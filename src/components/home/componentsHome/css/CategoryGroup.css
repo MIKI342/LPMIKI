@@ -1,0 +1,26 @@
+/* CategoryGroup.css */
+
+.category-group-card {
+    border: 1px solid #ccc;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .category-col {
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .category-col:last-child {
+    border-right: none;
+  }
+  
+  .category-card-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
