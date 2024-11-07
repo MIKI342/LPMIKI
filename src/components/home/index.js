@@ -13,7 +13,7 @@ const Ecommerce = () => {
         <Col xs={12} md={6}>
           <Bienvenida />
         </Col>
-        <Col xs={12} md={6}>
+        <Col xs={12} md={6}> 
           <CategoryGroup/>
         </Col>
       </Row>
