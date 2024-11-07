@@ -1,5 +1,3 @@
-// components/CategoryGroup.js
-
 import React, { useContext, useMemo, useCallback } from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -37,6 +35,9 @@ const CategoryGroup = () => {
   return (
     <Card className="category-group-card">
       <Card.Body className="py-3">
+        {/* Título impactante */}
+        <h2 className="category-group-title">Descubre Nuestras Categorías</h2>
+
         <Row className="mx-n1">
           {/* Mapear cada categoría y renderizar un componente CategoryCard */}
           {categories.map((category, index) => (
