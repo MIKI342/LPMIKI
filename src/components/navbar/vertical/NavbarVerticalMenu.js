@@ -6,54 +6,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import NavbarVerticalMenuItem from './NavbarVerticalMenuItem';
 import { useAppContext } from 'Main';
 
-const CollapseItems = React.memo(({ route }) => {
-  const { pathname } = useLocation();
-
-  const openCollapse = (children = []) => {
-    const checkLink = (child) => {
-      if (child.to === pathname) {
-        return true;
-      }
-      return (
-        Object.prototype.hasOwnProperty.call(child, 'children') &&
-        child.children.some(checkLink)
-      );
-    };
-    return children.some(checkLink);
-  };
-
-  const [open, setOpen] = useState(openCollapse(route.children));
-
-  return (
-    <Nav.Item as="li">
-      <Nav.Link
-        onClick={() => setOpen(!open)}
-        className={classNames('dropdown-indicator cursor-pointer', {
-          'text-500': !route.active,
-        })}
-        aria-expanded={open}
-      >
-        <NavbarVerticalMenuItem route={route} />
-      </Nav.Link>
-      <Collapse in={open}>
-        <Nav className="flex-column nav" as="ul">
-          <NavbarVerticalMenu routes={route.children || []} />
-        </Nav>
-      </Collapse>
-    </Nav.Item>
-  );
-});
-
-CollapseItems.propTypes = {
-  route: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    icon: PropTypes.string,
-    children: PropTypes.array.isRequired,
-    active: PropTypes.bool,
-  }).isRequired,
-};
-
-const NavbarVerticalMenu = React.memo(({ routes }) => {
+const NavbarVerticalMenu = ({ routes }) => {
   const {
     config: { showBurgerMenu, isNavbarVerticalCollapsed },
     setConfig,
@@ -70,32 +23,82 @@ const NavbarVerticalMenu = React.memo(({ routes }) => {
 
   const validRoutes = useMemo(() => (Array.isArray(routes) ? routes : []), [routes]);
 
-  return validRoutes.map((route) => {
-    if (!route.children) {
-      return (
-        <Nav.Item as="li" key={route.name} onClick={handleNavItemClick}>
-          <NavLink
-            end={route.exact}
-            to={route.to}
-            onClick={() =>
-              route.name === 'Modal' ? setConfig('openAuthModal', true) : undefined
-            }
-            className={({ isActive }) =>
-              classNames('nav-link', { active: isActive && route.to !== '#!' })
-            }
-          >
-            <NavbarVerticalMenuItem route={route} />
-          </NavLink>
-        </Nav.Item>
-      );
-    }
-    return <CollapseItems route={route} key={route.name} />;
-  });
-});
+  const CollapseItems = ({ route }) => {
+    const { pathname } = useLocation();
 
-NavbarVerticalMenu.propTypes = {
-  routes: PropTypes.arrayOf(PropTypes.shape(NavbarVerticalMenuItem.propTypes))
-    .isRequired,
+    const openCollapse = (children = []) => {
+      const checkLink = (child) => {
+        if (child.to === pathname) {
+          return true;
+        }
+        return (
+          Object.prototype.hasOwnProperty.call(child, 'children') &&
+          child.children.some(checkLink)
+        );
+      };
+      return children.some(checkLink);
+    };
+
+    const [open, setOpen] = useState(openCollapse(route.children));
+
+    return (
+      <Nav.Item as="li">
+        <Nav.Link
+          onClick={() => setOpen(!open)}
+          className={classNames('dropdown-indicator cursor-pointer', {
+            'text-500': !route.active,
+          })}
+          aria-expanded={open}
+        >
+          <NavbarVerticalMenuItem route={route} />
+        </Nav.Link>
+        <Collapse in={open} transition={false}>
+          <Nav className="flex-column nav" as="ul">
+            <NavbarVerticalMenu routes={route.children || []} />
+          </Nav>
+        </Collapse>
+      </Nav.Item>
+    );
+  };
+
+  CollapseItems.propTypes = {
+    route: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      icon: PropTypes.string,
+      children: PropTypes.array.isRequired,
+      active: PropTypes.bool,
+    }).isRequired,
+  };
+
+  return (
+    <>
+      {validRoutes.map((route) => {
+        if (!route.children) {
+          return (
+            <Nav.Item as="li" key={route.name} onClick={handleNavItemClick}>
+              <NavLink
+                end={route.exact}
+                to={route.to}
+                onClick={() =>
+                  route.name === 'Modal' ? setConfig('openAuthModal', true) : undefined
+                }
+                className={({ isActive }) =>
+                  classNames('nav-link', { active: isActive && route.to !== '#!' })
+                }
+              >
+                <NavbarVerticalMenuItem route={route} />
+              </NavLink>
+            </Nav.Item>
+          );
+        }
+        return <CollapseItems route={route} key={route.name} />;
+      })}
+    </>
+  );
 };
 
-export default NavbarVerticalMenu;
+NavbarVerticalMenu.propTypes = {
+  routes: PropTypes.arrayOf(PropTypes.shape(NavbarVerticalMenuItem.propTypes)).isRequired,
+};
+
+export default React.memo(NavbarVerticalMenu);

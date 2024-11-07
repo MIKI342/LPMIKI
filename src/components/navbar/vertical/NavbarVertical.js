@@ -1,21 +1,4 @@
-/**
- * Componente NavbarVertical
- *
- * Muestra la barra de navegación vertical en la aplicación, configurable en estilo y posición, y permite colapsarla según el tamaño de pantalla.
- * - Usa un menú de navegación vertical basado en `routes` que se puede colapsar en pantallas más pequeñas.
- * - Incluye un menú desplegable superior y una tarjeta de compra (opcional).
- * - Escucha cambios en el estado de colapso de la barra para ajustar la clase de HTML.
- *
- * Dependencias:
- * - `useAppContext`: Contexto para acceder a la configuración de la aplicación.
- * - `routes`: Contiene las rutas a mapear en el menú de navegación.
- *
- * Ejemplo de uso:
- * ```jsx
- * <NavbarVertical />
- * ```
- */
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Nav, Navbar, Row, Col } from 'react-bootstrap';
@@ -29,15 +12,18 @@ import NavbarTopDropDownMenus from 'components/navbar/top/NavbarTopDropDownMenus
 
 import bgNavbar from 'assets/img/generic/bg-navbar.png';
 import { useAppContext } from 'Main';
-import useWindowSize from 'hooks/useWindowSize'; // Importar el hook
+import useWindowSize from 'hooks/useWindowSize';
 
 const NavbarVertical = () => {
   const {
-    config: { navbarPosition, navbarStyle, isNavbarVerticalCollapsed }
+    config: { navbarPosition, navbarStyle, isNavbarVerticalCollapsed, showBurgerMenu },
+    setConfig,
   } = useAppContext();
 
   const HTMLClassList = document.getElementsByTagName('html')[0].classList;
-  const size = useWindowSize(); // Usar el hook para detectar el tamaño de la ventana
+  const size = useWindowSize();
+  const menuRef = useRef(null);
+  const toggleButtonRef = useRef(null); // Nueva referencia para el ícono de hamburguesa
 
   useEffect(() => {
     if (isNavbarVerticalCollapsed && size.width > 768) {
@@ -50,54 +36,96 @@ const NavbarVertical = () => {
     };
   }, [isNavbarVerticalCollapsed, size.width]);
 
+  // Manejo de clics fuera del menú
+  const handleOutsideClick = (event) => {
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target) &&
+      toggleButtonRef.current &&
+      !toggleButtonRef.current.contains(event.target)
+    ) {
+      if (showBurgerMenu) {
+        setConfig('showBurgerMenu', false);
+      }
+      if (!isNavbarVerticalCollapsed) {
+        setConfig('isNavbarVerticalCollapsed', true);
+      }
+    }
+  };
+
+  // Manejo del scroll
+  const handleScroll = () => {
+    if (showBurgerMenu) {
+      setConfig('showBurgerMenu', false);
+    }
+    if (!isNavbarVerticalCollapsed) {
+      setConfig('isNavbarVerticalCollapsed', true);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [showBurgerMenu, isNavbarVerticalCollapsed]);
+
   return (
-    <Navbar
-      expand={navbarBreakPoint}
-      className={classNames('navbar-vertical', {
-        [`navbar-${navbarStyle}`]: navbarStyle !== 'transparent'
-      })}
-      variant="light"
-    >
-      <Flex alignItems="center">
-        <ToggleButton />
-      </Flex>
-      <Navbar.Collapse
-        in={!isNavbarVerticalCollapsed}
-        onMouseEnter={() => isNavbarVerticalCollapsed && HTMLClassList.add('navbar-vertical-collapsed-hover')}
-        onMouseLeave={() => HTMLClassList.remove('navbar-vertical-collapsed-hover')}
-        style={{
-          backgroundImage: navbarStyle === 'vibrant'
-            ? `linear-gradient(-45deg, rgba(0, 160, 255, 0.86), #0048a2), url(${bgNavbar})`
-            : 'none'
-        }}
+    <div ref={menuRef}>
+      <Navbar
+        expand={navbarBreakPoint}
+        className={classNames('navbar-vertical', {
+          [`navbar-${navbarStyle}`]: navbarStyle !== 'transparent',
+        })}
+        variant="light"
       >
-        <div className="navbar-vertical-content scrollbar">
-          <Nav className="flex-column" as="ul">
-            {routes.map(route => (
-              <Fragment key={route.label}>
-                {!route.labelDisable && (
-                  <NavbarLabel label={capitalize(route.label)} />
-                )}
-                <NavbarVerticalMenu routes={route.children} />
-              </Fragment>
-            ))}
-          </Nav>
-          {navbarPosition === 'combo' && (
-            <div className={`d-${topNavbarBreakpoint}-none`}>
-              <div className="navbar-vertical-divider">
-                <hr className="navbar-vertical-hr my-2" />
+        <Flex alignItems="center">
+          <ToggleButton ref={toggleButtonRef} />
+        </Flex>
+        <Navbar.Collapse
+          in={!isNavbarVerticalCollapsed}
+          onMouseEnter={() =>
+            isNavbarVerticalCollapsed &&
+            HTMLClassList.add('navbar-vertical-collapsed-hover')
+          }
+          onMouseLeave={() => HTMLClassList.remove('navbar-vertical-collapsed-hover')}
+          style={{
+            backgroundImage:
+              navbarStyle === 'vibrant'
+                ? `linear-gradient(-45deg, rgba(0, 160, 255, 0.86), #0048a2), url(${bgNavbar})`
+                : 'none',
+          }}
+          transition={false}
+        >
+          <div className="navbar-vertical-content scrollbar">
+            <Nav className="flex-column" as="ul">
+              {routes.map((route) => (
+                <Fragment key={route.label}>
+                  {!route.labelDisable && <NavbarLabel label={capitalize(route.label)} />}
+                  <NavbarVerticalMenu routes={route.children} />
+                </Fragment>
+              ))}
+            </Nav>
+            {navbarPosition === 'combo' && (
+              <div className={`d-${topNavbarBreakpoint}-none`}>
+                <div className="navbar-vertical-divider">
+                  <hr className="navbar-vertical-hr my-2" />
+                </div>
+                <Nav navbar>
+                  <NavbarTopDropDownMenus />
+                </Nav>
               </div>
-              <Nav navbar>
-                <NavbarTopDropDownMenus />
-              </Nav>
-            </div>
-          )}
-          
-        </div>
-      </Navbar.Collapse>
-    </Navbar>
+            )}
+          </div>
+        </Navbar.Collapse>
+      </Navbar>
+    </div>
   );
 };
+
 
 const NavbarLabel = ({ label }) => (
   <Nav.Item as="li">
@@ -112,8 +140,8 @@ const NavbarLabel = ({ label }) => (
   </Nav.Item>
 );
 
-NavbarVertical.propTypes = {
-  label: PropTypes.string
+NavbarLabel.propTypes = {
+  label: PropTypes.string.isRequired,
 };
 
 export default NavbarVertical;
