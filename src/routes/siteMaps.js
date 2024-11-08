@@ -12,16 +12,11 @@ export const appRoutes = {
       active: true,
       children: [
         {
-          name: 'Producto',
-          active: true,
-          children: [
-            {
-              name: 'Cuadrícula de productos',
-              to: '/e-commerce/product/product-grid',
-              active: true
-            }
-          ]
+          name: 'Todos los productos',
+          to: '/e-commerce/product/product-grid',
+          active: true
         },
+
         {
           name: 'Carrito de compras',
           to: '/e-commerce/shopping-cart',
