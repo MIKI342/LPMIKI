@@ -14,7 +14,7 @@ const categoryImageMapping = {
   // Agrega más categorías e imágenes según sea necesario
 };
 
-const CategoryCard = ({ category }) => {
+const CategoryCard = ({ category }) => { 
   // Obtener las imágenes correspondientes a la categoría o una imagen por defecto
   const images = useMemo(() => categoryImageMapping[category] || ['/img/default.png'], [category]);
 
