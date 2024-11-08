@@ -74,6 +74,7 @@ const ProductDetails = () => {
     <>
       <Card className="shadow-sm mb-4">
         <Card.Body>
+          
           <Row>
             <Col lg={6} className="mb-4 mb-lg-0">
               <ProductDetailsMedia product={product} imageList={imageList} />

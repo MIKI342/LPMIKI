@@ -14,23 +14,31 @@ const ProductDetailsMain = ({ product }) => {
     descuento,
     precioMayoreo,
     unidadMayoreo,
-    estado,
-    CategoriaProducto
+    cantidad, // Asegurarse de que 'cantidad' está presente en el objeto 'product'
+    CategoriaProducto,
   } = product;
+
+  // Calcular el precio con descuento si aplica
+  const precioConDescuento = descuento
+    ? precioUnitario - (precioUnitario * descuento) / 100
+    : precioUnitario;
+
+  // Determinar la disponibilidad del producto
+  const disponible = cantidad > 0;
 
   const [productCount, setProductCount] = useState(1);
   const { handleAddToCart } = useProductHook(product);
 
-  const handleQuantityChange = e => {
+  const handleQuantityChange = (e) => {
     setProductCount(Math.max(1, parseInt(e.target.value)));
   };
 
   const handleQuantityIncrease = () => {
-    setProductCount(prevCount => prevCount + 1);
+    setProductCount((prevCount) => prevCount + 1);
   };
 
   const handleQuantityDecrease = () => {
-    setProductCount(prevCount => (prevCount > 1 ? prevCount - 1 : 1));
+    setProductCount((prevCount) => (prevCount > 1 ? prevCount - 1 : 1));
   };
 
   return (
@@ -44,10 +52,10 @@ const ProductDetailsMain = ({ product }) => {
       )}
 
       <div className="d-flex align-items-center mb-3">
-        <span className="fs-2 text-primary fw-bold">{`$${precioUnitario}`}</span>
+        <span className="fs-2 text-primary fw-bold">{`$${precioConDescuento.toFixed(2)}`}</span>
         {descuento && (
           <span className="ms-3 text-muted fs-5">
-            <del>{`$${precioUnitario}`}</del> <Badge bg="success">-{descuento}%</Badge>
+            <del>{`$${precioUnitario.toFixed(2)}`}</del> <Badge bg="success">-{descuento}%</Badge>
           </span>
         )}
       </div>
@@ -58,8 +66,8 @@ const ProductDetailsMain = ({ product }) => {
         <p><strong>Costo de Envío:</strong> $5</p>
         <p>
           <strong>Disponibilidad:</strong> 
-          <span className={`ms-2 ${estado === 'disponible' ? 'text-success' : 'text-danger'}`}>
-            {estado === 'disponible' ? 'Disponible' : 'Agotado'}
+          <span className={`ms-2 ${disponible ? 'text-success' : 'text-danger'}`}>
+            {disponible ? 'Disponible' : 'Agotado'}
           </span>
         </p>
       </div>
@@ -70,15 +78,17 @@ const ProductDetailsMain = ({ product }) => {
           handleChange={handleQuantityChange}
           handleIncrease={handleQuantityIncrease}
           handleDecrease={handleQuantityDecrease}
-          disabled={estado !== 'disponible'}
+          disabled={!disponible}
         />
         <IconButton
           iconClassName="me-1"
-          variant={estado !== 'disponible' ? 'secondary' : 'primary'}
+          variant={disponible ? 'primary' : 'secondary'}
           size="lg"
           icon="cart-plus"
-          onClick={() => estado === 'disponible' && handleAddToCart(productCount, true, false, nombreProducto, precioUnitario)}
-          disabled={estado !== 'disponible'}
+          onClick={() =>
+            disponible && handleAddToCart(productCount, true, false, nombreProducto, precioUnitario)
+          }
+          disabled={!disponible}
           className="ms-3"
         >
           Add To Cart
@@ -103,12 +113,12 @@ ProductDetailsMain.propTypes = {
     descuento: PropTypes.number,
     precioMayoreo: PropTypes.number,
     unidadMayoreo: PropTypes.string,
-    estado: PropTypes.string.isRequired,
+    cantidad: PropTypes.number.isRequired, // Asegurarse de que 'cantidad' sea obligatorio
     CategoriaProducto: PropTypes.shape({
       id: PropTypes.string.isRequired,
-      nombre: PropTypes.string.isRequired
-    })
-  }).isRequired
+      nombre: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
 
 export default ProductDetailsMain;
