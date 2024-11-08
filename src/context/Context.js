@@ -1,17 +1,12 @@
 // context/ProductContext.js
 
-import React, { createContext, useReducer, useMemo, useState } from 'react';
+import React, { createContext, useReducer, useMemo, useState, useEffect } from 'react';
 import { productReducer } from '../reducers/productReducer';
 import useFetchProducts from '../hooks/useFetchProductsDos';
 
 export const AppContext = createContext();
 export const ProductContext = createContext({ products: [], loading: true });
 
-/**
- * Función para formatear texto con solo la primera letra en mayúscula.
- * @param {string} text - Texto a formatear.
- * @returns {string} - Texto formateado.
- */
 const formatText = (text) => {
   if (!text) return '';
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
@@ -20,29 +15,25 @@ const formatText = (text) => {
 export const ProductProvider = ({ children }) => {
   const { products, loading } = useFetchProducts('/api/v2/products');
 
-  // Estado local para almacenar productos con formato aplicado
   const [formattedProducts, setFormattedProducts] = useState([]);
 
-  // Formatear productos y almacenarlos en el estado solo si `products` cambia
-  useMemo(() => {
+  useEffect(() => { // Cambiado de useMemo a useEffect
     if (products) {
-      setFormattedProducts(
-        products.map((product) => ({
-          ...product,
-          nombreProducto: formatText(product.nombreProducto),
-          descripcionProducto: formatText(product.descripcionProducto),
-        }))
-      );
+      const nuevosProductos = products.map((product) => ({
+        ...product,
+        nombreProducto: formatText(product.nombreProducto),
+        descripcionProducto: formatText(product.descripcionProducto),
+      }));
+      setFormattedProducts(nuevosProductos);
+      console.log('Productos formateados actualizados:', nuevosProductos);
     }
   }, [products]);
 
-  // Función para actualizar un producto específico
   const updateProduct = (productId, updatedAttributes) => {
+    console.log(`Actualizando producto ID ${productId} con atributos:`, updatedAttributes);
     setFormattedProducts((prevProducts) =>
       prevProducts.map((product) =>
-        product.id === productId
-          ? { ...product, ...updatedAttributes }
-          : product
+        product.id === productId ? { ...product, ...updatedAttributes } : product
       )
     );
   };
@@ -62,14 +53,23 @@ export const ProductProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(productReducer, initData);
 
+  useEffect(() => {
+    console.log('Estado inicial del carrito:', state.cartItems);
+  }, []);
+
   const getCartTotal = useMemo(() => {
-    return state.cartItems.reduce(
+    const total = state.cartItems.reduce(
       (total, item) => total + item.unitPrice * item.quantity,
       0
     );
+    console.log('Total del carrito recalculado:', total);
+    return total;
   }, [state.cartItems]);
 
-  // Contexto con datos y la función `updateProduct` para actualizar productos
+  useEffect(() => {
+    console.log('Estado del carrito actualizado:', state.cartItems);
+  }, [state.cartItems]);
+
   const contextValue = useMemo(
     () => ({
       products: formattedProducts.length ? formattedProducts : state.products,
@@ -80,7 +80,7 @@ export const ProductProvider = ({ children }) => {
       cartModal: state.cartModal,
       dispatch,
       getCartTotal,
-      updateProduct, // Proporcionamos la función de actualización
+      updateProduct,
     }),
     [
       formattedProducts,

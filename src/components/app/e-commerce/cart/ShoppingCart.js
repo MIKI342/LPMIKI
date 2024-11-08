@@ -18,10 +18,12 @@ const ShoppingCart = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log('Actualizando totalCost. Valor de getCartTotal:', getCartTotal);
     setTotalCost(getCartTotal); // Asigna directamente el valor memorizado
   }, [cartItems, getCartTotal]);
 
   const handleCheckout = () => {
+    console.log('handleCheckout llamado. isAuthenticated:', isAuthenticated);
     if (!isAuthenticated) {
       toast(<CustomToastContent navigate={navigate} />, {
         position: "top-center",
@@ -69,6 +71,10 @@ const ShoppingCart = () => {
         )}
       </Card>
       <CartModal />
+      <div style={{ display: 'none' }}>
+        {console.log('Renderizando ShoppingCart. cartItems:', cartItems)}
+        {console.log('TotalCost:', totalCost)}
+      </div>
     </>
   );
 };
@@ -81,6 +87,7 @@ const CustomToastContent = ({ navigate, closeToast }) => (
         variant="primary" 
         size="sm" 
         onClick={() => {
+          console.log('Iniciar sesión clicado en toast');
           navigate('/authentication/simple/login');
           closeToast();
         }}
@@ -91,7 +98,10 @@ const CustomToastContent = ({ navigate, closeToast }) => (
       <Button 
         variant="secondary" 
         size="sm" 
-        onClick={closeToast}
+        onClick={() => {
+          console.log('Cancelar clicado en toast');
+          closeToast();
+        }}
       >
         Cancelar
       </Button>

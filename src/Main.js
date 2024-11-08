@@ -1,21 +1,4 @@
-/**
- * Este archivo configura el contexto global de la aplicación, proporcionando estilos y ajustes de tema.
- *
- * `Main` es el proveedor de contexto central de la aplicación, configurando propiedades como:
- * - Estilos de tema (oscuro o claro) y modo RTL.
- * - Posición y estilo de la barra de navegación.
- * - Configuración de la disposición fluida o contenida.
- *
- * Este archivo:
- * - Utiliza `configReducer` para gestionar la lógica de configuración.
- * - Lee configuraciones iniciales desde el almacenamiento local y las aplica al estado global.
- * - Proporciona funciones para cambiar el tema, alternar la barra de navegación vertical y actualizar 
- *   el contexto.
- * - Integra `ChartJS` para gráficos y `useToggleStyle` para cambiar hojas de estilo según el tema.
- *
- * Los componentes hijos que consumen este contexto pueden acceder a `config`, cambiar el tema o estilo 
- * de la aplicación, y actualizar la configuración global en tiempo real.
- */
+
 import React, { useContext, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { AppContext } from 'context/Context';

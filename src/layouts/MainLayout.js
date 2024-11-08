@@ -1,23 +1,8 @@
-// MainLayout.js - Componente de diseño principal
-// Este componente establece la estructura general de la aplicación, renderizando los componentes principales como la barra de navegación superior y vertical,
-// gestionando el contexto de productos y proporcionando una disposición para el contenido principal y un modal de autenticación.
-
-// Características:
-// - `NavbarTop` y `NavbarVertical`: los componentes de navegación superior y vertical que cambian según la configuración de `navbarPosition`.
-// - `ProductProvider`: proporciona el contexto global de productos para la aplicación.
-// - `Outlet`: espacio para cargar dinámicamente los componentes de las rutas principales de la aplicación.
-// - `ModalAuth`: modal de autenticación que se muestra de forma condicional.
-
-// Comportamiento adicional:
-// - Realiza un scroll suave hacia elementos con `id` coincidentes en el `hash` de la URL al cargar o cambiar de ruta.
-// - Restaura la posición de scroll a la parte superior en cada cambio de ruta (controlado por `pathname`).
-
 import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import NavbarTop from 'components/navbar/top/NavbarTop';
 import NavbarVertical from 'components/navbar/vertical/NavbarVertical';
-import { ProductProvider } from 'context/Context';
 import ModalAuth from 'components/authentication/modal/ModalAuth';
 import { useAppContext } from 'Main';
 
@@ -52,13 +37,11 @@ const MainLayout = () => {
       {(navbarPosition === 'vertical' || navbarPosition === 'combo') && (
         <NavbarVertical />
       )}
-      <ProductProvider>
-        <div className={classNames('content', { 'pb-0': isKanban })}>
-          <NavbarTop />
-          {/*------ Main Routes ------*/}
-          <Outlet />
-        </div>
-      </ProductProvider>
+      <div className={classNames('content', { 'pb-0': isKanban })}>
+        <NavbarTop />
+        {/*------ Main Routes ------*/}
+        <Outlet />
+      </div>
       <ModalAuth />
     </div>
   );

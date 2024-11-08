@@ -1,4 +1,6 @@
-import React, { memo, useCallback } from 'react';
+// ProductCard.js
+
+import React, { memo, useCallback, useContext } from 'react';
 import { Card, Button, Col, Row, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
@@ -7,8 +9,9 @@ import classNames from 'classnames';
 import useProductHook from 'hooks/useProductHook';
 import StarRating from 'components/home/StarRating';
 import { FaShoppingCart } from 'react-icons/fa';
+import { ProductContext } from 'context/Context'; // Importar el contexto
 
-const ProductCard = memo(({ product, paginationState, dispatch }) => {
+const ProductCard = memo(({ product, paginationState }) => { // Eliminar 'dispatch' de las props
   const {
     id,
     nombreProducto,
@@ -28,6 +31,7 @@ const ProductCard = memo(({ product, paginationState, dispatch }) => {
 
   const { handleAddToCart } = useProductHook(product);
   const navigate = useNavigate();
+  const { dispatch } = useContext(ProductContext); // Acceder al contexto directamente
 
   const handleCardClick = useCallback(() => {
     navigate(`/e-commerce/product/product-details/${id}`);
@@ -35,6 +39,7 @@ const ProductCard = memo(({ product, paginationState, dispatch }) => {
 
   const handleAddToCartClick = useCallback(
     (event) => {
+      console.log('handleAddToCartClick iniciado'); // Log agregado
       event.stopPropagation();
       if (paginationState) {
         const currentPage = paginationState.currentPage; // Guarda la página actual
@@ -162,8 +167,7 @@ ProductCard.propTypes = {
     }),
   }).isRequired,
   paginationState: PropTypes.object,
-  dispatch: PropTypes.func,
+  // Eliminar 'dispatch' de propTypes
 };
 
 export default ProductCard;
-  

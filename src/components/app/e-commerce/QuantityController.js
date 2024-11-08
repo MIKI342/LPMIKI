@@ -5,19 +5,17 @@ import PropTypes from 'prop-types';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import classNames from 'classnames';
 
-const QuantityController = ({
-  quantity,
-  handleIncrease,
-  handleDecrease,
-  btnClassName
-}) => {
+const QuantityController = ({ quantity, handleIncrease, handleDecrease, btnClassName }) => {
   return (
     <InputGroup size="sm">
       <Button
         variant="outline-secondary"
         size="sm"
         className={classNames(btnClassName, 'border-300')}
-        onClick={handleDecrease}
+        onClick={() => {
+          console.log('Botón "-" clicado');
+          handleDecrease();
+        }}
       >
         -
       </Button>
@@ -33,7 +31,10 @@ const QuantityController = ({
         variant="outline-secondary"
         size="sm"
         className={classNames(btnClassName, 'border-300')}
-        onClick={handleIncrease}
+        onClick={() => {
+          console.log('Botón "+" clicado - Enviando a handleIncrease');
+          handleIncrease();
+        }}
       >
         +
       </Button>
@@ -45,7 +46,7 @@ QuantityController.propTypes = {
   quantity: PropTypes.number.isRequired,
   handleIncrease: PropTypes.func.isRequired,
   handleDecrease: PropTypes.func.isRequired,
-  btnClassName: PropTypes.string
+  btnClassName: PropTypes.string,
 };
 
 export default QuantityController;

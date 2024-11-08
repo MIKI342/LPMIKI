@@ -1,6 +1,6 @@
 // CartItem.js
 
-import React, { useContext } from 'react';
+import React, { useContext, useCallback, useEffect } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import QuantityController from '../QuantityController';
@@ -14,36 +14,45 @@ const CartItem = ({ product }) => {
 
   const unitPrice = totalPrice / quantity;
 
-  const handleRemove = () => {
+  // Log cuando el componente se monta
+  useEffect(() => {
+    console.log(`CartItem montado para el producto ID: ${id}`);
+    return () => {
+      console.log(`CartItem desmontado para el producto ID: ${id}`);
+    };
+  }, [id]);
+
+  const handleRemove = useCallback(() => {
+    console.log(`handleRemove llamado para el producto ID: ${id}`);
     dispatch({
       type: 'REMOVE_FROM_CART',
-      payload: {
-        id
-      }
+      payload: { id },
     });
-  };
+  }, [dispatch, id]);
 
-  const handleIncrease = () => {
+  const handleIncrease = useCallback(() => {
+    console.log(`handleIncrease llamado para el producto ID: ${id}`);
     dispatch({
       type: 'ADD_TO_CART',
       payload: {
         id,
         quantity: 1,
-        unitPrice
-      }
+        unitPrice,
+      },
     });
-  };
+  }, [dispatch, id, unitPrice]);
 
-  const handleDecrease = () => {
+  const handleDecrease = useCallback(() => {
+    console.log(`handleDecrease llamado para el producto ID: ${id}`);
     dispatch({
       type: 'ADD_TO_CART',
       payload: {
         id,
         quantity: -1,
-        unitPrice
-      }
+        unitPrice,
+      },
     });
-  };
+  }, [dispatch, id, unitPrice]);
 
   return (
     <Row className="gx-card mx-0 align-items-center border-bottom border-200">
