@@ -6,8 +6,7 @@
 webpack.config.js
 package.json
 package-lock.json
-
-
+ 
 # Otros archivos y carpetas ignorados
 /.pnp
 .pnp.js
