@@ -1,4 +1,11 @@
-/* eslint-disable react/prop-types */
+// El componente `AdvanceTableWrapper` es un contenedor avanzado para tablas que agrega funcionalidades de paginación,
+// selección de filas, filtros globales y ordenamiento, utilizando `react-table` y `react-bootstrap`.
+// Ofrece soporte para checkboxes con selección múltiple mediante el subcomponente `IndeterminateCheckbox`, que permite
+// seleccionar todas las filas o filas específicas. `AdvanceTableWrapper` es capaz de recibir hijos y clonar componentes,
+// propagando funciones y propiedades clave de `react-table` para que las tablas en sus hijos puedan utilizar las
+// funcionalidades de ordenamiento, selección, paginación y filtros. Es ideal para casos en los que una tabla necesita
+// configuraciones complejas en aplicaciones de datos.
+
 import classNames from 'classnames';
 import React from 'react';
 import { Form } from 'react-bootstrap';
@@ -13,7 +20,6 @@ import {
 export const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, className, ...rest }, ref) => {
     const defaultRef = React.useRef();
-
     const resolvedRef = ref || defaultRef;
 
     React.useEffect(() => {
@@ -140,34 +146,7 @@ const AdvanceTableWrapper = ({
     });
   };
 
-  return (
-    // <>
-    //   {React.Children.map(children, child => {
-    //     if (child.props.table) {
-    //       return React.cloneElement(child, {
-    //         ...child.props,
-    //         getTableProps,
-    //         headers,
-    //         page,
-    //         prepareRow,
-    //         canPreviousPage,
-    //         canNextPage,
-    //         nextPage,
-    //         previousPage,
-    //         gotoPage,
-    //         pageCount,
-    //         pageIndex,
-    //         selectedRowIds,
-    //         pageSize,
-    //         setPageSize
-    //       });
-    //     } else {
-    //       return child;
-    //     }
-    //   })}
-    // </>
-    <>{recursiveMap(children)}</>
-  );
+  return <>{recursiveMap(children)}</>;
 };
 
 export default AdvanceTableWrapper;

@@ -1,3 +1,9 @@
+// El componente `CardDropdown` es un menú desplegable utilizado para mostrar opciones adicionales asociadas a un elemento
+// específico, como ver, exportar o eliminar. Este componente se basa en `react-bootstrap` para el manejo de dropdowns y utiliza
+// `useAppContext` para ajustar la alineación según el contexto de dirección (`isRTL`), lo que lo hace adaptable para distintos idiomas.
+// Su configuración es altamente personalizable mediante props como `btnRevealClass`, `drop`, y `icon`, lo que permite integrarlo
+// de forma flexible en otros componentes, como tablas o tarjetas, para ofrecer acciones específicas.
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown } from 'react-bootstrap';
