@@ -1,4 +1,3 @@
-// craco.config.js
 const path = require('path');
 const dotenv = require('dotenv');
 
@@ -18,7 +17,7 @@ module.exports = {
     port: parseInt(process.env.PORT, 10) || 3000, // Asegura que el puerto sea un número
     historyApiFallback: true, // Soporte para SPA
     hot: true, // Hot Module Replacement (HMR)
-    // open: true, // Eliminar o comentar esta línea
+   
     static: {
       directory: path.join(__dirname, 'public'), // Servir archivos estáticos desde 'public'
     },
