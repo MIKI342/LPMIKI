@@ -1,5 +1,11 @@
 // craco.config.js
 const path = require('path');
+const dotenv = require('dotenv');
+
+// Cargar variables de entorno desde .env
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+console.log("Loaded PORT:", process.env.PORT); // Para verificar que se carga correctamente
 
 module.exports = {
   webpack: {
@@ -9,10 +15,10 @@ module.exports = {
     }
   },
   devServer: {
-    port: process.env.PORT || 3000, // Puerto configurado desde .env
+    port: parseInt(process.env.PORT, 10) || 3000, // Asegura que el puerto sea un número
     historyApiFallback: true, // Soporte para SPA
     hot: true, // Hot Module Replacement (HMR)
-    open: true, // Abre el navegador automáticamente
+    // open: true, // Eliminar o comentar esta línea
     static: {
       directory: path.join(__dirname, 'public'), // Servir archivos estáticos desde 'public'
     },

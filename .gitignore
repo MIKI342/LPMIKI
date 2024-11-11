@@ -1,8 +1,6 @@
 # Dependencias
 /node_modules
 
-# Configuración
-
 # Otros archivos y carpetas ignorados
 /.pnp
 .pnp.js
