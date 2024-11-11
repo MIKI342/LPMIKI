@@ -1,31 +1,40 @@
 /* src/components/home/componentsHome/Map.css */
 
 .map-wrapper {
-    direction: ltr;
-  }
-  
-  .map-container {
-    height: 500px;
-    width: 100%;
-    transition: filter 0.3s ease;
-  }
-  
-  .map-description {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #333;
-  }
-  
-  .map-highlight {
-    color: #007bff;
-  }
-  
-  .loading-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 300px;
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
+  direction: ltr;
+  margin: 0;
+  padding: 0;
+}
+
+.map-container {
+  height: 500px;
+  width: 100%;
+  transition: filter 0.3s ease;
+  margin: 0;
+  padding: 0;
+}
+
+.map-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.map-highlight {
+  color: #007bff;
+}
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  font-size: 1.2rem;
+  color: #555;
+  margin: 0;
+  padding: 0;
+}
+
+.falcon-component-card-body {
+  padding: 0;
+}

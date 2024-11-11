@@ -3,6 +3,8 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
   margin-bottom: 1rem;
+  margin: 0;
+  padding: 0;
 }
 
 .category-group-title {
@@ -28,6 +30,7 @@
 .category-col {
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  padding: 0;
 }
 
 .category-col:last-child {

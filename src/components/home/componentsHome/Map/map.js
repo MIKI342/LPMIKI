@@ -1,4 +1,4 @@
-// src/components/home/componentsHome/Map.js
+// Archivo: Map.js
 
 import React, { useContext, useMemo } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
@@ -13,14 +13,13 @@ import FalconComponentCard from 'components/common/FalconComponentCard';
 import MarkerComponent from './MarkerComponent';
 import 'components/home/componentsHome/css/Map.css';
 
-// Define defaultIcon para los marcadores
 const defaultIcon = L.icon({
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  iconSize: [25, 41], // Tamaño del icono
-  iconAnchor: [12, 41], // Punto de anclaje del icono
-  popupAnchor: [1, -34], // Punto de anclaje del popup
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-  shadowSize: [41, 41], // Tamaño de la sombra
+  shadowSize: [41, 41],
 });
 
 const Map = () => {

@@ -1,3 +1,5 @@
+// Archivo: CategoryGroup.jsx
+
 import React, { useContext, useMemo, useCallback } from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
