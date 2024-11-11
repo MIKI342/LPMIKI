@@ -14,6 +14,7 @@ module.exports = {
     }
   },
   devServer: {
+    allowedHosts: 'all',
     port: parseInt(process.env.PORT, 10) || 3000, // Asegura que el puerto sea un número
     historyApiFallback: true, // Soporte para SPA
     hot: true, // Hot Module Replacement (HMR)
