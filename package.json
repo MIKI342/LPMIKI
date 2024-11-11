@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@changey/react-leaflet-markercluster": "^4.0.0-rc1",
+    "@craco/craco": "^7.1.0",
     "@emoji-mart/react": "^1.0.1",
     "@emotion/styled": "^11.6.0",
     "@fortawesome/fontawesome-free": "^5.15.4",
@@ -84,17 +85,9 @@
     "yup": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build && cp ./build/index.html ./build/404.html",
-    "predeploy:beta": "npm run build && cp ./build/index.html ./build/404.html",
-    "deploy": "echo https://falconreact.prium.me > ./build/CNAME && gh-pages -d build",
-    "deploy:beta": "echo frlive.prium.me > ./build/CNAME && gh-pages -d build -r git@github.com:prium/falcon-react-alpha2.git",
-    "build:css": "webpack --config webpack.config.js",
-    "watch:css": "webpack --config webpack.config.js --watch"
-  },
+    "start": "craco start",
+    "dev": "craco start" },
+
   "proxy": "https://teamsf.store",
   "eslintConfig": {
     "extends": [
@@ -122,8 +115,6 @@
     "prettier": "^2.3.2",
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
-    "webpack": "^5.82.1",
-    "webpack-cli": "^5.1.1",
     "webpack-fix-style-only-entries": "^0.6.1"
   }
 }
