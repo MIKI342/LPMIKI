@@ -2,11 +2,7 @@
 /node_modules
 
 # Configuración
-.env
 
-
-package-lock.json
- 
 # Otros archivos y carpetas ignorados
 /.pnp
 .pnp.js
