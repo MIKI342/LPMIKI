@@ -6,7 +6,7 @@ import CategoryGroup from 'components/home/componentsHome/CategoryGroup';
 import Bienvenida from 'components/home/componentsHome/Bienvenida';
 import Map from 'components/home/componentsHome/Map/map';
 import MasServicios from 'components/home/componentsHome/MoreServices/MasServicios';
-import './Ecommerce.css'; // Asegúrate de importar tu hoja de estilos
+import 'components/home/componentsHome/css/Ecommerce.css'; // Asegúrate de importar tu hoja de estilos
 
 const Ecommerce = () => {
   return (
@@ -59,7 +59,7 @@ const Ecommerce = () => {
         <Row className="g-0 justify-content-center footer-row">
           <Col
             xs={12}
-            lg={6}
+            lg={12} // Cambiamos lg={6} a lg={12} para que ocupe todo el ancho en pantallas grandes
             style={{
               padding: '0',
             }}

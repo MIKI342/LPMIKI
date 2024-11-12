@@ -1,0 +1,61 @@
+/* Archivo: Ecommerce.css */
+
+/* Clase de espaciado reducido para pantallas pequeñas */
+.spacing-reduced {
+    margin-bottom: 0.35rem; /* 4px en pantallas pequeñas */
+  }
+  
+  /* Configuración de márgenes específica para pantallas grandes */
+  @media (min-width: 992px) {
+    .spacing-reduced {
+      margin-bottom: 0; /* Elimina el margen inferior en pantallas grandes */
+    }
+  
+    .custom-margin-right {
+      margin-right: -5px;
+    }
+  
+    .custom-margin-left {
+      margin-left: -45px;
+    }
+  
+    /* Clases de espaciado específicas para pantallas grandes */
+    .spacing-bienvenida-masServicios {
+      margin-bottom: 0; /* Sin margen entre Bienvenida y MasServicios en pantallas grandes */
+    }
+  
+    .spacing-masServicios-categoryGroup {
+      margin-bottom: 4rem; /* Aumentamos a 64px solo en pantallas grandes */
+    }
+  
+    .spacing-categoryGroup-map {
+      margin-bottom: 0; /* Sin margen entre CategoryGroup y Map en pantallas grandes */
+    }
+  }
+  
+  /* Configuraciones para pantallas pequeñas */
+  .spacing-bienvenida-masServicios {
+    margin-bottom: 0.35rem; /* 4px en pantallas pequeñas */
+  }
+  
+  .spacing-masServicios-categoryGroup {
+    margin-bottom: 0.35rem; /* 4px en pantallas pequeñas */
+  }
+  
+  .spacing-categoryGroup-map {
+    margin-bottom: 0.35rem; /* 4px en pantallas pequeñas */
+  }
+  
+  /* Clase para reducir el margen superior del footer en pantallas pequeñas */
+  .footer-row {
+    margin-top: 0.35rem; /* 4px en pantallas pequeñas */
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  @media (min-width: 992px) {
+    .footer-row {
+      margin-top: 0;
+    }
+  }
+  
