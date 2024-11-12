@@ -1,36 +1,41 @@
-import React, { useState } from 'react';
-import { Col, Row, Badge } from 'react-bootstrap';
+import React, { useState, useCallback } from 'react';
+import { Button, Badge, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import useProductHook from 'hooks/useProductHook';
 import QuantityController from '../../QuantityController';
-import IconButton from 'components/common/IconButton';
+import { FaShoppingCart } from 'react-icons/fa';
+import useProductHook from 'hooks/useProductHook';
 
 const ProductDetailsMain = ({ product }) => {
   const {
+    id,
     nombreProducto,
     descripcionProducto,
     precioUnitario,
     descuento,
-    precioMayoreo,
-    unidadMayoreo,
-    cantidad, // Asegurarse de que 'cantidad' está presente en el objeto 'product'
+    cantidad,
     CategoriaProducto,
   } = product;
 
-  // Calcular el precio con descuento si aplica
   const precioConDescuento = descuento
     ? precioUnitario - (precioUnitario * descuento) / 100
     : precioUnitario;
 
-  // Determinar la disponibilidad del producto
   const disponible = cantidad > 0;
 
   const [productCount, setProductCount] = useState(1);
   const { handleAddToCart } = useProductHook(product);
 
+  const handleAddToCartClick = useCallback(
+    (event) => {
+      event.stopPropagation();
+      handleAddToCart(productCount, true, true, nombreProducto, precioUnitario);
+    },
+    [productCount, handleAddToCart, nombreProducto, precioUnitario]
+  );
+
   const handleQuantityChange = (e) => {
-    setProductCount(Math.max(1, parseInt(e.target.value)));
+    setProductCount(Math.max(1, parseInt(e.target.value, 10)));
   };
 
   const handleQuantityIncrease = () => {
@@ -42,37 +47,58 @@ const ProductDetailsMain = ({ product }) => {
   };
 
   return (
-    <>
-      <h4 className="text-dark fw-bold">{nombreProducto}</h4>
+    <div
+      className="product-details"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        margin: '0',
+        padding: '2rem',
+        boxSizing: 'border-box',
+      }}
+    >
+      {/* Nombre del Producto */}
+      <h2 className="text-dark fw-bold">{nombreProducto}</h2>
 
+      {/* Categoría del Producto */}
       {CategoriaProducto && (
-        <Link to="#!" className="text-secondary d-block mb-3">
+        <Link to="#!" className="text-secondary d-block mb-2 fs-6">
           {CategoriaProducto.nombre}
         </Link>
       )}
 
+      {/* Precio y Descuento */}
       <div className="d-flex align-items-center mb-3">
-        <span className="fs-2 text-primary fw-bold">{`$${precioConDescuento.toFixed(2)}`}</span>
+        <h3 className="text-warning fw-bold">{`$${precioConDescuento.toFixed(2)}`}</h3>
         {descuento && (
-          <span className="ms-3 text-muted fs-5">
-            <del>{`$${precioUnitario.toFixed(2)}`}</del> <Badge bg="success">-{descuento}%</Badge>
+          <span className="ms-2 text-muted fs-5">
+            <del>{`$${precioUnitario.toFixed(2)}`}</del>
           </span>
+        )}
+        {descuento && (
+          <Badge bg="danger" pill className="discount-badge ms-2">
+            -{descuento}%
+          </Badge>
         )}
       </div>
 
-      <p className="text-muted mb-3">{descripcionProducto}</p>
+      {/* Descripción del Producto */}
+      <p className="text-muted fs-6 mb-4">{descripcionProducto}</p>
 
-      <div className="mb-3">
-        <p><strong>Costo de Envío:</strong> $5</p>
+      {/* Información adicional */}
+      <div className="additional-info mb-4">
+        <p><strong>Costo de Envío:</strong> <span className="text-info">$5</span></p>
         <p>
-          <strong>Disponibilidad:</strong> 
+          <strong>Disponibilidad:</strong>
           <span className={`ms-2 ${disponible ? 'text-success' : 'text-danger'}`}>
             {disponible ? 'Disponible' : 'Agotado'}
           </span>
         </p>
       </div>
 
-      <div className="d-flex align-items-center mb-4">
+      {/* Control de Cantidad y Botón de Carrito */}
+      <div className="d-flex align-items-center mt-4">
         <QuantityController
           quantity={productCount}
           handleChange={handleQuantityChange}
@@ -80,43 +106,36 @@ const ProductDetailsMain = ({ product }) => {
           handleDecrease={handleQuantityDecrease}
           disabled={!disponible}
         />
-        <IconButton
-          iconClassName="me-1"
-          variant={disponible ? 'primary' : 'secondary'}
-          size="lg"
-          icon="cart-plus"
-          onClick={() =>
-            disponible && handleAddToCart(productCount, true, false, nombreProducto, precioUnitario)
-          }
-          disabled={!disponible}
-          className="ms-3"
+        <OverlayTrigger
+          placement="top"
+          overlay={<Tooltip id={`tooltip-add-to-cart-${id}`}>Añadir al carrito</Tooltip>}
         >
-          Add To Cart
-        </IconButton>
+          <Button
+            variant="outline-secondary"
+            className="d-flex align-items-center justify-content-center ms-3"
+            style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+            onClick={handleAddToCartClick}
+            disabled={!disponible}
+            aria-label="Añadir al carrito"
+          >
+            <FaShoppingCart size={22} color="#6c757d" />
+          </Button>
+        </OverlayTrigger>
       </div>
-
-      <div className="d-flex align-items-center">
-        <span className="me-3">Tags:</span>
-        <Badge bg="light" className="me-2 text-dark">Laptop</Badge>
-        <Badge bg="light" className="me-2 text-dark">Apple</Badge>
-        <Badge bg="light" className="me-2 text-dark">Tech</Badge>
-      </div>
-    </>
+    </div>
   );
 };
 
 ProductDetailsMain.propTypes = {
   product: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     nombreProducto: PropTypes.string.isRequired,
     descripcionProducto: PropTypes.string.isRequired,
     precioUnitario: PropTypes.number.isRequired,
     descuento: PropTypes.number,
-    precioMayoreo: PropTypes.number,
-    unidadMayoreo: PropTypes.string,
-    cantidad: PropTypes.number.isRequired, // Asegurarse de que 'cantidad' sea obligatorio
+    cantidad: PropTypes.number.isRequired,
     CategoriaProducto: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      nombre: PropTypes.string.isRequired,
+      nombre: PropTypes.string,
     }),
   }).isRequired,
 };

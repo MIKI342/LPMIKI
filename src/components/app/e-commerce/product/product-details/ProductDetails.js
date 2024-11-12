@@ -3,7 +3,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { Card, Col, Row, Spinner } from 'react-bootstrap';
 import ProductDetailsMedia from './ProductDetailsMedia';
 import ProductDetailsMain from './ProductDetailsMain';
-import ProductDetailsFooter from './ProductDetailsFooter';
+
 import { ProductContext } from 'context/Context';
 import CartModal from '../../cart/CartModal';
 import Flex from 'components/common/Flex';
@@ -84,9 +84,7 @@ const ProductDetails = () => {
             </Col>
           </Row>
           <Row>
-            <Col xs={12}>
-              <ProductDetailsFooter product={product} />
-            </Col>
+            
           </Row>
         </Card.Body>
       </Card>
