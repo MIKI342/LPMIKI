@@ -1,8 +1,3 @@
-// FalconRoutes.js - Rutas principales de la aplicación
-// Este componente define las rutas de la aplicación utilizando `react-router-dom` para estructurar la navegación. 
-// Incluye rutas para el ecommerce, autenticación, mapeo y un redireccionamiento a una página de error en caso de rutas no encontradas.
-
-// Importaciones necesarias de React y componentes
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
@@ -21,6 +16,7 @@ import CategoryProducts from 'components/home/CategoryProducts';
 import PrivateRoute from 'routes/PrivateRoute';
 import SimpleLogout from 'components/authentication/simple/Logout';
 import AuthSimpleLayout from '../layouts/AuthSimpleLayout';
+import TramiteDetail from 'components/home/componentsHome/MoreServices/TramiteDetail'; // Importa el componente de detalles del trámite
 
 const FalconRoutes = () => {
   return (
@@ -37,6 +33,9 @@ const FalconRoutes = () => {
         <Route path="e-commerce/checkout" element={<PrivateRoute element={Checkout} />} />
         <Route path="e-commerce/invoice" element={<Invoice />} />
         <Route path="/category/:category" element={<CategoryProducts />} />
+
+        {/* Ruta para detalles del trámite */}
+        <Route path="/tramite/:tramiteId" element={<TramiteDetail />} />
       </Route>
 
       {/* Rutas de autenticación */}
@@ -48,7 +47,7 @@ const FalconRoutes = () => {
       </Route>
 
       {/* Rutas de usuario, mapas y utilidades */}
-      <Route path="components/home/componentsHome/map" element={<Map/>} />
+      <Route path="components/home/componentsHome/map" element={<Map />} />
 
       {/* Redirección en caso de error 404 */}
       <Route path="*" element={<Navigate to="/errors/404" replace />} />
