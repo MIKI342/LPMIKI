@@ -14,7 +14,7 @@ import classNames from 'classnames';
 import useProductHook from 'hooks/useProductHook';
 import StarRating from 'components/home/StarRating';
 import { FaShoppingCart } from 'react-icons/fa';
-import { ProductContext } from 'context/Context'; // Importar el contexto
+import { ProductContext } from 'context/Context';
 
 const ProductCard = memo(({ product, paginationState }) => {
   const {
@@ -23,6 +23,8 @@ const ProductCard = memo(({ product, paginationState }) => {
     descripcionProducto,
     precioUnitario,
     descuento,
+    superPrecio = 70, // Simula un superPrecio como 10% de descuento
+    precioMayoreo = 50, // Simula un precioMayoreo como 15% de descuento
     cantidad,
     CategoriaProducto
   } = product;
@@ -35,7 +37,7 @@ const ProductCard = memo(({ product, paginationState }) => {
 
   const { handleAddToCart } = useProductHook(product);
   const navigate = useNavigate();
-  const { dispatch } = useContext(ProductContext); // Acceder al contexto directamente
+  const { dispatch } = useContext(ProductContext);
 
   const handleCardClick = useCallback(() => {
     navigate(`/e-commerce/product/product-details/${id}`);
@@ -45,9 +47,9 @@ const ProductCard = memo(({ product, paginationState }) => {
     event => {
       event.stopPropagation();
       if (paginationState) {
-        const currentPage = paginationState.currentPage; // Guarda la página actual
+        const currentPage = paginationState.currentPage;
         handleAddToCart(1, true, true, nombreProducto, precioUnitario);
-        dispatch({ type: 'STAY_ON_PAGE', payload: { page: currentPage } }); // Mantiene la página
+        dispatch({ type: 'STAY_ON_PAGE', payload: { page: currentPage } });
       } else {
         console.error('paginationState is undefined');
       }
@@ -75,7 +77,7 @@ const ProductCard = memo(({ product, paginationState }) => {
               name={nombreProducto}
               id={id}
               category={CategoriaProducto?.nombre || 'Sin Categoría'}
-              files={product.images} // Cambiado para pasar el array de imágenes
+              files={product.images}
               layout="grid"
               className="w-100 h-100"
             />
@@ -115,6 +117,16 @@ const ProductCard = memo(({ product, paginationState }) => {
                   </small>
                 )}
               </h5>
+              {superPrecio && (
+                <h6 className="text-primary fw-bold mb-1">
+                  super precio: ${superPrecio.toFixed(2)}
+                </h6>
+              )}
+              {precioMayoreo && (
+                <h6 className="text-secondary fw-bold">
+                  precio mayoreo: ${precioMayoreo.toFixed(2)}
+                </h6>
+              )}
               <div className="d-flex align-items-center justify-content-between mt-2">
                 <Card.Text
                   className={classNames('fw-bold mb-0', {
@@ -167,7 +179,9 @@ ProductCard.propTypes = {
     descripcionProducto: PropTypes.string.isRequired,
     precioUnitario: PropTypes.number.isRequired,
     descuento: PropTypes.number,
-    images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })), // Definir propType para images
+    superPrecio: PropTypes.number,
+    precioMayoreo: PropTypes.number,
+    images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
     cantidad: PropTypes.number.isRequired,
     CategoriaProducto: PropTypes.shape({
       nombre: PropTypes.string
