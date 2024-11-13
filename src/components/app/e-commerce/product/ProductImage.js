@@ -1,5 +1,3 @@
-// src/components/ProductImage.js
-
 import React, { useMemo } from 'react';
 import { Badge, Image, Carousel } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -24,8 +22,13 @@ const DEFAULT_IMAGE = '/img/default.png';
 
 const ProductImage = ({ name, id, category, isNew, files, layout, className, style }) => {
   const imageList = useMemo(() => {
-    let images = [];
+    if (files && files.length > 0) {
+      // Priorizar imágenes de la API
+      return files.map((file) => file.url);
+    }
 
+    // Usar rutas locales si no hay imágenes de la API
+    let images = [];
     if (category && category.toLowerCase() === 'vape') {
       const trimmedName = name.trim();
       const imageFolder = productImageMapping[trimmedName] || null;
@@ -43,7 +46,7 @@ const ProductImage = ({ name, id, category, isNew, files, layout, className, sty
     }
 
     return images;
-  }, [name, category]);
+  }, [name, category, files]);
 
   return (
     <div className={classNames('overflow-hidden w-100 h-100', className)} style={style}>
@@ -123,5 +126,4 @@ ProductImage.propTypes = {
   style: PropTypes.object,
 };
 
-// Memorización del componente para evitar re-renderizados innecesarios
 export default React.memo(ProductImage);

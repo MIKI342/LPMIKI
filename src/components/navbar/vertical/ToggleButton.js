@@ -5,7 +5,7 @@ import { useAppContext } from 'Main';
 // Tooltip personalizado que aparece al pasar el cursor sobre el botón
 const renderTooltip = props => (
   <Tooltip style={{ position: 'fixed' }} id="button-tooltip" {...props}>
-    Botón de navegación Miki
+    Bienvenido:) 
   </Tooltip>
 );
 

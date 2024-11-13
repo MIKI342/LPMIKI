@@ -1,7 +1,12 @@
-// ProductCard.js
-
 import React, { memo, useCallback, useContext } from 'react';
-import { Card, Button, Col, Row, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import {
+  Card,
+  Button,
+  Col,
+  Row,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import ProductImage from './ProductImage';
@@ -11,16 +16,15 @@ import StarRating from 'components/home/StarRating';
 import { FaShoppingCart } from 'react-icons/fa';
 import { ProductContext } from 'context/Context'; // Importar el contexto
 
-const ProductCard = memo(({ product, paginationState }) => { // Eliminar 'dispatch' de las props
+const ProductCard = memo(({ product, paginationState }) => {
   const {
     id,
     nombreProducto,
     descripcionProducto,
     precioUnitario,
     descuento,
-    imagen = '/img/descarga.jpeg',
     cantidad,
-    CategoriaProducto,
+    CategoriaProducto
   } = product;
 
   const precioConDescuento = descuento
@@ -38,15 +42,14 @@ const ProductCard = memo(({ product, paginationState }) => { // Eliminar 'dispat
   }, [navigate, id]);
 
   const handleAddToCartClick = useCallback(
-    (event) => {
-      console.log('handleAddToCartClick iniciado'); // Log agregado
+    event => {
       event.stopPropagation();
       if (paginationState) {
         const currentPage = paginationState.currentPage; // Guarda la página actual
         handleAddToCart(1, true, true, nombreProducto, precioUnitario);
         dispatch({ type: 'STAY_ON_PAGE', payload: { page: currentPage } }); // Mantiene la página
       } else {
-        console.error("paginationState is undefined");
+        console.error('paginationState is undefined');
       }
     },
     [paginationState, dispatch, handleAddToCart, nombreProducto, precioUnitario]
@@ -65,14 +68,14 @@ const ProductCard = memo(({ product, paginationState }) => { // Eliminar 'dispat
             style={{
               borderTopLeftRadius: '24px',
               borderTopRightRadius: '24px',
-              overflow: 'hidden',
+              overflow: 'hidden'
             }}
           >
             <ProductImage
               name={nombreProducto}
               id={id}
               category={CategoriaProducto?.nombre || 'Sin Categoría'}
-              files={[{ src: imagen }]}
+              files={product.images} // Cambiado para pasar el array de imágenes
               layout="grid"
               className="w-100 h-100"
             />
@@ -85,7 +88,7 @@ const ProductCard = memo(({ product, paginationState }) => { // Eliminar 'dispat
                 style={{
                   fontSize: '1.3rem',
                   whiteSpace: 'normal',
-                  overflowWrap: 'break-word',
+                  overflowWrap: 'break-word'
                 }}
               >
                 {nombreProducto}
@@ -116,7 +119,7 @@ const ProductCard = memo(({ product, paginationState }) => { // Eliminar 'dispat
                 <Card.Text
                   className={classNames('fw-bold mb-0', {
                     'text-success': disponible,
-                    'text-danger': !disponible,
+                    'text-danger': !disponible
                   })}
                   style={{ fontSize: '1rem' }}
                 >
@@ -125,7 +128,11 @@ const ProductCard = memo(({ product, paginationState }) => { // Eliminar 'dispat
                 {disponible && (
                   <OverlayTrigger
                     placement="top"
-                    overlay={<Tooltip id={`tooltip-add-to-cart-${id}`}>Añadir al carrito</Tooltip>}
+                    overlay={
+                      <Tooltip id={`tooltip-add-to-cart-${id}`}>
+                        Añadir al carrito
+                      </Tooltip>
+                    }
                   >
                     <Button
                       variant="outline-secondary"
@@ -135,7 +142,7 @@ const ProductCard = memo(({ product, paginationState }) => { // Eliminar 'dispat
                         borderRadius: '8px',
                         width: '40px',
                         height: '40px',
-                        padding: 0,
+                        padding: 0
                       }}
                       onClick={handleAddToCartClick}
                       aria-label="Añadir al carrito"
@@ -160,14 +167,13 @@ ProductCard.propTypes = {
     descripcionProducto: PropTypes.string.isRequired,
     precioUnitario: PropTypes.number.isRequired,
     descuento: PropTypes.number,
-    imagen: PropTypes.string,
+    images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })), // Definir propType para images
     cantidad: PropTypes.number.isRequired,
     CategoriaProducto: PropTypes.shape({
-      nombre: PropTypes.string,
-    }),
+      nombre: PropTypes.string
+    })
   }).isRequired,
-  paginationState: PropTypes.object,
-  // Eliminar 'dispatch' de propTypes
+  paginationState: PropTypes.object
 };
 
 export default ProductCard;
