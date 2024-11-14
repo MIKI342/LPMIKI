@@ -6,9 +6,9 @@ import Flex from 'components/common/Flex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLaptopCode, faFileSignature } from '@fortawesome/free-solid-svg-icons';
 import SimpleBarReact from 'simplebar-react';
-import tramiteData from 'components/home/componentsHome/MoreServices/data/tramiteData';
+import tramiteData from 'components/home/componentsHome/MoreServices/tramites/data/tramiteData';
 import { useServices } from 'context/useServices'; // Usamos el hook del contexto
-import ServicesImage from './ServicesImage';
+import ServicesImage from './tramites/ServicesImage';
 
 const TabTitle = ({ title, icon }) => (
   <Flex className="p-3 ps-2 text-start cursor-pointer gap-1">

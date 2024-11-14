@@ -16,7 +16,7 @@ import CategoryProducts from 'components/home/CategoryProducts';
 import PrivateRoute from 'routes/PrivateRoute';
 import SimpleLogout from 'components/authentication/simple/Logout';
 import AuthSimpleLayout from '../layouts/AuthSimpleLayout';
-import TramiteDetail from 'components/home/componentsHome/MoreServices/TramiteDetail'; // Importa el componente de detalles del trámite
+import TramiteDetail from 'components/home/componentsHome/MoreServices/tramites/TramiteDetail'; // Importa el componente de detalles del trámite
 
 const FalconRoutes = () => {
   return (

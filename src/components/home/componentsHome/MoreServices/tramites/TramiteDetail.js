@@ -1,7 +1,7 @@
 // TramiteDetail.js
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import tramiteData from 'components/home/componentsHome/MoreServices/data/tramiteData';
+import tramiteData from 'components/home/componentsHome/MoreServices/tramites/data/tramiteData';
 import { useServices } from 'context/useServices';  // Usamos el hook del contexto
 import { Carousel, Badge, Modal } from 'react-bootstrap';
 

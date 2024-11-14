@@ -1,4 +1,4 @@
-import folderPaths from 'components/home/componentsHome/MoreServices/data/imagePaths';
+import folderPaths from 'components/home/componentsHome/MoreServices/tramites/data/imagePaths';
 
 const tramiteData = folderPaths.map((folder, index) => ({
   id: index.toString(),
