@@ -1,12 +1,13 @@
+// MasServicios.js
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card, Tab, Nav } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLaptopCode, faMobileAlt, faFileSignature } from '@fortawesome/free-solid-svg-icons';
+import { faLaptopCode, faFileSignature } from '@fortawesome/free-solid-svg-icons';
 import SimpleBarReact from 'simplebar-react';
 import tramiteData from 'components/home/componentsHome/MoreServices/data/tramiteData';
-import useFetchServices from 'hooks/useFetchServices';
+import { useServices } from 'context/useServices'; // Usamos el hook del contexto
 import ServicesImage from './ServicesImage';
 
 const TabTitle = ({ title, icon }) => (
@@ -22,15 +23,22 @@ const TabTitle = ({ title, icon }) => (
 
 const MasServicios = ({ className }) => {
   const [activeTab, setActiveTab] = useState('');
-  const { services, loading } = useFetchServices('/api/v2/services'); // Hook para servicios
+  const { services, loading } = useServices(); // Accedemos al contexto
 
   const handleToggleTab = (tabKey) => {
     setActiveTab((prevTab) => (prevTab === tabKey ? '' : tabKey));
   };
 
-  const combinedData = [...tramiteData, ...services]; // Combinar datos estáticos y simulados
-
-  console.log('Datos combinados:', combinedData);
+  const combinedData = [
+    ...tramiteData.map((item) => ({
+      ...item,
+      isSimulado: false,
+    })),
+    ...services.map((item) => ({
+      ...item,
+      isSimulado: true,
+    })),
+  ];
 
   return (
     <Card className={className}>

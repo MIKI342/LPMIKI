@@ -15,8 +15,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { useAppContext } from 'Main';
 import { ProductProvider } from './context/Context';
 import { AuthProvider } from './context/AuthContext'; // Proveedor de contexto de autenticación
-// src/index.js o src/App.js
-
+import { ServicesProvider } from './context/useServices'; // Importa el provider de servicios
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Importar el helper de clases de navegador
@@ -62,20 +61,22 @@ const App = () => {
   return (
     // Envolvemos toda la aplicación con los proveedores de contexto
     <AuthProvider>
-      {' '}
       {/* Proveedor de autenticación para gestionar el estado de usuario */}
       <ProductProvider>
-        <Router basename={process.env.PUBLIC_URL}>
-          {/* Condicional para mostrar un mensaje según el tamaño de la ventana */}
-          <FalconRoutes /> {/* Configuración de rutas de la aplicación */}
-          <SettingsToggle /> {/* Botón para activar panel de configuración */}
-          <SettingsPanel /> {/* Panel de configuración de la aplicación */}
-          <ToastContainer
-            closeButton={CloseButton}
-            icon={false}
-            position="bottom-left"
-          />
-        </Router>
+        {/* Proveedor de servicios */}
+        <ServicesProvider>
+          <Router basename={process.env.PUBLIC_URL}>
+            {/* Condicional para mostrar un mensaje según el tamaño de la ventana */}
+            <FalconRoutes /> {/* Configuración de rutas de la aplicación */}
+            <SettingsToggle /> {/* Botón para activar panel de configuración */}
+            <SettingsPanel /> {/* Panel de configuración de la aplicación */}
+            <ToastContainer
+              closeButton={CloseButton}
+              icon={false}
+              position="bottom-left"
+            />
+          </Router>
+        </ServicesProvider> {/* Cerramos el provider de servicios */}
       </ProductProvider>
     </AuthProvider>
   );

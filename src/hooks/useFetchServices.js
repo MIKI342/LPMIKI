@@ -29,7 +29,7 @@ const useFetchServices = (url) => {
             nombreServicio: 'Servicio Simulado 1',
             descripcion: 'Descripción simulada para el servicio 1.',
             precio: 100,
-            mainImageUrl: 'https://via.placeholder.com/300?text=Simulado+1',
+            mainImageUrl: 'https://via.placeholder.com/300?text=SimuladoMIKI+1',
           },
           {
             id: 'simulado-2',

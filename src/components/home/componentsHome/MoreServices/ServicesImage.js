@@ -12,7 +12,7 @@ const ServicesImage = ({ data }) => {
             <img
               className="d-block w-100"
               src={item.mainImageUrl || 'https://via.placeholder.com/300'}
-              alt={`Service Image ${item.nombre}`}
+              alt={item.nombre || item.nombreServicio}
             />
           </Link>
         </Carousel.Item>
@@ -26,7 +26,8 @@ ServicesImage.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       mainImageUrl: PropTypes.string,
-      nombre: PropTypes.string.isRequired,
+      nombre: PropTypes.string,
+      nombreServicio: PropTypes.string,
     })
   ).isRequired,
 };
