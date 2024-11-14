@@ -7,7 +7,9 @@ const tramiteData = folderPaths.map((folder, index) => ({
   costo: folder.costo,
   requisitos: folder.requisitos,
   mainImageUrl: `${process.env.PUBLIC_URL}/img/tramites/${folder.path}/${folder.images[0]}`,
-  allImages: folder.images.map(image => `${process.env.PUBLIC_URL}/img/tramites/${folder.path}/${image}`)
+  allImages: folder.images.map(
+    (image) => `${process.env.PUBLIC_URL}/img/tramites/${folder.path}/${image}`
+  ),
 }));
 
 export default tramiteData;

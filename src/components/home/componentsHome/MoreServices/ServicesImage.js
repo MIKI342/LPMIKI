@@ -3,18 +3,16 @@ import PropTypes from 'prop-types';
 import { Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const ServicesImage = ({ folderPaths }) => {
-  const imageUrls = folderPaths.map(folder => `${process.env.PUBLIC_URL}/img/tramites/${folder}/img1.png`);
-
+const ServicesImage = ({ data }) => {
   return (
     <Carousel>
-      {imageUrls.map((url, index) => (
+      {data.map((item, index) => (
         <Carousel.Item key={index}>
-          <Link to={`/tramite/${index}`}>
+          <Link to={`/tramite/${item.id}`}>
             <img
               className="d-block w-100"
-              src={url}
-              alt={`Service Image ${index + 1}`}
+              src={item.mainImageUrl || 'https://via.placeholder.com/300'}
+              alt={`Service Image ${item.nombre}`}
             />
           </Link>
         </Carousel.Item>
@@ -24,7 +22,13 @@ const ServicesImage = ({ folderPaths }) => {
 };
 
 ServicesImage.propTypes = {
-  folderPaths: PropTypes.arrayOf(PropTypes.string).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      mainImageUrl: PropTypes.string,
+      nombre: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default ServicesImage;
