@@ -1,14 +1,16 @@
-// MasServicios.js
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card, Tab, Nav } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLaptopCode, faFileSignature } from '@fortawesome/free-solid-svg-icons';
+import { faLaptopCode, faFileSignature, faTools } from '@fortawesome/free-solid-svg-icons';
 import SimpleBarReact from 'simplebar-react';
 import tramiteData from 'components/home/componentsHome/MoreServices/tramites/data/tramiteData';
-import { useServices } from 'context/useServices'; // Usamos el hook del contexto
+import { useServices } from 'context/useServices'; // Usamos el hook del contexto para servicios
+import { useRefacciones } from 'context/useRefacciones'; // Usamos el hook del contexto para refacciones
 import ServicesImage from './tramites/ServicesImage';
+import RefaccionesImage from './refacciones/RefaccionesImage';
+
 
 const TabTitle = ({ title, icon }) => (
   <Flex className="p-3 ps-2 text-start cursor-pointer gap-1">
@@ -23,13 +25,14 @@ const TabTitle = ({ title, icon }) => (
 
 const MasServicios = ({ className }) => {
   const [activeTab, setActiveTab] = useState('');
-  const { services, loading } = useServices(); // Accedemos al contexto
+  const { services, loading: loadingServices } = useServices(); // Accedemos al contexto de servicios
+  const { refacciones, loading: loadingRefacciones } = useRefacciones(); // Accedemos al contexto de refacciones
 
   const handleToggleTab = (tabKey) => {
     setActiveTab((prevTab) => (prevTab === tabKey ? '' : tabKey));
   };
 
-  const combinedData = [
+  const combinedServiceData = [
     ...tramiteData.map((item) => ({
       ...item,
       isSimulado: false,
@@ -39,6 +42,11 @@ const MasServicios = ({ className }) => {
       isSimulado: true,
     })),
   ];
+
+  const combinedRefaccionData = refacciones.map((item) => ({
+    ...item,
+    isSimulado: true,
+  }));
 
   return (
     <Card className={className}>
@@ -51,19 +59,27 @@ const MasServicios = ({ className }) => {
                   <TabTitle title="Trámites" icon={faFileSignature} />
                 </Nav.Link>
               </Nav.Item>
+             
               <Nav.Item>
-                <Nav.Link eventKey="electronicos" onClick={() => handleToggleTab('electronicos')}>
-                  <TabTitle title="Electrónicos" icon={faLaptopCode} />
+                <Nav.Link eventKey="refacciones" onClick={() => handleToggleTab('refacciones')}>
+                  <TabTitle title="Refacciones" icon={faTools} />
                 </Nav.Link>
               </Nav.Item>
             </Nav>
           </Card.Header>
           <Tab.Content>
             <Tab.Pane eventKey="tramites">
-              {loading ? (
+              {loadingServices ? (
                 <p className="text-center">Cargando servicios desde la API...</p>
               ) : (
-                <ServicesImage data={combinedData} />
+                <ServicesImage data={combinedServiceData} />
+              )}
+            </Tab.Pane>
+            <Tab.Pane eventKey="refacciones">
+              {loadingRefacciones ? (
+                <p className="text-center">Cargando refacciones desde la API...</p>
+              ) : (
+                <RefaccionesImage data={combinedRefaccionData} />
               )}
             </Tab.Pane>
           </Tab.Content>
