@@ -18,6 +18,8 @@ import SimpleLogout from 'components/authentication/simple/Logout';
 import AuthSimpleLayout from '../layouts/AuthSimpleLayout';
 import TramiteDetail from 'components/home/componentsHome/MoreServices/tramites/TramiteDetail'; // Importa el componente de detalles del trámite
 import RefaccionDetail from 'components/home/componentsHome/MoreServices/refacciones/RefaccionDetail'; // Importa el componente de detalles de refacciones
+import HerramientaDetail from 'components/home/componentsHome/MoreServices/herramientas/HerramientaDetail'; // Importa el componente de detalles de refacciones
+
 
 const FalconRoutes = () => {
   return (
@@ -40,6 +42,10 @@ const FalconRoutes = () => {
 
         {/* Ruta para detalles de la refacción */}
         <Route path="/refaccion/:refaccionId" element={<RefaccionDetail />} />
+        
+        <Route path="/herramienta/:herramientaId" element={<HerramientaDetail />} />
+
+
       </Route>
 
       {/* Rutas de autenticación */}

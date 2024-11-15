@@ -8,6 +8,8 @@ import SettingsPanel from 'components/settings-panel/SettingsPanel';
 import { ProductProvider } from './context/Context';
 import { AuthProvider } from './context/AuthContext';
 import { ServicesProvider } from './context/useServices';
+import { HerramientasProvider} from './context/useHerramientas'; // Importa el provider de refacciones
+
 import { RefaccionesProvider } from './context/useRefacciones'; // Importa el provider de refacciones
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -35,12 +37,14 @@ const App = () => {
       <ProductProvider>
         <ServicesProvider>
           <RefaccionesProvider>
+          <HerramientasProvider>
             <Router basename={process.env.PUBLIC_URL}>
               <FalconRoutes />
               <SettingsToggle />
               <SettingsPanel />
               <ToastContainer closeButton={CloseButton} icon={false} position="bottom-left" />
             </Router>
+            </HerramientasProvider>
           </RefaccionesProvider>
         </ServicesProvider>
       </ProductProvider>

@@ -3,14 +3,19 @@ import PropTypes from 'prop-types';
 import { Card, Tab, Nav } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLaptopCode, faFileSignature, faTools } from '@fortawesome/free-solid-svg-icons';
+import {
+  faLaptopCode,
+  faFileSignature,
+  faTools
+} from '@fortawesome/free-solid-svg-icons';
 import SimpleBarReact from 'simplebar-react';
 import tramiteData from 'components/home/componentsHome/MoreServices/tramites/data/tramiteData';
-import { useServices } from 'context/useServices'; // Usamos el hook del contexto para servicios
-import { useRefacciones } from 'context/useRefacciones'; // Usamos el hook del contexto para refacciones
+import { useServices } from 'context/useServices'; // Hook del contexto para servicios
+import { useRefacciones } from 'context/useRefacciones'; // Hook del contexto para refacciones
+import { useHerramientas } from 'context/useHerramientas'; // Hook del contexto para herramientas e insumos
 import ServicesImage from './tramites/ServicesImage';
 import RefaccionesImage from './refacciones/RefaccionesImage';
-
+import HerramientasImage from './herramientas/HerramientasImage'; // Ajusta la ruta según tu estructura
 
 const TabTitle = ({ title, icon }) => (
   <Flex className="p-3 ps-2 text-start cursor-pointer gap-1">
@@ -25,8 +30,9 @@ const TabTitle = ({ title, icon }) => (
 
 const MasServicios = ({ className }) => {
   const [activeTab, setActiveTab] = useState('');
-  const { services, loading: loadingServices } = useServices(); // Accedemos al contexto de servicios
-  const { refacciones, loading: loadingRefacciones } = useRefacciones(); // Accedemos al contexto de refacciones
+  const { services, loading: loadingServices } = useServices(); // Hook para servicios
+  const { refacciones, loading: loadingRefacciones } = useRefacciones(); // Hook para refacciones
+  const { herramientas, loading: loadingHerramientas } = useHerramientas(); // Hook para herramientas e insumos
 
   const handleToggleTab = (tabKey) => {
     setActiveTab((prevTab) => (prevTab === tabKey ? '' : tabKey));
@@ -35,17 +41,17 @@ const MasServicios = ({ className }) => {
   const combinedServiceData = [
     ...tramiteData.map((item) => ({
       ...item,
-      isSimulado: false,
+      isSimulado: false
     })),
     ...services.map((item) => ({
       ...item,
-      isSimulado: true,
-    })),
+      isSimulado: true
+    }))
   ];
 
   const combinedRefaccionData = refacciones.map((item) => ({
     ...item,
-    isSimulado: true,
+    isSimulado: true
   }));
 
   return (
@@ -55,14 +61,27 @@ const MasServicios = ({ className }) => {
           <Card.Header>
             <Nav className="nav-tabs">
               <Nav.Item>
-                <Nav.Link eventKey="tramites" onClick={() => handleToggleTab('tramites')}>
+                <Nav.Link
+                  eventKey="tramites"
+                  onClick={() => handleToggleTab('tramites')}
+                >
                   <TabTitle title="Trámites" icon={faFileSignature} />
                 </Nav.Link>
               </Nav.Item>
-             
               <Nav.Item>
-                <Nav.Link eventKey="refacciones" onClick={() => handleToggleTab('refacciones')}>
+                <Nav.Link
+                  eventKey="refacciones"
+                  onClick={() => handleToggleTab('refacciones')}
+                >
                   <TabTitle title="Refacciones" icon={faTools} />
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link
+                  eventKey="herramientas"
+                  onClick={() => handleToggleTab('herramientas')}
+                >
+                  <TabTitle title="Herramientas e Insumos" icon={faTools} />
                 </Nav.Link>
               </Nav.Item>
             </Nav>
@@ -82,6 +101,13 @@ const MasServicios = ({ className }) => {
                 <RefaccionesImage data={combinedRefaccionData} />
               )}
             </Tab.Pane>
+            <Tab.Pane eventKey="herramientas">
+              {loadingHerramientas ? (
+                <p className="text-center">Cargando herramientas desde la API...</p>
+              ) : (
+                <HerramientasImage data={herramientas} />
+              )}
+            </Tab.Pane>
           </Tab.Content>
         </SimpleBarReact>
       </Tab.Container>
@@ -90,7 +116,7 @@ const MasServicios = ({ className }) => {
 };
 
 MasServicios.propTypes = {
-  className: PropTypes.string,
+  className: PropTypes.string
 };
 
 export default MasServicios;
