@@ -23,8 +23,8 @@ const ProductCard = memo(({ product, paginationState }) => {
     descripcionProducto,
     precioUnitario,
     descuento,
-    superPrecio = 70, // Simula un superPrecio como 10% de descuento
-    precioMayoreo = 50, // Simula un precioMayoreo como 15% de descuento
+    superPrecio = 70, 
+    precioMayoreo = 50, 
     cantidad,
     CategoriaProducto
   } = product;
