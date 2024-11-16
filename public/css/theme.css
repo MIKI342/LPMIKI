@@ -23454,6 +23454,28 @@ h5, .h5 {
   font-size: 14px;
 }
 
+
+/* Desplazamiento de contenido en pantallas grandes */
+@media (min-width: 769px) {
+  .content-shift-collapsed .content {
+    margin-left: 3.125rem;
+    transition: margin-left 0.3s ease;
+  }
+
+  .content {
+    margin-left: 15.625rem;
+    transition: margin-left 0.3s ease;
+  }
+}
+
+/* Pantallas pequeñas: menú tipo hamburguesa sin margen adicional */
+@media (max-width: 768px) {
+  body.menu-open .content {
+    margin-left: 0;
+  }
+}
+
+
 .navbar-vertical {
   position: fixed;
   display: inline-block;

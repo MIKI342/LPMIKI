@@ -22,18 +22,34 @@ const NavbarVertical = () => {
   const HTMLClassList = document.getElementsByTagName('html')[0].classList;
   const size = useWindowSize();
   const menuRef = useRef(null);
-  const toggleButtonRef = useRef(null); // Nueva referencia para el ícono de hamburguesa
+  const toggleButtonRef = useRef(null); // Referencia para el ícono de hamburguesa
 
   useEffect(() => {
-    if (isNavbarVerticalCollapsed && size.width > 768) {
-      HTMLClassList.add('navbar-vertical-collapsed');
+    if (size.width > 768) {
+      // Pantallas grandes: desplazar la UI principal
+      if (isNavbarVerticalCollapsed) {
+        HTMLClassList.add('navbar-vertical-collapsed');
+        document.body.classList.add('content-shift-collapsed');
+      } else {
+        HTMLClassList.remove('navbar-vertical-collapsed');
+        document.body.classList.remove('content-shift-collapsed');
+      }
     } else {
-      HTMLClassList.remove('navbar-vertical-collapsed');
+      // Pantallas pequeñas: manejar apertura/cierre del menú
+      document.body.classList.remove('content-shift-collapsed');
+      if (showBurgerMenu) {
+        document.body.classList.add('menu-open');
+      } else {
+        document.body.classList.remove('menu-open');
+      }
     }
+
     return () => {
       HTMLClassList.remove('navbar-vertical-collapsed-hover');
+      document.body.classList.remove('content-shift-collapsed');
+      document.body.classList.remove('menu-open');
     };
-  }, [isNavbarVerticalCollapsed, size.width]);
+  }, [isNavbarVerticalCollapsed, showBurgerMenu, size.width]);
 
   // Manejo de clics fuera del menú
   const handleOutsideClick = (event) => {
@@ -43,10 +59,9 @@ const NavbarVertical = () => {
       toggleButtonRef.current &&
       !toggleButtonRef.current.contains(event.target)
     ) {
-      if (showBurgerMenu) {
+      if (size.width <= 768 && showBurgerMenu) {
         setConfig('showBurgerMenu', false);
-      }
-      if (!isNavbarVerticalCollapsed) {
+      } else if (size.width > 768 && !isNavbarVerticalCollapsed) {
         setConfig('isNavbarVerticalCollapsed', true);
       }
     }
@@ -54,11 +69,11 @@ const NavbarVertical = () => {
 
   // Manejo del scroll
   const handleScroll = () => {
-    if (showBurgerMenu) {
-      setConfig('showBurgerMenu', false);
-    }
-    if (!isNavbarVerticalCollapsed) {
-      setConfig('isNavbarVerticalCollapsed', true);
+    if (size.width <= 768) {
+      // Si estamos en dispositivos pequeños, cerrar el menú si está abierto
+      if (showBurgerMenu) {
+        setConfig('showBurgerMenu', false);
+      }
     }
   };
 
@@ -70,7 +85,7 @@ const NavbarVertical = () => {
       document.removeEventListener('mousedown', handleOutsideClick);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [showBurgerMenu, isNavbarVerticalCollapsed]);
+  }, [showBurgerMenu, isNavbarVerticalCollapsed, size.width]);
 
   return (
     <div ref={menuRef}>
@@ -88,9 +103,10 @@ const NavbarVertical = () => {
           in={!isNavbarVerticalCollapsed}
           onMouseEnter={() =>
             isNavbarVerticalCollapsed &&
+            size.width > 768 &&
             HTMLClassList.add('navbar-vertical-collapsed-hover')
           }
-          onMouseLeave={() => HTMLClassList.remove('navbar-vertical-collapsed-hover')}
+          onMouseLeave={() => size.width > 768 && HTMLClassList.remove('navbar-vertical-collapsed-hover')}
           style={{
             backgroundImage:
               navbarStyle === 'vibrant'
@@ -113,7 +129,6 @@ const NavbarVertical = () => {
                 <div className="navbar-vertical-divider">
                   <hr className="navbar-vertical-hr my-2" />
                 </div>
-                
               </div>
             )}
           </div>
@@ -122,7 +137,6 @@ const NavbarVertical = () => {
     </div>
   );
 };
-
 
 const NavbarLabel = ({ label }) => (
   <Nav.Item as="li">
