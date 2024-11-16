@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useRef } from 'react';
+import React, { useEffect, Fragment, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Nav, Navbar, Row, Col } from 'react-bootstrap';
@@ -19,14 +19,68 @@ const NavbarVertical = () => {
     setConfig,
   } = useAppContext();
 
-  const HTMLClassList = document.getElementsByTagName('html')[0].classList;
+  const HTMLClassList = document.documentElement.classList;
   const size = useWindowSize();
   const menuRef = useRef(null);
-  const toggleButtonRef = useRef(null); // Referencia para el ícono de hamburguesa
+  const toggleButtonRef = useRef(null);
+  const [canOpenMenu, setCanOpenMenu] = useState(true); // Controlar si el menú puede abrirse
+
+  // Verificar la posición de la barra de desplazamiento
+  const checkScrollBarPosition = () => {
+    const scrollPosition = window.scrollY; // Posición actual del scroll
+    const windowHeight = window.innerHeight; // Altura visible de la ventana
+    const fullHeight = document.body.offsetHeight; // Altura total del documento
+    const buffer = 50; // Margen de píxeles para considerar "cerca del final"
+
+    // Si la barra de desplazamiento está al final o cerca del final, bloquear la apertura
+    const isNearBottom = scrollPosition + windowHeight >= fullHeight - buffer;
+    setCanOpenMenu(!isNearBottom); // Solo permitir abrir si no estamos al final
+  };
+
+  const handleOutsideClick = (event) => {
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target) &&
+      toggleButtonRef.current &&
+      !toggleButtonRef.current.contains(event.target)
+    ) {
+      HTMLClassList.remove('menu-open');
+      setConfig('showBurgerMenu', false);
+      setConfig('isNavbarVerticalCollapsed', true);
+    }
+  };
+
+  const handleScroll = () => {
+    HTMLClassList.remove('menu-open');
+    setConfig('showBurgerMenu', false);
+    setConfig('isNavbarVerticalCollapsed', true);
+    checkScrollBarPosition(); // Verificar posición al hacer scroll
+  };
+
+  const openMenu = () => {
+    if (!canOpenMenu) {
+      console.log("No se puede abrir el menú porque estás cerca o al final de la página.");
+      return; // Bloquear apertura si estamos al final
+    }
+
+    HTMLClassList.add('menu-open');
+    setConfig('showBurgerMenu', true);
+    setConfig('isNavbarVerticalCollapsed', false);
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick);
+    window.addEventListener('scroll', handleScroll);
+    checkScrollBarPosition(); // Inicializar estado al montar
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (size.width > 768) {
-      // Pantallas grandes: desplazar la UI principal
       if (isNavbarVerticalCollapsed) {
         HTMLClassList.add('navbar-vertical-collapsed');
         document.body.classList.add('content-shift-collapsed');
@@ -35,57 +89,20 @@ const NavbarVertical = () => {
         document.body.classList.remove('content-shift-collapsed');
       }
     } else {
-      // Pantallas pequeñas: manejar apertura/cierre del menú
       document.body.classList.remove('content-shift-collapsed');
       if (showBurgerMenu) {
-        document.body.classList.add('menu-open');
+        HTMLClassList.add('menu-open');
       } else {
-        document.body.classList.remove('menu-open');
+        HTMLClassList.remove('menu-open');
       }
     }
 
     return () => {
       HTMLClassList.remove('navbar-vertical-collapsed-hover');
       document.body.classList.remove('content-shift-collapsed');
-      document.body.classList.remove('menu-open');
+      HTMLClassList.remove('menu-open');
     };
   }, [isNavbarVerticalCollapsed, showBurgerMenu, size.width]);
-
-  // Manejo de clics fuera del menú
-  const handleOutsideClick = (event) => {
-    if (
-      menuRef.current &&
-      !menuRef.current.contains(event.target) &&
-      toggleButtonRef.current &&
-      !toggleButtonRef.current.contains(event.target)
-    ) {
-      if (size.width <= 768 && showBurgerMenu) {
-        setConfig('showBurgerMenu', false);
-      } else if (size.width > 768 && !isNavbarVerticalCollapsed) {
-        setConfig('isNavbarVerticalCollapsed', true);
-      }
-    }
-  };
-
-  // Manejo del scroll
-  const handleScroll = () => {
-    if (size.width <= 768) {
-      // Si estamos en dispositivos pequeños, cerrar el menú si está abierto
-      if (showBurgerMenu) {
-        setConfig('showBurgerMenu', false);
-      }
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [showBurgerMenu, isNavbarVerticalCollapsed, size.width]);
 
   return (
     <div ref={menuRef}>
@@ -97,15 +114,14 @@ const NavbarVertical = () => {
         variant="light"
       >
         <Flex alignItems="center">
-          <ToggleButton ref={toggleButtonRef} />
+          <ToggleButton
+            ref={toggleButtonRef}
+            onClick={openMenu} // Llama a la función que controla si el menú puede abrirse
+          />
         </Flex>
         <Navbar.Collapse
           in={!isNavbarVerticalCollapsed}
-          onMouseEnter={() =>
-            isNavbarVerticalCollapsed &&
-            size.width > 768 &&
-            HTMLClassList.add('navbar-vertical-collapsed-hover')
-          }
+          onMouseEnter={() => size.width > 768 && HTMLClassList.add('navbar-vertical-collapsed-hover')}
           onMouseLeave={() => size.width > 768 && HTMLClassList.remove('navbar-vertical-collapsed-hover')}
           style={{
             backgroundImage:
@@ -113,7 +129,6 @@ const NavbarVertical = () => {
                 ? `linear-gradient(-45deg, rgba(0, 160, 255, 0.86), #0048a2), url(${bgNavbar})`
                 : 'none',
           }}
-          transition={false}
         >
           <div className="navbar-vertical-content scrollbar">
             <Nav className="flex-column" as="ul">

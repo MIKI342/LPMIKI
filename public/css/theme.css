@@ -23505,8 +23505,23 @@ h5, .h5 {
 .navbar-vertical .navbar-collapse .navbar-vertical-content {
   padding: 0 1rem;
   flex-direction: column;
-  max-height: calc(100vh - var(--falcon-top-nav-height));
+  height: auto; /* Cambiar de max-height a height */
+  max-height: none !important; /* Eliminar restricciones de altura */
 }
+
+body.menu-open .navbar-vertical {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow-y: visible;
+}
+
+body.menu-open .content {
+  margin-bottom: 200px; /* Ajusta el margen inferior del contenido */
+}
+
+
+
 .navbar-vertical .navbar-collapse .navbar-vertical-content > * {
   width: 100%;
   overflow: hidden;
