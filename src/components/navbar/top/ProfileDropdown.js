@@ -1,14 +1,14 @@
 /**
  * Componente ProfileDropdown
  *
- * Este componente renderiza un menú desplegable de perfil para que el usuario acceda a opciones como 
+ * Este componente renderiza un menú desplegable de perfil para que el usuario acceda a opciones como
  * "Ir a Pro", "Perfil", "Configuración" y "Cerrar sesión". El menú se muestra al hacer clic en el avatar del usuario.
  *
  * Dependencias:
  * - `react-bootstrap`: Para los elementos de interfaz como `Dropdown`.
  * - `FontAwesomeIcon`: Para los iconos en las opciones del menú.
  * - `AuthContext`: Proporciona la función de cierre de sesión `logout`.
- * 
+ *
  * Ejemplo de uso:
  * ```jsx
  * <ProfileDropdown />
@@ -25,8 +25,8 @@ import { AuthContext } from 'context/AuthContext';
 
 const ProfileDropdown = () => {
   // Estado de autenticación y función de cierre de sesión
-  const { logout } = useContext(AuthContext); 
-  const navigate = useNavigate(); 
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // Maneja el cierre de sesión
   const handleLogout = () => {
@@ -47,23 +47,7 @@ const ProfileDropdown = () => {
 
       <Dropdown.Menu className="dropdown-caret dropdown-menu-card dropdown-menu-end">
         <div className="bg-white rounded-2 py-2 dark__bg-1000">
-          <Dropdown.Item className="fw-bold text-warning" href="#!">
-            <FontAwesomeIcon icon="crown" className="me-1" />
-            <span>Go Pro</span>
-          </Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item href="#!">Set status</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/user/profile">
-            Profile &amp; account
-          </Dropdown.Item>
-          <Dropdown.Item href="#!">Feedback</Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item as={Link} to="/user/settings">
-            Settings
-          </Dropdown.Item>
-          <Dropdown.Item onClick={handleLogout}>
-            Logout
-          </Dropdown.Item>
+          <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
         </div>
       </Dropdown.Menu>
     </Dropdown>

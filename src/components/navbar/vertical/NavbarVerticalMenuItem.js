@@ -4,15 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Flex from 'components/common/Flex';
 import SubtleBadge from 'components/common/SubtleBadge';
 
-/**
- * Componente NavbarVerticalMenuItem
- * 
- * Renderiza un ítem de la barra de navegación vertical con un icono, texto y badge opcionales.
- * Utiliza Flex para alinear los elementos y SubtleBadge para mostrar una insignia adicional.
- * 
- * Ejemplo de uso:
- * <NavbarVerticalMenuItem route={route} />
- */
+
 const NavbarVerticalMenuItem = ({ route }) => {
   return (
     <Flex alignItems="center">

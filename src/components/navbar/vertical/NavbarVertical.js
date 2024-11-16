@@ -8,7 +8,6 @@ import NavbarVerticalMenu from './NavbarVerticalMenu';
 import ToggleButton from './ToggleButton';
 import routes from 'routes/siteMaps';
 import { capitalize } from 'helpers/utils';
-import NavbarTopDropDownMenus from 'components/navbar/top/NavbarTopDropDownMenus';
 
 import bgNavbar from 'assets/img/generic/bg-navbar.png';
 import { useAppContext } from 'Main';
@@ -114,9 +113,7 @@ const NavbarVertical = () => {
                 <div className="navbar-vertical-divider">
                   <hr className="navbar-vertical-hr my-2" />
                 </div>
-                <Nav navbar>
-                  <NavbarTopDropDownMenus />
-                </Nav>
+                
               </div>
             )}
           </div>

@@ -18,9 +18,6 @@
 
 import React, { useContext } from 'react';
 import { Nav } from 'react-bootstrap';
-import ThemeControlDropdown from './ThemeControlDropdown';
-import CartNotification from 'components/navbar/top/CartNotification';
-import NotificationDropdown from 'components/navbar/top/NotificationDropdown';
 import ProfileDropdown from 'components/navbar/top/ProfileDropdown';
 import { AuthContext } from 'context/AuthContext';
 
@@ -33,12 +30,8 @@ const TopNavRightSideNavItem = () => {
       className="navbar-nav-icons ms-auto flex-row align-items-center"
       as="ul"
     >
-      <ThemeControlDropdown /> {/* Siempre visible, independiente de la autenticación */}
-      
       {isAuthenticated && (
         <>
-          <CartNotification />
-          <NotificationDropdown />
           <ProfileDropdown />
         </>
       )}
