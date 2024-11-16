@@ -8,7 +8,7 @@ const Bienvenida = () => {
   // Memoizar el saludo para evitar cálculos innecesarios en cada render
   const greeting = useMemo(() => {
     const hour = new Date().getHours();
-    return `¡Buenas ${hour < 12 ? 'días' : 'tardes'}, bienvenido de vuelta!`;
+    return `¡Bienvenido!`;
   }, []);
 
   const { products, loading } = useContext(ProductContext);
@@ -58,7 +58,7 @@ const Bienvenida = () => {
             color: '#555',
           }}
         >
-          Descubre la variedad de productos que tenemos para ti:
+          Descubre la variedad de productos y servicios que tenemos para ti:
         </p>
       </Card.Header>
       <Carousel interval={5000} pause="hover" indicators={false}>
