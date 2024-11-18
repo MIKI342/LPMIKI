@@ -4,14 +4,14 @@ import React from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
 import CategoryGroup from 'components/home/componentsHome/CategoryGroup';
 import Bienvenida from 'components/home/componentsHome/Bienvenida';
-import Map from 'components/home/componentsHome/Map/map';import 'components/home/componentsHome/css/Ecommerce.css'; // Asegúrate de importar tu hoja de estilos
+import Map from 'components/home/componentsHome/Map/map';
+import 'components/home/componentsHome/css/Ecommerce.css';
 
 const Ecommerce = () => {
   return (
-    <Container fluid className="px-1" style={{ maxWidth: '100vw', margin: '0' }}>
-      {/* Primera fila: Bienvenida a la izquierda, MasServicios y CategoryGroup a la derecha para pantallas grandes, apilados en pantallas pequeñas */}
+    <Container fluid className="px-0" style={{ maxWidth: '100vw', margin: '0' }}>
       <Row
-        className="g-0 justify-content-center"
+        className="justify-content-center equal-height-row"
         style={{
           margin: '0',
           padding: '0',
@@ -22,28 +22,28 @@ const Ecommerce = () => {
         <Col
           xs={12}
           lg={6}
-          className="custom-margin-right mb-lg-0" // Agregar clase personalizada para márgenes en pantallas grandes
+          className="mb-lg-0 equal-height-col"
           style={{
-            padding: '0',
+            paddingLeft: '0',
+            paddingRight: '10px', // Agrega padding derecho
           }}
         >
-          <div className="spacing-bienvenida-masServicios">
+          <div className="spacing-bienvenida-masServicios fill-height">
             <Bienvenida />
           </div>
         </Col>
 
-        {/* Columna de MasServicios y CategoryGroup */}
+        {/* Columna de CategoryGroup */}
         <Col
           xs={12}
           lg={6}
-          className="custom-margin-left mb-lg-0" // Agregar clase personalizada para márgenes en pantallas grandes
+          className="mb-lg-0 equal-height-col"
           style={{
-            padding: '0',
+            paddingRight: '0',
+            paddingLeft: '10px', // Agrega padding izquierdo
           }}
         >
-          
-          {/* CategoryGroup con margen inferior reducido en pantallas pequeñas */}
-          <div className="spacing-categoryGroup-map">
+          <div className="spacing-categoryGroup-map fill-height">
             <CategoryGroup />
           </div>
         </Col>
@@ -54,7 +54,7 @@ const Ecommerce = () => {
         <Row className="g-0 justify-content-center footer-row">
           <Col
             xs={12}
-            lg={12} // Cambiamos lg={6} a lg={12} para que ocupe todo el ancho en pantallas grandes
+            lg={12}
             style={{
               padding: '0',
             }}

@@ -1,3 +1,5 @@
+/* Archivo: CategoryGroup.css */
+
 .category-group-card {
   border: 1px solid #ccc;
   padding-top: 1rem;
@@ -5,7 +7,18 @@
   margin-bottom: 1rem;
   margin: 0;
   padding: 0;
+  height: 100%; /* Aseguramos que el card ocupe toda la altura */
+  display: flex;
+  flex-direction: column;
 }
+
+@media (max-width: 991.98px) { /* Pantallas pequeñas */
+  .category-group-card {
+    margin-left: -1%; /* Ajusta este valor según necesites */
+    margin-right: auto;
+  }
+}
+
 
 .category-group-title {
   font-size: 1.5rem; /* Tamaño reducido en un 40-50% */
@@ -31,6 +44,7 @@
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   padding: 0;
+  flex: 1; /* Asegura que las columnas ocupen el mismo espacio vertical */
 }
 
 .category-col:last-child {
@@ -44,3 +58,11 @@
   justify-content: center;
   cursor: pointer;
 }
+
+/* Aseguramos que el contenido del Card ocupe toda la altura disponible */
+.category-group-card .card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+  

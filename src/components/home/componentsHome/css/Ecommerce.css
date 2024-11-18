@@ -2,60 +2,76 @@
 
 /* Clase de espaciado reducido para pantallas pequeñas */
 .spacing-reduced {
-    margin-bottom: 0.35rem; /* 4px en pantallas pequeñas */
+  margin-bottom: 0.35rem; /* 4px en pantallas pequeñas */
+}
+
+/* Estilos para el componente Bienvenida */
+.bienvenida-card {
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+@media (max-width: 991.98px) { /* Pantallas pequeñas */
+  .bienvenida-card {
+    margin-left: 1%; /* Ajusta este valor */
+    margin-right: auto;
   }
-  
-  /* Configuración de márgenes específica para pantallas grandes */
-  @media (min-width: 992px) {
-    .spacing-reduced {
-      margin-bottom: 0; /* Elimina el margen inferior en pantallas grandes */
-    }
-  
-    .custom-margin-right {
-      margin-right: -5px;
-    }
-  
-    .custom-margin-left {
-      margin-left: -45px;
-    }
-  
-    /* Clases de espaciado específicas para pantallas grandes */
-    .spacing-bienvenida-masServicios {
-      margin-bottom: 0; /* Sin margen entre Bienvenida y MasServicios en pantallas grandes */
-    }
-  
-    .spacing-masServicios-categoryGroup {
-      margin-bottom: 4rem; /* Aumentamos a 64px solo en pantallas grandes */
-    }
-  
-    .spacing-categoryGroup-map {
-      margin-bottom: 0; /* Sin margen entre CategoryGroup y Map en pantallas grandes */
-    }
+}
+
+@media (min-width: 992px) { /* Pantallas grandes */
+  .bienvenida-card {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 100%;
   }
-  
-  /* Configuraciones para pantallas pequeñas */
-  .spacing-bienvenida-masServicios {
-    margin-bottom: 0.35rem; /* 4px en pantallas pequeñas */
+}
+
+@media (min-width: 992px) {
+  .equal-height-row {
+    display: flex;
+    align-items: stretch;
   }
-  
-  .spacing-masServicios-categoryGroup {
-    margin-bottom: 0.35rem; /* 4px en pantallas pequeñas */
+
+  .equal-height-col {
+    display: flex;
+    flex-direction: column;
   }
-  
+
+  .fill-height {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  /* Aseguramos que no haya márgenes en las columnas */
+  .mb-lg-0 {
+    margin-bottom: 0 !important;
+  }
+
+  /* Aseguramos que no haya márgenes adicionales */
+  .spacing-bienvenida-masServicios,
   .spacing-categoryGroup-map {
-    margin-bottom: 0.35rem; /* 4px en pantallas pequeñas */
+    margin: 0;
   }
-  
-  /* Clase para reducir el margen superior del footer en pantallas pequeñas */
+}
+
+/* Configuraciones para pantallas pequeñas */
+.spacing-bienvenida-masServicios,
+.spacing-categoryGroup-map {
+  margin-bottom: 0.35rem; /* 4px en pantallas pequeñas */
+}
+
+/* Clase para reducir el margen superior del footer en pantallas pequeñas */
+.footer-row {
+  margin-top: 0.35rem; /* 4px en pantallas pequeñas */
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+@media (min-width: 992px) {
   .footer-row {
-    margin-top: 0.35rem; /* 4px en pantallas pequeñas */
-    padding-top: 0;
-    padding-bottom: 0;
+    margin-top: 0;
   }
-  
-  @media (min-width: 992px) {
-    .footer-row {
-      margin-top: 0;
-    }
-  }
-  
+}

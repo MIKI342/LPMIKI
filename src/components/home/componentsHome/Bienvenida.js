@@ -1,3 +1,5 @@
+// Archivo: Bienvenida.jsx
+
 import React, { useContext, useMemo } from 'react';
 import { Card, Carousel } from 'react-bootstrap';
 import { ProductContext } from 'context/Context';
@@ -7,8 +9,7 @@ import ProductImage from 'components/app/e-commerce/product/ProductImage';
 const Bienvenida = () => {
   // Memoizar el saludo para evitar cálculos innecesarios en cada render
   const greeting = useMemo(() => {
-    const hour = new Date().getHours();
-    return `¡Bienvenido!`;
+    return '¡Bienvenido!';
   }, []);
 
   const { products, loading } = useContext(ProductContext);
@@ -21,14 +22,14 @@ const Bienvenida = () => {
 
   return (
     <Card
-      className="overflow-hidden shadow-lg mx-auto"
+      className="bienvenida-card overflow-hidden shadow-lg fill-height"
       style={{
         borderRadius: '15px',
         backgroundColor: '#f8f9fa',
-        padding: '10px',
+        padding: '20px',
         boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-        maxWidth: '600px',
         width: '100%',
+        minHeight: '600px',
       }}
     >
       <Card.Header
@@ -66,7 +67,7 @@ const Bienvenida = () => {
           <Carousel.Item key={offer.id}>
             <div
               className="position-relative d-flex justify-content-center align-items-center"
-              style={{ minHeight: '300px' }}
+              style={{ minHeight: '400px' }} // Aumenta la altura mínima del carrusel si lo deseas
             >
               {/* Carrusel de imágenes */}
               <ProductImage
@@ -124,3 +125,4 @@ const Bienvenida = () => {
 
 // Envolver el componente con React.memo para memoización
 export default React.memo(Bienvenida);
+  
