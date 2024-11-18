@@ -1,5 +1,3 @@
-// useGroupedByModule.js
-
 import { useMemo } from 'react';
 import useContactNumbers from './useContactNumbers';
 
@@ -26,10 +24,7 @@ const useGroupedByModule = (products) => {
         acc[moduloId] = {
           products: [],
           moduleName: Modulo.nombre || 'Sucursal Desconocida',
-          address: Modulo.direccion || 'Dirección no disponible',
           contact,
-          lat: Modulo.lat || 19.715690900326546,
-          long: Modulo.long || -99.95523253068207,
         };
       }
 

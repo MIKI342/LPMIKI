@@ -1,5 +1,3 @@
-// Archivo: Map.js
-
 import React, { useContext, useMemo } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
@@ -8,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 import { useAppContext } from 'Main';
 import { ProductContext } from 'context/Context';
-import useGroupedByModule from 'hooks/useGroupedByModule';
+import useLocationsByModule from 'hooks/useLocationsByModule';
 import FalconComponentCard from 'components/common/FalconComponentCard';
 import MarkerComponent from './MarkerComponent';
 import 'components/home/componentsHome/css/Map.css';
@@ -29,26 +27,29 @@ const Map = () => {
   // Obtener productos y estado de carga desde ProductContext
   const { products, loading } = useContext(ProductContext);
 
-  // Agrupar productos por módulo y obtener información de ubicaciones
-  const moduleLocations = useGroupedByModule(products);
+  // Usar el nuevo hook para obtener ubicaciones
+  const moduleLocations = useLocationsByModule(products);
 
-  // Coordenadas iniciales predeterminadas
-  const defaultPosition = [19.715690900326546, -99.95523253068207];
-
-  // Obtener las coordenadas de la primera ubicación disponible
+  // Coordenadas iniciales basadas en la primera ubicación disponible
   const initialPosition = useMemo(() => {
-    const firstLocation = Object.values(moduleLocations)[0];
-    return firstLocation ? [firstLocation.lat, firstLocation.long] : defaultPosition;
-  }, [moduleLocations, defaultPosition]);
+    const firstLocation = Object.values(moduleLocations)[0]?.locations[0];
+    return firstLocation ? [firstLocation.lat, firstLocation.long] : null;
+  }, [moduleLocations]);
 
   // Memorizar el icono para evitar recreaciones
   const markerIcon = useMemo(() => defaultIcon, []);
 
-  // Memorizar las posiciones de los marcadores
+  // Crear marcadores para todas las ubicaciones
   const markers = useMemo(() => {
-    return Object.values(moduleLocations).map(location => (
-      <MarkerComponent key={location.moduloId} location={location} icon={markerIcon} />
-    ));
+    return Object.values(moduleLocations).flatMap(module =>
+      module.locations.map((location, index) => (
+        <MarkerComponent
+          key={`${module.moduloId}-${index}`}
+          location={location}
+          icon={markerIcon}
+        />
+      ))
+    );
   }, [moduleLocations, markerIcon]);
 
   if (loading) {
@@ -61,6 +62,23 @@ const Map = () => {
         </FalconComponentCard.Header>
         <FalconComponentCard.Body>
           <div className="loading-container">Loading...</div>
+        </FalconComponentCard.Body>
+      </FalconComponentCard>
+    );
+  }
+
+  if (!initialPosition) {
+    return (
+      <FalconComponentCard>
+        <FalconComponentCard.Header>
+          <div className="text-center">
+            <h3>No se encontraron sucursales</h3>
+          </div>
+        </FalconComponentCard.Header>
+        <FalconComponentCard.Body>
+          <div className="text-center">
+            <p>No hay información de ubicaciones disponible para mostrar en el mapa.</p>
+          </div>
         </FalconComponentCard.Body>
       </FalconComponentCard>
     );
@@ -104,5 +122,4 @@ const Map = () => {
   );
 };
 
-// Exportar componente memorizado
 export default React.memo(Map);
