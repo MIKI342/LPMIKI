@@ -1,28 +1,33 @@
-// src/hooks/useGroupedByModule.js
+// useGroupedByModule.js
 
 import { useMemo } from 'react';
+import useContactNumbers from './useContactNumbers';
 
-/**
- * Hook para agrupar productos por módulo.
- * @param {Array} products - Lista de productos.
- * @returns {Object} - Productos agrupados por módulo.
- */
 const useGroupedByModule = (products) => {
+  const { getContactNumberByCategory } = useContactNumbers();
+
   return useMemo(() => {
     if (!products || products.length === 0) return {};
 
     return products.reduce((acc, product) => {
       const { moduloId, Modulo } = product;
 
-      if (!moduloId || !Modulo) return acc; // Ignorar productos sin módulo válido
+      if (!moduloId || !Modulo) return acc;
 
-      // Inicializar el módulo si no existe
+      if (!Modulo.categoria) {
+        console.warn(`El producto con ID ${product.id} no tiene definida la categoría en Modulo.categoria.`);
+      }
+
       if (!acc[moduloId]) {
+        const category = Modulo.categoria || '';
+        const contact = getContactNumberByCategory(category);
+        console.log(`Product ID: ${product.id}, Module Category: ${category}, Assigned Contact: ${contact}`);
+
         acc[moduloId] = {
           products: [],
           moduleName: Modulo.nombre || 'Sucursal Desconocida',
           address: Modulo.direccion || 'Dirección no disponible',
-          contact: Modulo.contacto || '7121658661',
+          contact,
           lat: Modulo.lat || 19.715690900326546,
           long: Modulo.long || -99.95523253068207,
         };
@@ -31,7 +36,7 @@ const useGroupedByModule = (products) => {
       acc[moduloId].products.push(product);
       return acc;
     }, {});
-  }, [products]);
+  }, [products, getContactNumberByCategory]);
 };
 
 export default useGroupedByModule;

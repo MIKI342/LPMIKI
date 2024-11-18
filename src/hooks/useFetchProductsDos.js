@@ -26,7 +26,12 @@ const useFetchProducts = (url) => {
             (mod) => mod.id === product.moduloId
           ) || null;
         
-          // Simular imágenes para algunos productos solamente
+          // Incluye la categoría dentro de 'Modulo' si existe
+          const moduloConCategoria = modulo
+            ? { ...modulo, categoria: categoriaProducto ? categoriaProducto.nombreCategoria : null }
+            : null;
+        
+          // Simular imágenes para algunos productos
           const simulatedImage = {
             url: 'https://via.placeholder.com/300',
           };
@@ -36,10 +41,11 @@ const useFetchProducts = (url) => {
           return {
             ...product,
             CategoriaProducto: categoriaProducto,
-            Modulo: modulo,
-            images: hasImages ? product.images : (index % 2 === 0 ? [simulatedImage] : []), // Alternar productos con imágenes simuladas
+            Modulo: moduloConCategoria, // Usamos 'moduloConCategoria' aquí
+            images: hasImages ? product.images : (index % 2 === 0 ? [simulatedImage] : []),
           };
         });
+        
         
         setProducts(mappedProducts); // Actualizar productos procesados
       } catch (error) {
