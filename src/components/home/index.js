@@ -4,9 +4,7 @@ import React from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
 import CategoryGroup from 'components/home/componentsHome/CategoryGroup';
 import Bienvenida from 'components/home/componentsHome/Bienvenida';
-import Map from 'components/home/componentsHome/Map/map';
-import MasServicios from 'components/home/componentsHome/MoreServices/MasServicios';
-import 'components/home/componentsHome/css/Ecommerce.css'; // Asegúrate de importar tu hoja de estilos
+import Map from 'components/home/componentsHome/Map/map';import 'components/home/componentsHome/css/Ecommerce.css'; // Asegúrate de importar tu hoja de estilos
 
 const Ecommerce = () => {
   return (
@@ -43,10 +41,7 @@ const Ecommerce = () => {
             padding: '0',
           }}
         >
-          {/* MasServicios con margen inferior reducido en pantallas pequeñas */}
-          <div className="spacing-masServicios-categoryGroup">
-            <MasServicios />
-          </div>
+          
           {/* CategoryGroup con margen inferior reducido en pantallas pequeñas */}
           <div className="spacing-categoryGroup-map">
             <CategoryGroup />
