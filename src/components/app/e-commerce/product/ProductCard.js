@@ -16,14 +16,20 @@ import StarRating from 'components/home/StarRating';
 import { FaShoppingCart } from 'react-icons/fa';
 import { ProductContext } from 'context/Context';
 
+// Función auxiliar para manejar valores nulos o indefinidos
+const getDisplayValue = (value) => (value != null ? value : 'No disponible');
+
 const ProductCard = memo(({ product, paginationState }) => {
   const {
     id,
     nombreProducto,
     descripcionProducto,
-    superPrecio = 20, 
+    superPrecio,
     cantidad,
-    CategoriaProducto
+    CategoriaProducto,
+    images,
+    precioUnitario,
+    precioMayoreo
   } = product;
 
   const disponible = cantidad > 0;
@@ -37,7 +43,7 @@ const ProductCard = memo(({ product, paginationState }) => {
   }, [navigate, id]);
 
   const handleAddToCartClick = useCallback(
-    event => {
+    (event) => {
       event.stopPropagation();
       if (paginationState) {
         const currentPage = paginationState.currentPage;
@@ -70,7 +76,7 @@ const ProductCard = memo(({ product, paginationState }) => {
               name={nombreProducto}
               id={id}
               category={CategoriaProducto?.nombre || 'Sin Categoría'}
-              files={product.images}
+              files={images}
               layout="grid"
               className="w-100 h-100"
             />
@@ -95,17 +101,11 @@ const ProductCard = memo(({ product, paginationState }) => {
                 className="text-muted mb-1"
                 style={{ fontSize: '1rem', whiteSpace: 'normal' }}
               >
-                {descripcionProducto.length > 40
-                  ? `${descripcionProducto.slice(0, 40)}...`
-                  : descripcionProducto}
+                {descripcionProducto}
               </Card.Text>
-              {/* Mostrar solo el super precio resaltado */}
-              <h5
-                style={{ color: '#FF8C00' }}
-                className="fw-bold"
-              >
-                ${superPrecio.toFixed(2)}
-              </h5>
+              <p>Super Precio: {getDisplayValue(superPrecio)}</p>
+              <p>Precio Unitario: {getDisplayValue(precioUnitario)}</p>
+              <p>Precio Mayoreo: {getDisplayValue(precioMayoreo)}</p>
               <div className="d-flex align-items-center justify-content-between mt-2">
                 <Card.Text
                   className={classNames('fw-bold mb-0', {
@@ -156,12 +156,11 @@ ProductCard.propTypes = {
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     nombreProducto: PropTypes.string.isRequired,
     descripcionProducto: PropTypes.string.isRequired,
-    precioUnitario: PropTypes.number.isRequired,
-    descuento: PropTypes.number,
-    superPrecio: PropTypes.number,
-    precioMayoreo: PropTypes.number,
-    images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
+    superPrecio: PropTypes.any,
+    precioUnitario: PropTypes.any,
+    precioMayoreo: PropTypes.any,
     cantidad: PropTypes.number.isRequired,
+    images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
     CategoriaProducto: PropTypes.shape({
       nombre: PropTypes.string
     })
