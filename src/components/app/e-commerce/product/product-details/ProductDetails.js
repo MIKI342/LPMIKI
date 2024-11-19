@@ -3,6 +3,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { Card, Col, Row, Spinner } from 'react-bootstrap';
 import ProductDetailsMedia from './ProductDetailsMedia';
 import ProductDetailsMain from './ProductDetailsMain';
+import ProductDetailsFooter from './ProductDetailsFooter';
 
 import { ProductContext } from 'context/Context';
 import CartModal from '../../cart/CartModal';
@@ -74,7 +75,7 @@ const ProductDetails = () => {
     <>
       <Card className="shadow-sm mb-4">
         <Card.Body>
-          
+          {/* Información principal */}
           <Row>
             <Col lg={6} className="mb-4 mb-lg-0">
               <ProductDetailsMedia product={product} imageList={imageList} />
@@ -83,8 +84,12 @@ const ProductDetails = () => {
               <ProductDetailsMain product={product} />
             </Col>
           </Row>
-          <Row>
-            
+
+          {/* Footer alineado */}
+          <Row className="mt-4">
+            <Col>
+              <ProductDetailsFooter product={product} />
+            </Col>
           </Row>
         </Card.Body>
       </Card>

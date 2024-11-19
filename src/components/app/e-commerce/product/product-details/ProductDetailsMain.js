@@ -90,8 +90,7 @@ const ProductDetailsMain = ({ product }) => {
         </div>
       </div>
 
-      {/* Descripción del Producto */}
-      <p className="text-muted fs-6 mb-4">{descripcionProducto}</p>
+     
 
       {/* Información adicional */}
       <div className="additional-info mb-4">
