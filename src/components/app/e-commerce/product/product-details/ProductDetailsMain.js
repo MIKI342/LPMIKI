@@ -1,13 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { Button, Badge, OverlayTrigger, Tooltip, Row, Col, Container } from 'react-bootstrap';
+import { Button, OverlayTrigger, Tooltip, Row, Col, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import QuantityController from '../../QuantityController';
 import { FaShoppingCart } from 'react-icons/fa';
 import useProductHook from 'hooks/useProductHook';
 
 import classNames from 'classnames'; // Asegúrate de importar classNames  
-// Función auxiliar para manejar valores nulos o indefinidos
-const getDisplayValue = (value) => (value != null ? value : 'No disponible');
 
 const ProductDetailsMain = ({ product }) => {
   const {
@@ -16,7 +14,7 @@ const ProductDetailsMain = ({ product }) => {
     descripcionProducto,
     precioUnitario,
     descuento,
-    superPrecio,
+    superPrecio = 10, // Valor predeterminado si es null o undefined
     precioMayoreo,
     cantidad
   } = product;
@@ -61,21 +59,25 @@ const ProductDetailsMain = ({ product }) => {
               className={classNames('fw-bold', { 'text-danger': descuento })}
               style={{ color: '#FF8C00' }}
             >
-              ${getDisplayValue(precioConDescuento)}
+              ${precioConDescuento}
               {descuento && (
                 <small className="text-muted ms-2">
-                  <del>${getDisplayValue(precioUnitario)}</del> -{descuento}%
+                  <del>${precioUnitario}</del> -{descuento}%
                 </small>
               )}
             </h4>
-            {superPrecio != null && (
-              <h6 className="text-primary fw-bold mb-1">
-                Super Precio: ${getDisplayValue(superPrecio)}
-              </h6>
-            )}
+            <h6
+              className="fw-bold mb-1"
+              style={{ fontSize: '1.2rem', color: '#FF8C00' }}
+            >
+              super precio: ${superPrecio} {/* Siempre muestra "super precio" */}
+            </h6>
             {precioMayoreo != null && (
-              <h6 className="text-secondary fw-bold">
-                Precio Mayoreo: ${getDisplayValue(precioMayoreo)}
+              <h6
+                className="text-secondary fw-bold"
+                style={{ fontSize: '1.2rem' }}
+              >
+                precio mayoreo: ${precioMayoreo}
               </h6>
             )}
           </div>

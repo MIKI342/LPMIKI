@@ -10,14 +10,10 @@ import {
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import ProductImage from './ProductImage';
-import classNames from 'classnames';
 import useProductHook from 'hooks/useProductHook';
 import StarRating from 'components/home/StarRating';
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaShoppingCart, FaTags, FaCoins, FaBox } from 'react-icons/fa';
 import { ProductContext } from 'context/Context';
-
-// Función auxiliar para manejar valores nulos o indefinidos
-const getDisplayValue = (value) => (value != null ? value : 'No disponible');
 
 const ProductCard = memo(({ product, paginationState }) => {
   const {
@@ -25,17 +21,12 @@ const ProductCard = memo(({ product, paginationState }) => {
     nombreProducto,
     descripcionProducto,
     precioUnitario,
-    descuento,
     superPrecio,
     precioMayoreo,
     cantidad,
     CategoriaProducto,
     images
   } = product;
-
-  const precioConDescuento = descuento
-    ? precioUnitario - (precioUnitario * descuento) / 100
-    : precioUnitario;
 
   const disponible = cantidad > 0;
 
@@ -61,10 +52,47 @@ const ProductCard = memo(({ product, paginationState }) => {
     [paginationState, dispatch, handleAddToCart, nombreProducto, precioUnitario]
   );
 
+  // Crear una lista de precios válidos con íconos
+  let precios = [
+    {
+      label: 'Precio unitario',
+      value: precioUnitario,
+      color: '#FFA500', // Naranja brillante por defecto
+      icon: <FaCoins style={{ marginRight: '5px' }} />
+    },
+    {
+      label: 'Super precio',
+      value: superPrecio,
+      color: '#FFA500', // Naranja si es el más barato
+      icon: <FaTags style={{ marginRight: '5px' }} />
+    },
+    {
+      label: 'Precio mayoreo',
+      value: precioMayoreo,
+      color: '#007BFF', // Azul moderado
+      icon: <FaBox style={{ marginRight: '5px' }} />
+    }
+  ].filter((precio) => precio.value != null); // Filtrar solo precios válidos
+
+  // Ordenar precios para destacar el más barato y el más caro
+  precios.sort((a, b) => a.value - b.value);
+
+  if (precios.length > 1) {
+    // El precio más barato será naranja brillante
+    precios[0].color = '#FFA500';
+
+    // El precio más caro será gris oscuro
+    precios[precios.length - 1].color = '#6C757D';
+  }
+
   return (
     <Card
-      className="h-100 shadow-sm border"
-      style={{ borderRadius: '25px', cursor: 'pointer' }}
+      className="h-100 shadow-sm"
+      style={{
+        borderRadius: '10px',
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+        backgroundColor: '#F7F7F7' // Fondo gris claro
+      }}
       onClick={handleCardClick}
     >
       <Row className="g-0">
@@ -72,8 +100,8 @@ const ProductCard = memo(({ product, paginationState }) => {
           <div
             className="ratio ratio-1x1"
             style={{
-              borderTopLeftRadius: '24px',
-              borderTopRightRadius: '24px',
+              borderTopLeftRadius: '10px',
+              borderTopRightRadius: '10px',
               overflow: 'hidden'
             }}
           >
@@ -92,7 +120,9 @@ const ProductCard = memo(({ product, paginationState }) => {
             <div>
               <Card.Title
                 style={{
-                  fontSize: '1.3rem',
+                  fontSize: '1.2rem',
+                  color: '#00274D', // Azul oscuro
+                  fontWeight: 'bold',
                   whiteSpace: 'normal',
                   overflowWrap: 'break-word'
                 }}
@@ -103,41 +133,48 @@ const ProductCard = memo(({ product, paginationState }) => {
                 <StarRating />
               </div>
               <Card.Text
-                className="text-muted mb-1"
-                style={{ fontSize: '1rem', whiteSpace: 'normal' }}
+                className="text-muted mb-3"
+                style={{
+                  fontSize: '1rem' // Aumentar tamaño
+                }}
               >
                 {descripcionProducto.length > 40
                   ? `${descripcionProducto.slice(0, 40)}...`
                   : descripcionProducto}
               </Card.Text>
-              <h5
-                style={{ color: '#FF8C00' }}
-                className={classNames('fw-bold', { 'text-danger': descuento })}
-              >
-                ${getDisplayValue(precioConDescuento)}
-                {descuento && (
-                  <small className="text-muted ms-2">
-                    <del>${getDisplayValue(precioUnitario)}</del> -{descuento}%
-                  </small>
-                )}
-              </h5>
-              {superPrecio != null && (
-                <h6 className="text-primary fw-bold mb-1">
-                  super precio: ${getDisplayValue(superPrecio)}
-                </h6>
-              )}
-              {precioMayoreo != null && (
-                <h6 className="text-secondary fw-bold">
-                  precio mayoreo: ${getDisplayValue(precioMayoreo)}
-                </h6>
-              )}
-              <div className="d-flex align-items-center justify-content-between mt-2">
+
+              {/* Mostrar precios ordenados, destacando el más barato y el más caro */}
+              {precios.map((precio, index) => {
+                const fontSize = index === 0 ? '1.1rem' : index === 1 ? '1rem' : '0.9rem';
+                const fontWeight = index === 0 ? 'bold' : '500';
+                const marginBottom = '8px'; // Espacio entre precios
+                return (
+                  <h5
+                    key={precio.label}
+                    style={{
+                      color: precio.color,
+                      fontSize,
+                      fontWeight,
+                      marginBottom,
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                  >
+                    {precio.icon}
+                    {precio.label}: ${precio.value}
+                  </h5>
+                );
+              })}
+
+              <div className="d-flex align-items-center justify-content-between mt-3">
                 <Card.Text
-                  className={classNames('fw-bold mb-0', {
-                    'text-success': disponible,
-                    'text-danger': !disponible
-                  })}
-                  style={{ fontSize: '1rem' }}
+                  className={`fw-bold mb-0 ${
+                    disponible ? '' : 'text-danger'
+                  }`}
+                  style={{
+                    fontSize: '1rem',
+                    color: disponible ? '#28A745' : '#DC3545' // Verde suave para "En stock"
+                  }}
                 >
                   {disponible ? 'En Stock' : 'Agotado'}
                 </Card.Text>
@@ -155,15 +192,17 @@ const ProductCard = memo(({ product, paginationState }) => {
                       size="sm"
                       className="d-flex align-items-center justify-content-center ms-2"
                       style={{
-                        borderRadius: '8px',
+                        borderRadius: '50%',
                         width: '40px',
                         height: '40px',
-                        padding: 0
+                        padding: 0,
+                        backgroundColor: 'transparent',
+                        borderColor: '#0056B3' // Azul oscuro para el botón
                       }}
                       onClick={handleAddToCartClick}
                       aria-label="Añadir al carrito"
                     >
-                      <FaShoppingCart size={18} color="#6c757d" />
+                      <FaShoppingCart size={18} color="#0056B3" />
                     </Button>
                   </OverlayTrigger>
                 )}
@@ -181,10 +220,9 @@ ProductCard.propTypes = {
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     nombreProducto: PropTypes.string.isRequired,
     descripcionProducto: PropTypes.string.isRequired,
-    precioUnitario: PropTypes.any,
-    descuento: PropTypes.number,
-    superPrecio: PropTypes.any,
-    precioMayoreo: PropTypes.any,
+    precioUnitario: PropTypes.number.isRequired,
+    superPrecio: PropTypes.number,
+    precioMayoreo: PropTypes.number,
     cantidad: PropTypes.number.isRequired,
     images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
     CategoriaProducto: PropTypes.shape({
