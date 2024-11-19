@@ -5,6 +5,7 @@ import QuantityController from '../../QuantityController';
 import { FaShoppingCart } from 'react-icons/fa';
 import useProductHook from 'hooks/useProductHook';
 
+import classNames from 'classnames'; // Asegúrate de importar classNames  
 // Función auxiliar para manejar valores nulos o indefinidos
 const getDisplayValue = (value) => (value != null ? value : 'No disponible');
 
@@ -14,10 +15,15 @@ const ProductDetailsMain = ({ product }) => {
     nombreProducto,
     descripcionProducto,
     precioUnitario,
+    descuento,
     superPrecio,
     precioMayoreo,
     cantidad
   } = product;
+
+  const precioConDescuento = descuento
+    ? precioUnitario - (precioUnitario * descuento) / 100
+    : precioUnitario;
 
   const disponible = cantidad > 0;
 
@@ -51,9 +57,27 @@ const ProductDetailsMain = ({ product }) => {
           <h2 className="fw-bold text-dark text-center mb-5">{nombreProducto}</h2>
           <p className="text-muted text-center">{descripcionProducto}</p>
           <div className="mb-5 text-center">
-            <p>Super Precio: {getDisplayValue(superPrecio)}</p>
-            <p>Precio Unitario: {getDisplayValue(precioUnitario)}</p>
-            <p>Precio Mayoreo: {getDisplayValue(precioMayoreo)}</p>
+            <h4
+              className={classNames('fw-bold', { 'text-danger': descuento })}
+              style={{ color: '#FF8C00' }}
+            >
+              ${getDisplayValue(precioConDescuento)}
+              {descuento && (
+                <small className="text-muted ms-2">
+                  <del>${getDisplayValue(precioUnitario)}</del> -{descuento}%
+                </small>
+              )}
+            </h4>
+            {superPrecio != null && (
+              <h6 className="text-primary fw-bold mb-1">
+                Super Precio: ${getDisplayValue(superPrecio)}
+              </h6>
+            )}
+            {precioMayoreo != null && (
+              <h6 className="text-secondary fw-bold">
+                Precio Mayoreo: ${getDisplayValue(precioMayoreo)}
+              </h6>
+            )}
           </div>
           <div className="mb-5 text-center">
             <strong>Disponibilidad:</strong>
@@ -104,6 +128,7 @@ ProductDetailsMain.propTypes = {
     nombreProducto: PropTypes.string.isRequired,
     descripcionProducto: PropTypes.string.isRequired,
     precioUnitario: PropTypes.any,
+    descuento: PropTypes.number,
     superPrecio: PropTypes.any,
     precioMayoreo: PropTypes.any,
     cantidad: PropTypes.number.isRequired,

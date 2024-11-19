@@ -24,13 +24,18 @@ const ProductCard = memo(({ product, paginationState }) => {
     id,
     nombreProducto,
     descripcionProducto,
+    precioUnitario,
+    descuento,
     superPrecio,
+    precioMayoreo,
     cantidad,
     CategoriaProducto,
-    images,
-    precioUnitario,
-    precioMayoreo
+    images
   } = product;
+
+  const precioConDescuento = descuento
+    ? precioUnitario - (precioUnitario * descuento) / 100
+    : precioUnitario;
 
   const disponible = cantidad > 0;
 
@@ -47,13 +52,13 @@ const ProductCard = memo(({ product, paginationState }) => {
       event.stopPropagation();
       if (paginationState) {
         const currentPage = paginationState.currentPage;
-        handleAddToCart(1, true, true, nombreProducto, superPrecio);
+        handleAddToCart(1, true, true, nombreProducto, precioUnitario);
         dispatch({ type: 'STAY_ON_PAGE', payload: { page: currentPage } });
       } else {
         console.error('paginationState is undefined');
       }
     },
-    [paginationState, dispatch, handleAddToCart, nombreProducto, superPrecio]
+    [paginationState, dispatch, handleAddToCart, nombreProducto, precioUnitario]
   );
 
   return (
@@ -101,11 +106,31 @@ const ProductCard = memo(({ product, paginationState }) => {
                 className="text-muted mb-1"
                 style={{ fontSize: '1rem', whiteSpace: 'normal' }}
               >
-                {descripcionProducto}
+                {descripcionProducto.length > 40
+                  ? `${descripcionProducto.slice(0, 40)}...`
+                  : descripcionProducto}
               </Card.Text>
-              <p>Super Precio: {getDisplayValue(superPrecio)}</p>
-              <p>Precio Unitario: {getDisplayValue(precioUnitario)}</p>
-              <p>Precio Mayoreo: {getDisplayValue(precioMayoreo)}</p>
+              <h5
+                style={{ color: '#FF8C00' }}
+                className={classNames('fw-bold', { 'text-danger': descuento })}
+              >
+                ${getDisplayValue(precioConDescuento)}
+                {descuento && (
+                  <small className="text-muted ms-2">
+                    <del>${getDisplayValue(precioUnitario)}</del> -{descuento}%
+                  </small>
+                )}
+              </h5>
+              {superPrecio != null && (
+                <h6 className="text-primary fw-bold mb-1">
+                  super precio: ${getDisplayValue(superPrecio)}
+                </h6>
+              )}
+              {precioMayoreo != null && (
+                <h6 className="text-secondary fw-bold">
+                  precio mayoreo: ${getDisplayValue(precioMayoreo)}
+                </h6>
+              )}
               <div className="d-flex align-items-center justify-content-between mt-2">
                 <Card.Text
                   className={classNames('fw-bold mb-0', {
@@ -156,8 +181,9 @@ ProductCard.propTypes = {
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     nombreProducto: PropTypes.string.isRequired,
     descripcionProducto: PropTypes.string.isRequired,
-    superPrecio: PropTypes.any,
     precioUnitario: PropTypes.any,
+    descuento: PropTypes.number,
+    superPrecio: PropTypes.any,
     precioMayoreo: PropTypes.any,
     cantidad: PropTypes.number.isRequired,
     images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
