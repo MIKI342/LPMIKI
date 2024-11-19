@@ -3,7 +3,7 @@ import { Tab, Nav, Table } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import createMarkup from 'helpers/createMarkup';
 
-const ProductDetailsFooter = ({ product: { descripcionProducto, specification = {} } }) => {
+const ProductDetailsFooter = ({ product: { descripcionProducto, CategoriaProducto, specification = {} } }) => {
   return (
     <div className="mt-4">
       <Tab.Container defaultActiveKey="description">
@@ -28,10 +28,18 @@ const ProductDetailsFooter = ({ product: { descripcionProducto, specification = 
         <Tab.Content>
           {/* Descripción */}
           <Tab.Pane eventKey="description">
-            <div
-              className="mt-3"
-              dangerouslySetInnerHTML={createMarkup(descripcionProducto || 'No hay descripción disponible.')}
-            />
+            <div className="mt-3">
+              {/* Descripción del Producto */}
+              <div
+                dangerouslySetInnerHTML={createMarkup(descripcionProducto || 'No hay descripción disponible.')}
+              />
+              {/* Categoría del Producto */}
+              {CategoriaProducto?.nombre && (
+                <p className="text-muted mt-3">
+                  <strong>Categoría:</strong> {CategoriaProducto.nombre}
+                </p>
+              )}
+            </div>
           </Tab.Pane>
 
           {/* Especificaciones */}
@@ -51,8 +59,7 @@ const ProductDetailsFooter = ({ product: { descripcionProducto, specification = 
                   <tr>
                     <td colSpan="2" className="text-center text-muted">
                       Aquí irán especificaciones de cómo conseguir el super precio o precio mayoreo,
-                      por ejemplo, "En la compra de 10 se aplica el precio mayoreo" 
-                      
+                      por ejemplo, "En la compra de 10 se aplica el precio mayoreo"
                     </td>
                   </tr>
                 )}
@@ -67,8 +74,11 @@ const ProductDetailsFooter = ({ product: { descripcionProducto, specification = 
 
 ProductDetailsFooter.propTypes = {
   product: PropTypes.shape({
-    descripcionProducto: PropTypes.string, // Cambiado para usar descripcionProducto
-    specification: PropTypes.object,
+    descripcionProducto: PropTypes.string, // Descripción del producto
+    CategoriaProducto: PropTypes.shape({
+      nombre: PropTypes.string, // Nombre de la categoría
+    }),
+    specification: PropTypes.object, // Especificaciones del producto
   }),
 };
 
