@@ -1,13 +1,11 @@
-
-
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const StarRating = () => {
-    // Generar un número aleatorio de estrellas llenas entre 1 y 5
+    // Generar un número aleatorio de estrellas llenas entre 4 y 5
     const totalStars = 5;
-    const filledStars = Math.floor(Math.random() * totalStars) + 1;
+    const filledStars = Math.floor(Math.random() * 2) + 4; // Genera 4 o 5
 
     return (
         <div>

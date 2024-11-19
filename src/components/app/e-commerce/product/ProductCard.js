@@ -21,17 +21,10 @@ const ProductCard = memo(({ product, paginationState }) => {
     id,
     nombreProducto,
     descripcionProducto,
-    precioUnitario,
-    descuento,
-    superPrecio = 70, 
-    precioMayoreo = 50, 
+    superPrecio = 20, 
     cantidad,
     CategoriaProducto
   } = product;
-
-  const precioConDescuento = descuento
-    ? precioUnitario - (precioUnitario * descuento) / 100
-    : precioUnitario;
 
   const disponible = cantidad > 0;
 
@@ -48,13 +41,13 @@ const ProductCard = memo(({ product, paginationState }) => {
       event.stopPropagation();
       if (paginationState) {
         const currentPage = paginationState.currentPage;
-        handleAddToCart(1, true, true, nombreProducto, precioUnitario);
+        handleAddToCart(1, true, true, nombreProducto, superPrecio);
         dispatch({ type: 'STAY_ON_PAGE', payload: { page: currentPage } });
       } else {
         console.error('paginationState is undefined');
       }
     },
-    [paginationState, dispatch, handleAddToCart, nombreProducto, precioUnitario]
+    [paginationState, dispatch, handleAddToCart, nombreProducto, superPrecio]
   );
 
   return (
@@ -106,27 +99,13 @@ const ProductCard = memo(({ product, paginationState }) => {
                   ? `${descripcionProducto.slice(0, 40)}...`
                   : descripcionProducto}
               </Card.Text>
+              {/* Mostrar solo el super precio resaltado */}
               <h5
                 style={{ color: '#FF8C00' }}
-                className={classNames('fw-bold', { 'text-danger': descuento })}
+                className="fw-bold"
               >
-                ${precioConDescuento.toFixed(2)}
-                {descuento && (
-                  <small className="text-muted ms-2">
-                    <del>${precioUnitario.toFixed(2)}</del> -{descuento}%
-                  </small>
-                )}
+                ${superPrecio.toFixed(2)}
               </h5>
-              {superPrecio && (
-                <h6 className="text-primary fw-bold mb-1">
-                  super precio: ${superPrecio.toFixed(2)}
-                </h6>
-              )}
-              {precioMayoreo && (
-                <h6 className="text-secondary fw-bold">
-                  precio mayoreo: ${precioMayoreo.toFixed(2)}
-                </h6>
-              )}
               <div className="d-flex align-items-center justify-content-between mt-2">
                 <Card.Text
                   className={classNames('fw-bold mb-0', {

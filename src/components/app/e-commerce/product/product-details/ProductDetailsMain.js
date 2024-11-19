@@ -13,6 +13,8 @@ const ProductDetailsMain = ({ product }) => {
     descripcionProducto,
     precioUnitario,
     descuento,
+    superPrecio = 20,
+    precioMayoreo = 30,
     cantidad,
     CategoriaProducto,
   } = product;
@@ -68,19 +70,24 @@ const ProductDetailsMain = ({ product }) => {
         </Link>
       )}
 
-      {/* Precio y Descuento */}
-      <div className="d-flex align-items-center mb-3">
-        <h3 className="text-warning fw-bold">{`$${precioConDescuento.toFixed(2)}`}</h3>
-        {descuento && (
-          <span className="ms-2 text-muted fs-5">
-            <del>{`$${precioUnitario.toFixed(2)}`}</del>
-          </span>
-        )}
-        {descuento && (
-          <Badge bg="danger" pill className="discount-badge ms-2">
-            -{descuento}%
-          </Badge>
-        )}
+      {/* Precios */}
+      <div className="d-flex flex-column mb-4">
+        <h5 className="text-warning fw-bold mb-1">
+          Super Precio: ${superPrecio.toFixed(2)}
+        </h5>
+        <h6 className="text-secondary fw-bold mb-1">
+          Precio Mayoreo: ${precioMayoreo.toFixed(2)}
+        </h6>
+        <div className="d-flex align-items-center">
+          <h6 className="text-muted mb-0">
+            Precio Unitario: ${precioConDescuento.toFixed(2)}
+          </h6>
+          {descuento && (
+            <Badge bg="danger" pill className="discount-badge ms-2">
+              -{descuento}%
+            </Badge>
+          )}
+        </div>
       </div>
 
       {/* Descripción del Producto */}
@@ -88,7 +95,9 @@ const ProductDetailsMain = ({ product }) => {
 
       {/* Información adicional */}
       <div className="additional-info mb-4">
-        <p><strong>Costo de Envío:</strong> <span className="text-info">$5</span></p>
+        <p>
+          <strong>Costo de Envío:</strong> <span className="text-info">$5</span>
+        </p>
         <p>
           <strong>Disponibilidad:</strong>
           <span className={`ms-2 ${disponible ? 'text-success' : 'text-danger'}`}>
@@ -133,6 +142,8 @@ ProductDetailsMain.propTypes = {
     descripcionProducto: PropTypes.string.isRequired,
     precioUnitario: PropTypes.number.isRequired,
     descuento: PropTypes.number,
+    superPrecio: PropTypes.number,
+    precioMayoreo: PropTypes.number,
     cantidad: PropTypes.number.isRequired,
     CategoriaProducto: PropTypes.shape({
       nombre: PropTypes.string,
