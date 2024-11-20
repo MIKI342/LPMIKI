@@ -1,35 +1,66 @@
-// components/home/CategoryCard.js
-
 import React, { useMemo } from 'react';
 import { Card, Carousel } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import 'components/home/componentsHome/css/CategoryCard.css'; // Archivo CSS para estilos
+import 'components/home/componentsHome/css/CategoryCard.css';
 
-// Mapeo de categorías con sus conjuntos de imágenes específicos
 const categoryImageMapping = {
   'ELECTRÓNICA': ['/img/electronica/img1.png', '/img/electronica/img2.png', '/img/electronica/img3.png'],
   'PAPELERÍA': ['/img/papeleria/img1.png', '/img/papeleria/img2.png', '/img/papeleria/img3.png'],
-  'REGALOS Y FIESTA': ['/img/regalosyfiesta/img1.png', '/img/regalosyfiesta/img2.png', '/img/regalosyfiesta/img3.png' ],
-  'VAPE': ['/img/vape/img1.png','/img/vape/img2.png', '/img/vape/img3.png', '/img/vape/img4.png', '/img/vape/img5.png', '/img/vape/img6.png'],
-  // Agrega más categorías e imágenes según sea necesario
+  'REGALOS Y FIESTA': ['/img/regalosyfiesta/img1.png', '/img/regalosyfiesta/img2.png', '/img/regalosyfiesta/img3.png'],
+  'VAPE': ['/img/vape/img1.png', '/img/vape/img2.png', '/img/vape/img3.png', '/img/vape/img4.png', '/img/vape/img5.png', '/img/vape/img6.png'],
 };
 
-const CategoryCard = ({ category }) => { 
-  // Obtener las imágenes correspondientes a la categoría o una imagen por defecto
-  const images = useMemo(() => categoryImageMapping[category] || ['/img/default.png'], [category]);
+const tramitesImageMapping = [
+  '/img/tramites/actasFoliadas/actaNacimiento/img1.png',
+  '/img/tramites/actasFoliadas/defuncion/img1.png',
+  '/img/tramites/actasFoliadas/divorcio/img1.png',
+  '/img/tramites/actasFoliadas/matrimonio/img1.png',
+  '/img/tramites/afiliacionImss/img3.png',
+  '/img/tramites/afiliacionIsste/img2.png',
+  '/img/tramites/antecedentesPenales/img3.png',
+  '/img/tramites/cartaInfonavit/img2.png',
+  '/img/tramites/cfe/img3.png',
+  '/img/tramites/cuentaInfonavit/img2.png',
+  '/img/tramites/nss/img2.png',
+];
+
+const CategoryCard = ({ category }) => {
+  const images = useMemo(() => {
+    if (category === 'TRÁMITES') {
+      return tramitesImageMapping.filter((imgSrc) => imgSrc);
+    }
+    return categoryImageMapping[category] || ['/img/default.png'];
+  }, [category]);
 
   return (
     <Card className="category-card">
-      {/* Carrusel de imágenes con intervalo de 2 segundos */}
       <Carousel interval={2000}>
         {images.map((imgSrc, index) => (
           <Carousel.Item key={index}>
-            <Card.Img variant="top" src={imgSrc} alt={`${category} Image ${index + 1}`} />
+            <Card.Img
+              variant="top"
+              src={imgSrc}
+              alt={`${category} Image ${index + 1}`}
+              onError={(e) => {
+                e.target.src = '/img/default.png'; // Fallback para imágenes faltantes
+              }}
+              style={{
+                height: '200px',
+                width: '100%',
+                objectFit: 'cover',
+              }}
+            />
           </Carousel.Item>
         ))}
       </Carousel>
-
-      <Card.Body className="category-card-body">
+      <Card.Body
+        className="category-card-body"
+        style={{
+          textAlign: 'center',
+          fontSize: '14px',
+          fontWeight: 'bold',
+        }}
+      >
         {category.toUpperCase()}
       </Card.Body>
     </Card>
@@ -41,3 +72,7 @@ CategoryCard.propTypes = {
 };
 
 export default React.memo(CategoryCard);
+
+
+
+

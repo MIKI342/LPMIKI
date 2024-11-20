@@ -19,7 +19,7 @@ const useContactNumbers = () => {
 
     const contactMapping = {
       vape: contactNumbers.vapeDiego,
-      'trámites': contactNumbers.tramitesVale,
+      'Trámites': contactNumbers.tramitesVale,
       refacciones: contactNumbers.refaccionesYahir,
       herramientas: contactNumbers.refaccionesYahir,
       insumos: contactNumbers.refaccionesYahir,
