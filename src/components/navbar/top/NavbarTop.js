@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { AuthContext } from 'context/AuthContext';
 import { useAppContext } from 'Main';
-import Logo from 'components/common/Logo';
 import SearchBox from './SearchBox';
 import TopNavRightSideNavItem from './TopNavRightSideNavItem';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -54,9 +53,7 @@ const NavbarTop = () => {
             )}
           </Col>
 
-          <Col xs="auto">
-            <Logo at="navbar-top" textClass="text-primary" width={40} id="topLogo" />
-          </Col>
+         
 
           {!isAuthenticated && (
             <Col xs="auto" className="ms-auto">
