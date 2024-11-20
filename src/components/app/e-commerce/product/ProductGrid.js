@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Col } from 'react-bootstrap';
-import ProductCard from 'components/app/e-commerce/product/ProductCard';
+import ProductCard from 'components/app/e-commerce/product/componentsProductCard/ProductCard';
 import Skeleton from 'react-loading-skeleton';
 
 const ProductGrid = memo(({ product, paginationState, dispatch }) => {

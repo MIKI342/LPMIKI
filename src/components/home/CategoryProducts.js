@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ProductContext } from 'context/Context';
-import ProductCard from 'components/app/e-commerce/product/ProductCard';
+import ProductCard from 'components/app/e-commerce/product/componentsProductCard/ProductCard';
 import useGroupedByCategory from 'hooks/useGroupedByCategory';
 import { Row, Col, Button } from 'react-bootstrap';
 import Skeleton from 'react-loading-skeleton';
