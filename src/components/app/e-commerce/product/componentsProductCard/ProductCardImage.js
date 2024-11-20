@@ -1,3 +1,6 @@
+//Renderiza la imagen principal del producto.
+//Encapsula la lógica relacionada con la visualización de imágenes, como el ajuste de proporción, el diseño y los bordes redondeados.
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProductImage from 'components/app/e-commerce/product/ProductImage';

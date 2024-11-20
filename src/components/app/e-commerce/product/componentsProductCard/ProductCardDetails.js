@@ -1,3 +1,9 @@
+//Muestra los detalles básicos del producto:
+//Nombre del producto.
+//Descripción (limitada a 40 caracteres con puntos suspensivos si es más larga).
+//Rating con estrellas.
+//Se encarga únicamente del contenido textual y la sección de calificaciones, manteniendo el diseño limpio.
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import StarRating from 'components/home/StarRating';
