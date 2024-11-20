@@ -19,7 +19,7 @@ const ProductStockAndCart = ({ isAvailable, onAddToCart }) => (
         placement="top"
         overlay={<Tooltip>Añadir al carrito</Tooltip>}
       >
-        <Button
+        <Button 
           variant="outline-secondary"
           style={{
             borderRadius: '50%',

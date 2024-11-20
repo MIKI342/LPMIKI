@@ -12,7 +12,7 @@ import SimpleRegistration from 'components/authentication/simple/Registration';
 import SimpleForgetPassword from 'components/authentication/simple/ForgetPassword';
 import Map from 'components/home/componentsHome/Map/map';
 import Home from 'components/home';
-import CategoryProducts from 'components/home/CategoryProducts';
+import CategoryProducts from 'components/home/componentsHome/CategoryProductsComponents/CategoryProducts';
 import PrivateRoute from 'routes/PrivateRoute';
 import SimpleLogout from 'components/authentication/simple/Logout';
 import AuthSimpleLayout from '../layouts/AuthSimpleLayout';

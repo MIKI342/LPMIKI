@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { Card, Col, Row, Spinner } from 'react-bootstrap';
 import ProductDetailsMedia from './ProductDetailsMedia';
-import ProductDetailsMain from './ProductDetailsMain';
+import ProductDetailsMain from 'components/app/e-commerce/product/product-details/componentsProductDetailsMain/ProductDetailsMain';
 import ProductDetailsFooter from './ProductDetailsFooter';
 
 import { ProductContext } from 'context/Context';
