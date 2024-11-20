@@ -5,7 +5,7 @@ import { Card, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { ProductContext } from 'context/Context';
 import useGroupedByCategory from 'hooks/useGroupedByCategory';
-import CategoryCard from 'components/home/CategoryCard';
+import CategoryCard from 'components/home/componentsHome/CategoryCard';
 import 'components/home/componentsHome/css/CategoryGroup.css';
 
 const CategoryGroup = () => {
