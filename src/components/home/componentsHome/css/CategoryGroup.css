@@ -1,4 +1,4 @@
-/* Archivo: CategoryGroup.css */
+/* CategoryGroup.css */
 
 .category-group-card {
   border: 1px solid #ccc;
@@ -12,13 +12,12 @@
   flex-direction: column;
 }
 
-@media (max-width: 991.98px) { /* Pantallas pequeñas */
+@media (max-width: 991.98px) { /* Pantallas medianas y pequeñas */
   .category-group-card {
     margin-left: -1%; /* Ajusta este valor según necesites */
     margin-right: auto;
   }
 }
-
 
 .category-group-title {
   font-size: 1.5rem; /* Tamaño reducido en un 40-50% */
@@ -65,4 +64,26 @@
   display: flex;
   flex-direction: column;
 }
-  
+
+/* Estilos para el elemento de alternancia */
+.toggle-categories {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  color: #007bff;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.toggle-categories:hover {
+  color: #0056b3;
+}
+
+.toggle-icon {
+  margin-left: 8px;
+  transition: transform 0.3s;
+}
+
+.toggle-icon.open {
+  transform: rotate(180deg);
+}
