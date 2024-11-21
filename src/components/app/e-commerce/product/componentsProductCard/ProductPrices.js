@@ -1,9 +1,14 @@
+// ProductPrices.js
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FaShoppingCart, FaTags, FaCoins, FaBox } from 'react-icons/fa';
+import useIsSmallScreen from 'hooks/useIsSmallScreen'; // Ajusta la ruta según tu estructura
 
 const ProductPrices = ({ product }) => {
   const { precioUnitario, superPrecio, precioMayoreo } = product;
+
+  // Utiliza el hook para determinar si la pantalla es pequeña
+  const isSmallScreen = useIsSmallScreen();
 
   // Filtra y ordena los precios
   const precios = [
@@ -17,12 +22,15 @@ const ProductPrices = ({ product }) => {
   return (
     <>
       {precios.map((precio, index) => {
-        // Ajusta los estilos dinámicamente con tamaños ligeramente mayores
-        const fontSize = `${(1.4 - index * 0.1) * 0.85}rem`; // Reducción del 15%
+        // Ajusta los estilos dinámicamente basados en el tamaño de la pantalla
+        const baseFontSize = 1.4 - index * 0.1; // Base para cálculo
+        const reductionFactor = isSmallScreen ? 0.70 : 0.85; // Reducir más en pantallas pequeñas
+        const fontSize = `${baseFontSize * reductionFactor}rem`;
+
         const fontWeight = index === 0 ? 'bold' : 'normal'; // El más barato en negrita
         const color =
           index === 0
-            ? '#FFA500' // Naranja para el más barato
+            ? '#E76A00' // Naranja para el más barato
             : index === 1
             ? '#007BFF' // Azul para el intermedio
             : '#6C757D'; // Gris para el más caro
@@ -49,7 +57,11 @@ const ProductPrices = ({ product }) => {
 };
 
 ProductPrices.propTypes = {
-  product: PropTypes.object.isRequired,
+  product: PropTypes.shape({
+    precioUnitario: PropTypes.number,
+    superPrecio: PropTypes.number,
+    precioMayoreo: PropTypes.number,
+  }).isRequired,
 };
 
 export default ProductPrices;

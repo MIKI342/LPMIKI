@@ -13,7 +13,7 @@ const StarRating = () => {
                 <FontAwesomeIcon
                     key={index}
                     icon={faStar}
-                    color={index < filledStars ? '#ffc107' : '#e4e5e9'}
+                    color={index < filledStars ? '#FFD700' : '#FFD700'}
                 />
             ))}
         </div>

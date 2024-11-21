@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import StarRating from 'components/home/StarRating';
 
 const ProductCardDetails = ({ product }) => {
-  const { nombreProducto, descripcionProducto } = product;
+  const { nombreProducto } = product;
 
   return (
     <>
@@ -19,23 +19,19 @@ const ProductCardDetails = ({ product }) => {
           color: '#00274D',
           fontWeight: 'bold',
           whiteSpace: 'normal',
-          overflowWrap: 'break-word',
+          overflowWrap: 'break-word'
         }}
       >
         {nombreProducto}
       </h5>
       <StarRating className="mb-2" />
-      <p className="text-muted mb-3" style={{ fontSize: '1rem' }}>
-        {descripcionProducto.length > 40
-          ? `${descripcionProducto.slice(0, 40)}...`
-          : descripcionProducto}
-      </p>
+      <br></br>{' '}
     </>
   );
 };
 
 ProductCardDetails.propTypes = {
-  product: PropTypes.object.isRequired,
+  product: PropTypes.object.isRequired
 };
 
 export default ProductCardDetails;
