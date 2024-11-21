@@ -1,5 +1,5 @@
 // CategoryCard.js
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { Card, Carousel } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import 'components/home/componentsHome/css/CategoryCard.css';
@@ -21,12 +21,12 @@ const CategoryCard = ({ category, onImageClick }) => {
     return categoryImageMapping[category.toUpperCase()] || ['/img/default.png'];
   }, [category]);
 
-  // Función para manejar clics en la imagen
-  const handleImageClick = (e) => {
+  // Función memoizada para manejar clics en la imagen
+  const handleImageClick = useCallback((e) => {
     // Prevenir que el clic se propague al Carousel para evitar conflictos con gestos de deslizamiento
     e.stopPropagation();
     onImageClick();
-  };
+  }, [onImageClick]);
 
   return (
     <Card className="category-card">

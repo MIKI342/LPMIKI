@@ -1,17 +1,22 @@
 // DynamicCategories.js
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import CategoryCard from 'components/home/componentsHome/CategoryGroupComponents/CategoryCard';
 import PropTypes from 'prop-types';
 
 const DynamicCategories = ({ categories, onCategoryClick }) => {
-  const categoryWrapperStyle = {
+  const categoryWrapperStyle = useMemo(() => ({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
-  };
+  }), []);
+
+  // Función para generar handlers memoizados por categoría
+  const generateOnImageClick = useCallback((categoryName) => {
+    return () => onCategoryClick(categoryName);
+  }, [onCategoryClick]);
 
   return (
     <Row className="mx-n1 flex-grow-1">
@@ -30,7 +35,7 @@ const DynamicCategories = ({ categories, onCategoryClick }) => {
             <CategoryCard 
               category={category.name} 
               image="/img/category-default.png" 
-              onImageClick={() => onCategoryClick(category.name)} 
+              onImageClick={generateOnImageClick(category.name)} 
             />
           </div>
         </Col>
@@ -46,4 +51,5 @@ DynamicCategories.propTypes = {
   onCategoryClick: PropTypes.func.isRequired,
 };
 
-export default DynamicCategories;
+// Memoizar el componente para evitar re-renderizados innecesarios
+export default React.memo(DynamicCategories);

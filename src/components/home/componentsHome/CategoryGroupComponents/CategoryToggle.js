@@ -1,6 +1,7 @@
 // CategoryToggle.js
 import React from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import PropTypes from 'prop-types';
 
 const CategoryToggle = ({ showAllCategories, toggleCategories }) => {
   return (
@@ -22,4 +23,10 @@ const CategoryToggle = ({ showAllCategories, toggleCategories }) => {
   );
 };
 
-export default CategoryToggle;
+CategoryToggle.propTypes = {
+  showAllCategories: PropTypes.bool.isRequired,
+  toggleCategories: PropTypes.func.isRequired,
+};
+
+// Memoizar el componente para evitar re-renderizados innecesarios
+export default React.memo(CategoryToggle);

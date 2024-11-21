@@ -1,3 +1,4 @@
+// CategoryGroup.js
 import React, { useContext, useState, useCallback } from 'react';
 import { Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -22,10 +23,16 @@ const CategoryGroup = () => {
     showAllCategories
   );
 
+  // Función memoizada para manejar el clic en una categoría
   const handleCategoryClick = useCallback(
     (category) => navigate(`/category/${category}`),
     [navigate]
   );
+
+  // Función memoizada para alternar la visualización de categorías
+  const toggleCategories = useCallback(() => {
+    setShowAllCategories((prev) => !prev);
+  }, []);
 
   if (loading) {
     return <div>Cargando...</div>;
@@ -50,7 +57,7 @@ const CategoryGroup = () => {
         {isSmallScreen && (
           <CategoryToggle
             showAllCategories={showAllCategories}
-            toggleCategories={() => setShowAllCategories((prev) => !prev)}
+            toggleCategories={toggleCategories}
           />
         )}
       </Card.Body>
