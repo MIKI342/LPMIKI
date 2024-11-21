@@ -7,8 +7,8 @@ import useIsSmallScreen from 'hooks/useIsSmallScreen';
 import { useCategoryLogic } from 'hooks/useCategoryLogic';
 import DynamicCategories from 'components/home/componentsHome/CategoryGroupComponents/DynamicCategories';
 import CategoryToggle from 'components/home/componentsHome/CategoryGroupComponents/CategoryToggle';
-import TramiteCategory from 'components/home/componentsHome/MoreServices/tramites/TramiteCategory';
 import 'components/home/componentsHome/css/CategoryGroup.css';
+
 const CategoryGroup = () => {
   const { products, loading } = useContext(ProductContext);
   const groupedProducts = useGroupedByCategory(products);
@@ -37,7 +37,10 @@ const CategoryGroup = () => {
         <h2 className="category-group-title">Descubre nuestras categorías</h2>
 
         {/* Renderizado de todas las categorías */}
-        <DynamicCategories categories={displayedDynamicCategories} onCategoryClick={handleCategoryClick} />
+        <DynamicCategories
+          categories={displayedDynamicCategories}
+          onCategoryClick={handleCategoryClick}
+        />
 
         {/* Alternador para pantallas pequeñas */}
         {isSmallScreen && (
