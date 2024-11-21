@@ -2,12 +2,8 @@
   border: 1px solid #ccc;
   margin: 0;
   padding: 0;
-  /* Removemos height: 100% para permitir alturas dinámicas */
-  /* height: 100%; */
   display: flex;
   flex-direction: column;
-  /* Eliminamos min-height fijo */
-  /* min-height: 600px; */
 }
 
 @media (max-width: 991.98px) { /* Pantallas medianas y pequeñas */
@@ -73,11 +69,11 @@
 }
 
 .category-card-wrapper {
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  padding: 1rem; /* Añadido para mejor espaciado */
 }
 
 .category-group-card .card-body {
