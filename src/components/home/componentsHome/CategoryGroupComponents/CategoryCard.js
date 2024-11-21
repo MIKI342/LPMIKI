@@ -1,3 +1,4 @@
+// CategoryCard.js
 import React, { useMemo } from 'react';
 import { Card, Carousel } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -15,20 +16,28 @@ const categoryImageMapping = {
   ],
 };
 
-const CategoryCard = ({ category }) => {
+const CategoryCard = ({ category, onImageClick }) => {
   const images = useMemo(() => {
     return categoryImageMapping[category.toUpperCase()] || ['/img/default.png'];
   }, [category]);
 
+  // Función para manejar clics en la imagen
+  const handleImageClick = (e) => {
+    // Prevenir que el clic se propague al Carousel para evitar conflictos con gestos de deslizamiento
+    e.stopPropagation();
+    onImageClick();
+  };
+
   return (
     <Card className="category-card">
-      <Carousel interval={2000}>
+      <Carousel interval={2000} touch={true} pause={false}>
         {images.map((imgSrc, index) => (
           <Carousel.Item key={index}>
             <Card.Img
               variant="top"
               src={imgSrc}
               alt={`${category} Image ${index + 1}`}
+              onClick={handleImageClick}
               onError={(e) => {
                 e.target.src = '/img/default.png'; // Fallback para imágenes faltantes
               }}
@@ -56,6 +65,7 @@ const CategoryCard = ({ category }) => {
 
 CategoryCard.propTypes = {
   category: PropTypes.string.isRequired,
+  onImageClick: PropTypes.func.isRequired,
 };
 
 export default React.memo(CategoryCard);

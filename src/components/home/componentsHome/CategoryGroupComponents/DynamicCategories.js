@@ -1,11 +1,12 @@
+// DynamicCategories.js
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import CategoryCard from 'components/home/componentsHome/CategoryGroupComponents/CategoryCard';
+import PropTypes from 'prop-types';
 
 const DynamicCategories = ({ categories, onCategoryClick }) => {
   const categoryWrapperStyle = {
     flex: 1,
-    cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -25,14 +26,24 @@ const DynamicCategories = ({ categories, onCategoryClick }) => {
           <div
             className="category-card-wrapper"
             style={categoryWrapperStyle}
-            onClick={() => onCategoryClick(category.name)}
           >
-            <CategoryCard category={category.name} image="/img/category-default.png" />
+            <CategoryCard 
+              category={category.name} 
+              image="/img/category-default.png" 
+              onImageClick={() => onCategoryClick(category.name)} 
+            />
           </div>
         </Col>
       ))}
     </Row>
   );
+};
+
+DynamicCategories.propTypes = {
+  categories: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  })).isRequired,
+  onCategoryClick: PropTypes.func.isRequired,
 };
 
 export default DynamicCategories;
