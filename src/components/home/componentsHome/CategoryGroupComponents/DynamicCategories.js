@@ -16,8 +16,8 @@ const DynamicCategories = ({ categories, onCategoryClick }) => {
     <Row className="mx-n1 flex-grow-1">
       {categories.map((category) => (
         <Col
-          xs={6}
-          md={4}
+          xs={6} // 2 categorías por fila en pantallas pequeñas
+          md={4} // 3 categorías por fila en pantallas medianas y grandes
           className="px-3 py-2 category-col"
           key={category.name}
           style={{ display: 'flex' }}
