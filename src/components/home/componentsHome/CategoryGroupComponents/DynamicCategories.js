@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import CategoryCard from 'components/home/componentsHome/CategoryCard';
+import CategoryCard from 'components/home/componentsHome/CategoryGroupComponents/CategoryCard';
 
 const DynamicCategories = ({ categories, onCategoryClick }) => {
   const categoryWrapperStyle = {
