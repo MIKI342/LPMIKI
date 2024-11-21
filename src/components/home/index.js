@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
-import CategoryGroup from 'components/home/componentsHome/CategoryGroup';
+import CategoryGroup from 'components/home/componentsHome/CategoryGroupComponents/CategoryGroup';
 import Bienvenida from 'components/home/componentsHome/Bienvenida';
 import Map from 'components/home/componentsHome/Map/map';
 import 'components/home/componentsHome/css/Ecommerce.css';
