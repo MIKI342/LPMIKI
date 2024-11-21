@@ -31,8 +31,24 @@ const CategoryGroup = () => {
     return <div>Cargando...</div>;
   }
 
+  // Calcular la altura mínima basada en la cantidad de categorías
+  const categoriesCount = displayedDynamicCategories.length;
+  const categoriesPerRow = isSmallScreen ? 2 : 3;
+  const numberOfRows = Math.ceil(categoriesCount / categoriesPerRow);
+  
+  // Definir la altura mínima por fila (ajusta este valor según tu diseño)
+  const minHeightPerRow = 200; // Por ejemplo, 200px por fila
+  const calculatedMinHeight = numberOfRows * minHeightPerRow;
+
+  // Establecer el estilo dinámicamente
+  const cardStyle = {
+    minHeight: showAllCategories ? '600px' : `${calculatedMinHeight}px`,
+    width: '100%',
+    transition: 'min-height 0.3s ease', // Añade una transición suave
+  };
+
   return (
-    <Card className="category-group-card fill-height" style={{ minHeight: '600px', width: '100%' }}>
+    <Card className="category-group-card fill-height" style={cardStyle}>
       <Card.Body className="py-3">
         <h2 className="category-group-title">Descubre nuestras categorías</h2>
 
