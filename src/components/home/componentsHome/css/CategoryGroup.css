@@ -1,10 +1,5 @@
-/* CategoryGroup.css */
-
 .category-group-card {
   border: 1px solid #ccc;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
   margin: 0;
   padding: 0;
   height: 100%; /* Aseguramos que el card ocupe toda la altura */
@@ -14,19 +9,43 @@
 
 @media (max-width: 991.98px) { /* Pantallas medianas y pequeñas */
   .category-group-card {
-    margin-left: -1%; /* Ajusta este valor según necesites */
-    margin-right: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Reducir espacio entre el título y las categorías */
+  .category-group-title {
+    margin-bottom: 0.25rem; /* Espacio mínimo */
+  }
+
+  .category-group-title::after {
+    margin: 0.1rem auto 0.1rem; /* Espacio mínimo en el subrayado */
+  }
+
+  /* Reducir espacio entre el contenedor de categorías y "Ver todas las categorías" */
+  .category-group-card .card-body {
+    padding: 0.25rem 0; /* Reducimos el espacio superior e inferior */
+  }
+
+  /* Reducir espacio entre filas de categorías */
+  .category-col {
+    padding: 0.25rem 0; /* Espacio mínimo entre filas */
+  }
+
+  /* Reducir espacio para la opción "Ver todas las categorías" */
+  .toggle-categories {
+    margin-top: 0.25rem; /* Espacio mínimo */
   }
 }
 
 .category-group-title {
-  font-size: 1.5rem; /* Tamaño reducido en un 40-50% */
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #2c3e50; /* Color profesional */
+  color: #2c3e50;
   text-align: center;
   margin-bottom: 1rem;
   font-family: 'Helvetica Neue', sans-serif;
-  letter-spacing: 0.5px; /* Espaciado ligero para un estilo moderno */
+  letter-spacing: 0.5px;
 }
 
 .category-group-title::after {
@@ -34,7 +53,7 @@
   display: block;
   width: 60px;
   height: 3px;
-  background-color: #3498db; /* Color de acento */
+  background-color: #3498db;
   margin: 0.5rem auto 1rem;
   border-radius: 2px;
 }
@@ -43,7 +62,7 @@
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   padding: 0;
-  flex: 1; /* Asegura que las columnas ocupen el mismo espacio vertical */
+  flex: 1;
 }
 
 .category-col:last-child {
@@ -58,14 +77,12 @@
   cursor: pointer;
 }
 
-/* Aseguramos que el contenido del Card ocupe toda la altura disponible */
 .category-group-card .card-body {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* Estilos para el elemento de alternancia */
 .toggle-categories {
   display: inline-flex;
   align-items: center;
