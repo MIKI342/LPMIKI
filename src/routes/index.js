@@ -1,3 +1,4 @@
+// FalconRoutes.js
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
@@ -16,10 +17,7 @@ import CategoryProducts from 'components/home/componentsHome/CategoryProductsCom
 import PrivateRoute from 'routes/PrivateRoute';
 import SimpleLogout from 'components/authentication/simple/Logout';
 import AuthSimpleLayout from '../layouts/AuthSimpleLayout';
-import TramiteDetail from 'components/home/componentsHome/MoreServices/tramites/TramiteDetail'; // Importa el componente de detalles del trámite
-import RefaccionDetail from 'components/home/componentsHome/MoreServices/refacciones/RefaccionDetail'; // Importa el componente de detalles de refacciones
-import HerramientaDetail from 'components/home/componentsHome/MoreServices/herramientas/HerramientaDetail'; // Importa el componente de detalles de refacciones
-
+import Tramites from 'components/home/componentsHome/CategoryGroupComponents/Tramites'; // Importa el nuevo componente Tramites
 
 const FalconRoutes = () => {
   return (
@@ -35,16 +33,12 @@ const FalconRoutes = () => {
         <Route path="e-commerce/billing" element={<Billing />} />
         <Route path="e-commerce/checkout" element={<PrivateRoute element={Checkout} />} />
         <Route path="e-commerce/invoice" element={<Invoice />} />
-        <Route path="/category/:category" element={<CategoryProducts />} />
-
-        {/* Ruta para detalles del trámite */}
-        <Route path="/tramite/:tramiteId" element={<TramiteDetail />} />
-
-        {/* Ruta para detalles de la refacción */}
-        <Route path="/refaccion/:refaccionId" element={<RefaccionDetail />} />
         
-        <Route path="/herramienta/:herramientaId" element={<HerramientaDetail />} />
-
+        {/* Ruta específica para "Trámites" */}
+        <Route path="/category/Trámites" element={<Tramites />} />
+        
+        {/* Ruta genérica para otras categorías */}
+        <Route path="/category/:category" element={<CategoryProducts />} />
 
       </Route>
 
