@@ -11,10 +11,10 @@ const Tramites = () => {
         {folderPaths.map((tramite) => (
           <Col key={tramite.path} md={6} lg={4} className="mb-4">
             <Card className="tramite-card h-100">
-              {/* Mostrar la primera imagen del arreglo de imágenes */}
+              {/* Ruta actualizada para las imágenes */}
               <Card.Img
                 variant="top"
-                src={`/img/${tramite.images[0]}`} // Asegúrate de que las imágenes estén en public/img/
+                src={`/img/tramites/${tramite.path}/${tramite.images[0]}`} // Ruta actualizada
                 alt={tramite.nombre}
                 className="tramite-image"
               />
