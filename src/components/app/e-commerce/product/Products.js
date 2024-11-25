@@ -56,6 +56,11 @@ const Products = () => {
     }
   }, [layout, navigate]);
 
+  // Asegúrate de que siempre se inicia desde el principio de la página
+  useEffect(() => {
+    window.scrollTo(0, 0); // Establece el scroll al inicio
+  }, [paginationState.currentPage]); // Cada vez que cambia la página
+
   if (loading && cachedProducts.length === 0) return <div>Cargando productos...</div>;
 
   if (!products || products.length === 0) {
@@ -88,34 +93,6 @@ const Products = () => {
             {paginationState?.totalItems || 0} Productos
           </h6>
         </Col>
-        <Col sm="auto">
-          <Row className="gx-2 align-items-center">
-            <Col xs="auto">
-              <Form.Select
-                size="sm"
-                value={categoryFilter}
-                onChange={({ target }) => setCategoryFilter(target.value)}
-              >
-                {categories.map(category => (
-                  <option key={category} value={category}>
-                    {category === 'all' ? 'Todas las Categorías' : category}
-                  </option>
-                ))}
-              </Form.Select>
-            </Col>
-            <Col xs="auto">
-              <Form.Select
-                size="sm"
-                value={statusFilter}
-                onChange={({ target }) => setStatusFilter(target.value)}
-              >
-                <option value="all">Todos los Estados</option>
-                <option value="disponible">Disponible</option>
-                <option value="no disponible">Agotado</option>
-              </Form.Select>
-            </Col>
-          </Row>
-        </Col>
       </Row>
 
       <Row className="g-3">
@@ -134,7 +111,9 @@ const Products = () => {
           variant="falcon-default"
           size="sm"
           disabled={!paginationState?.canPreviousPage}
-          onClick={prevPage}
+          onClick={() => {
+            prevPage(); // Cambiar la página
+          }}
           className="me-2"
         >
           <FontAwesomeIcon icon="chevron-left" /> Anterior
@@ -150,7 +129,9 @@ const Products = () => {
               <Button
                 size="sm"
                 variant="falcon-default"
-                onClick={() => goToPage(page)}
+                onClick={() => {
+                  goToPage(page); // Cambiar la página
+                }}
               >
                 {page}
               </Button>
@@ -161,7 +142,9 @@ const Products = () => {
           variant="falcon-default"
           size="sm"
           disabled={!paginationState?.canNextPage}
-          onClick={nextPage}
+          onClick={() => {
+            nextPage(); // Cambiar la página
+          }}
         >
           Siguiente <FontAwesomeIcon icon="chevron-right" />
         </Button>

@@ -33,66 +33,9 @@ export const homeRoutes = {
   children: [
     {
       name: 'Home',
+      icon: 'home',
       to: '/home',
       active: true
-    }
-  ]
-};
-
-// Definición de rutas de autenticación y perfil de usuario
-export const pagesRoutes = {
-  label: 'Usuario',
-  children: [
-    {
-      name: 'Autenticación',
-      icon: 'lock',
-      active: true,
-      children: [
-        {
-          name: 'Iniciar sesión',
-          to: '/authentication/simple/login',
-          active: true
-        },
-        {
-          name: 'Cerrar sesión',
-          to: '/authentication/simple/logout',
-          active: true
-        },
-        {
-          name: 'Registrarse',
-          to: '/authentication/simple/register',
-          active: true
-        },
-        {
-          name: 'Olvidé mi contraseña',
-          to: '/authentication/simple/forgot-password',
-          active: true
-        },
-        {
-          name: 'Confirmar correo',
-          to: '/authentication/simple/confirm-mail',
-          active: true
-        },
-        {
-          name: 'Restablecer contraseña',
-          to: '/authentication/simple/reset-password',
-          active: true
-        },
-        {
-          name: 'Bloquear pantalla',
-          to: '/authentication/simple/lock-screen',
-          active: true
-        }
-      ]
-    },
-    {
-      name: 'Usuario',
-      icon: 'user',
-      active: true,
-      children: [
-        { name: 'Perfil', to: '/user/profile', active: true },
-        { name: 'Configuraciones', to: '/user/settings', active: true }
-      ]
     }
   ]
 };
@@ -111,4 +54,4 @@ export const modulesRoutes = {
 };
 
 // Exportación de las rutas combinadas para el sistema de navegación
-export default [homeRoutes, appRoutes, pagesRoutes, modulesRoutes];
+export default [homeRoutes, appRoutes,  modulesRoutes];
