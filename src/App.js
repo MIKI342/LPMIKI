@@ -6,7 +6,6 @@ import { CloseButton } from 'components/common/Toast';
 import SettingsToggle from 'components/settings-panel/SettingsToggle';
 import SettingsPanel from 'components/settings-panel/SettingsPanel';
 import { ProductProvider } from './context/Context';
-import { AuthProvider } from './context/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Otros imports
@@ -29,7 +28,7 @@ const App = () => {
   }, [HTMLClassList]);
 
   return (
-    <AuthProvider>
+    
       <ProductProvider>
         
         
@@ -42,7 +41,7 @@ const App = () => {
             </Router>
            
       </ProductProvider>
-    </AuthProvider>
+ 
   );
 };
 

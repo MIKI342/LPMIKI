@@ -1,20 +1,15 @@
-// ShoppingCart.js
-
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Card, Col, Row, Form } from 'react-bootstrap';
+import { Button, Card, Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CartItem from './CartItem';
 import CartModal from './CartModal';
 import { ProductContext } from 'context/Context';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from 'context/AuthContext';
 
 const ShoppingCart = () => {
   const { cartItems, getCartTotal } = useContext(ProductContext); // No se llama como función
   const [totalCost, setTotalCost] = useState(0);
-  const [promoCode, setPromoCode] = useState('');
-  const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,19 +18,15 @@ const ShoppingCart = () => {
   }, [cartItems, getCartTotal]);
 
   const handleCheckout = () => {
-    console.log('handleCheckout llamado. isAuthenticated:', isAuthenticated);
-    if (!isAuthenticated) {
-      toast(<CustomToastContent navigate={navigate} />, {
-        position: "top-center",
-        autoClose: false,
-        closeOnClick: false,
-        draggable: false,
-        closeButton: false,
-        toastId: 'authToast'
-      });
-    } else {
-      navigate('/e-commerce/checkout');
-    }
+    console.log('handleCheckout llamado.');
+    toast(<CustomToastContent navigate={navigate} />, {
+      position: "top-center",
+      autoClose: false,
+      closeOnClick: false,
+      draggable: false,
+      closeButton: false,
+      toastId: 'authToast'
+    });
   };
 
   return (

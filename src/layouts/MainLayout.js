@@ -3,7 +3,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import NavbarTop from 'components/navbar/top/NavbarTop';
 import NavbarVertical from 'components/navbar/vertical/NavbarVertical';
-import ModalAuth from 'components/authentication/modal/ModalAuth';
 import { useAppContext } from 'Main';
 
 const MainLayout = () => {
@@ -42,7 +41,7 @@ const MainLayout = () => {
         {/*------ Main Routes ------*/}
         <Outlet />
       </div>
-      <ModalAuth />
+      
     </div>
   );
 };
