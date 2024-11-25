@@ -1,16 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Container, Row, Col } from 'react-bootstrap';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
-import { AuthContext } from 'context/AuthContext';
 import { useAppContext } from 'Main';
 import SearchBox from './SearchBox';
-import TopNavRightSideNavItem from './TopNavRightSideNavItem';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import useWindowSize from 'hooks/useWindowSize';
 
 const NavbarTop = () => {
-  const { isAuthenticated } = useContext(AuthContext);
   const { config, setConfig } = useAppContext();
   const [showDropShadow, setShowDropShadow] = useState(false);
 
@@ -34,7 +30,7 @@ const NavbarTop = () => {
   return (
     <Navbar
       className={classNames('navbar-glass fs-10 navbar-top sticky-kit', {
-        'navbar-glass-shadow': showDropShadow
+        'navbar-glass-shadow': showDropShadow,
       })}
       expand="lg"
     >
@@ -52,27 +48,6 @@ const NavbarTop = () => {
               </button>
             )}
           </Col>
-
-         
-
-          {!isAuthenticated && (
-            <Col xs="auto" className="ms-auto">
-              <Link
-                to="/authentication/simple/login"
-                className="text-decoration-none"
-                style={{ color: '#343a40' }}
-              >
-                <i className="fas fa-user"></i>
-                <span className="ms-2">Iniciar Sesión</span>
-              </Link>
-            </Col>
-          )}
-
-          {isAuthenticated && (
-            <Col xs="auto" className="ms-auto">
-              <TopNavRightSideNavItem />
-            </Col>
-          )}
         </Row>
 
         <Row className="align-items-center">

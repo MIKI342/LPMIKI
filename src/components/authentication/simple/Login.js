@@ -1,37 +1,27 @@
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Flex from 'components/common/Flex';
-import LoginForm from 'components/authentication/LoginForm';
+import { useNavigate } from 'react-router-dom';
+import { Card, Container, Row, Col } from 'react-bootstrap';
+import { FaTools } from 'react-icons/fa';
 
 const Login = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleBackButton = (event) => {
-      event.preventDefault();
-      // Si el usuario decide retroceder, lo redirigimos a la página de inicio
-      navigate('/home');
-    };
-
-    // Agregar un listener para el evento de retroceso del navegador
-    window.addEventListener('popstate', handleBackButton);
-
-    // Limpiar el listener cuando se desmonte el componente
-    return () => {
-      window.removeEventListener('popstate', handleBackButton);
-    };
-  }, [navigate]);
-
+  
   return (
-    <>
-      <Flex justifyContent="between" alignItems="center" className="mb-2">
-        <h5>Iniciar Sesión</h5>
-        <p className="fs-10 text-600 mb-0">
-          o <Link to="/authentication/simple/register">Crear una cuenta</Link>
-        </p>
-      </Flex>
-      <LoginForm />
-    </>
+    <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+      <Row>
+        <Col>
+          <Card className="text-center shadow-lg p-3">
+            <Card.Body>
+              <FaTools size={64} className="mb-3 text-primary" />
+              <Card.Title className="mb-3">¡En Construcción!</Card.Title>
+              <Card.Text>
+                La funcionalidad de inicio de sesión aún está en desarrollo. 
+                Estamos trabajando para traerla muy pronto.
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
