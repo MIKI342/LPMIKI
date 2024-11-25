@@ -1,5 +1,7 @@
-import React from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+// Tramites.js
+
+import React, { useState } from 'react';
+import { Container, Row, Col, Card, Modal } from 'react-bootstrap';
 import folderPaths from 'data/imagePaths'; // Ajusta la ruta según la ubicación real
 import CategoryHeader from 'components/home/componentsHome/CategoryProductsComponents/CategoryHeader'; // Ajusta la ruta según la ubicación real
 import useContactNumbers from 'hooks/useContactNumbers'; // Ajusta la ruta según la ubicación real
@@ -7,6 +9,16 @@ import useContactNumbers from 'hooks/useContactNumbers'; // Ajusta la ruta segú
 const Tramites = () => {
   const { getContactNumberByCategory } = useContactNumbers();
   const contactNumber = getContactNumberByCategory('Trámites');
+
+  // Estados para manejar el modal y la imagen seleccionada
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
+
+  // Función para manejar el clic en la imagen
+  const handleImageClick = (imagePath) => {
+    setSelectedImage(imagePath);
+    setShowModal(true);
+  };
 
   return (
     <Container className="my-4">
@@ -23,6 +35,10 @@ const Tramites = () => {
                 src={`/img/tramites/${tramite.path}/${tramite.images[0]}`} // Ruta actualizada
                 alt={tramite.nombre}
                 className="tramite-image"
+                onClick={() =>
+                  handleImageClick(`/img/tramites/${tramite.path}/${tramite.images[0]}`)
+                }
+                style={{ cursor: 'pointer' }} // Cambiamos el cursor para indicar que es clickeable
               />
               <Card.Body>
                 <Card.Title>{tramite.nombre}</Card.Title>
@@ -49,6 +65,22 @@ const Tramites = () => {
           </Col>
         ))}
       </Row>
+
+      {/* Modal para mostrar la imagen ampliada */}
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        centered
+        size="lg"
+      >
+        <Modal.Body className="p-0">
+          <img
+            src={selectedImage}
+            alt="Trámite ampliado"
+            className="img-fluid w-100"
+          />
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };
