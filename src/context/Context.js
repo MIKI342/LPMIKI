@@ -1,8 +1,6 @@
-// context/ProductContext.js
-
 import React, { createContext, useReducer, useMemo, useState, useEffect } from 'react';
 import { productReducer } from '../reducers/productReducer';
-import useFetchProducts from '../hooks/useFetchProductsDos';
+import useFetchProducts from 'hooks/useFetchProductsDos'; // Asegúrate de importar el hook correcto
 
 export const AppContext = createContext();
 export const ProductContext = createContext({ products: [], loading: true });
@@ -13,17 +11,30 @@ const formatText = (text) => {
 };
 
 export const ProductProvider = ({ children }) => {
-  const { products, loading } = useFetchProducts('/api/v2/products');
+  const { products, loading } = useFetchProducts('/api/v3/products');
 
   const [formattedProducts, setFormattedProducts] = useState([]);
 
-  useEffect(() => { // Cambiado de useMemo a useEffect
-    if (products) {
-      const nuevosProductos = products.map((product) => ({
-        ...product,
-        nombreProducto: formatText(product.nombreProducto),
-        descripcionProducto: formatText(product.descripcionProducto),
-      }));
+  useEffect(() => {
+    if (products && products.length) {
+      const nuevosProductos = products.map((product) => {
+        // **Añadimos un console.log para verificar cada producto antes de formatear**
+        console.log('Producto recibido en ProductContext:', product);
+
+        const productoFormateado = {
+          ...product,
+          nombreProducto: formatText(product.nombreProducto),
+          descripcionProducto: formatText(product.descripcionProducto),
+          // Asegurarse de que la imagen está correctamente estructurada
+          imagen: product.imagen,
+        };
+
+        // **Añadimos un console.log para verificar el producto después de formatear**
+        console.log('Producto formateado:', productoFormateado);
+
+        return productoFormateado;
+      });
+
       setFormattedProducts(nuevosProductos);
       console.log('Productos formateados actualizados:', nuevosProductos);
     }

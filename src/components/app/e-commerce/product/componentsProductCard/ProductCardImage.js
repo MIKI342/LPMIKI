@@ -1,5 +1,4 @@
-//Renderiza la imagen principal del producto.
-//Encapsula la lógica relacionada con la visualización de imágenes, como el ajuste de proporción, el diseño y los bordes redondeados.
+// components/app/e-commerce/product/ProductCardImage.jsx
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -20,8 +19,8 @@ const ProductCardImage = ({ product }) => {
       <ProductImage
         name={nombreProducto}
         id={id}
-        category={CategoriaProducto?.nombre || 'Sin Categoría'}
-        files={images}
+        category={CategoriaProducto?.nombreCategoria || 'Sin Categoría'}
+        images={images} // Pasamos 'images' al componente
         layout="grid"
         className="w-100 h-100"
       />

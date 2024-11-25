@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+// components/app/e-commerce/product/product-details/ProductDetailsMedia.jsx
+
+import React, { useState, useMemo } from 'react';
 import { Carousel, Image, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-const ProductDetailsMedia = ({ product, imageList }) => {
-  const defaultImage = '/img/default.png';
+const DEFAULT_IMAGE = '/img/default.png';
+
+const ProductDetailsMedia = ({ product, images }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+
+  // Obtener el baseUrl desde la variable de entorno
+  const baseUrl = process.env.REACT_APP_BASE_URL || '';
+
+  // Construir las URLs completas de las imágenes
+  const imageUrls = useMemo(() => {
+    if (images && images.length > 0) {
+      return images.map((img) => `${baseUrl}${img}`);
+    } else {
+      return [DEFAULT_IMAGE];
+    }
+  }, [images, baseUrl]);
 
   const handleImageClick = (src) => {
     setSelectedImage(src); // Establecer la imagen seleccionada
@@ -21,41 +36,26 @@ const ProductDetailsMedia = ({ product, imageList }) => {
     <>
       {/* Carrusel de Imágenes */}
       <Carousel indicators={false} controls interval={2500} fade className="w-100">
-        {imageList.length > 0
-          ? imageList.map((src, index) => (
-              <Carousel.Item key={index}>
-                <Image
-                  src={src}
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = defaultImage;
-                  }}
-                  className="w-100"
-                  alt={`${product.nombreProducto} - Imagen ${index + 1}`}
-                  loading="lazy"
-                  style={{
-                    objectFit: 'cover',
-                    height: '500px',
-                    cursor: 'pointer', // Indicar que es interactiva
-                  }}
-                  onClick={() => handleImageClick(src)} // Manejar clic en la imagen
-                />
-              </Carousel.Item>
-            ))
-          : (
+        {imageUrls.map((src, index) => (
+          <Carousel.Item key={index}>
             <Image
-              src={defaultImage}
+              src={src}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = DEFAULT_IMAGE;
+              }}
               className="w-100"
-              alt="Imagen por defecto"
+              alt={`${product.nombreProducto} - Imagen ${index + 1}`}
               loading="lazy"
               style={{
                 objectFit: 'cover',
                 height: '500px',
-                cursor: 'pointer',
+                cursor: 'pointer', // Indicar que es interactiva
               }}
-              onClick={() => handleImageClick(defaultImage)}
+              onClick={() => handleImageClick(src)} // Manejar clic en la imagen
             />
-          )}
+          </Carousel.Item>
+        ))}
       </Carousel>
 
       {/* Modal para Imagen Expandida */}
@@ -77,7 +77,7 @@ const ProductDetailsMedia = ({ product, imageList }) => {
 
 ProductDetailsMedia.propTypes = {
   product: PropTypes.object.isRequired,
-  imageList: PropTypes.array.isRequired,
+  images: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default ProductDetailsMedia;

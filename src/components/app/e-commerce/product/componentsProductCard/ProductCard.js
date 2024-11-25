@@ -35,6 +35,7 @@ const ProductCard = memo(({ product, paginationState }) => {
 
   return (
     <Card
+   
       className="h-100 shadow-sm"
       style={{
         borderRadius: '10px',

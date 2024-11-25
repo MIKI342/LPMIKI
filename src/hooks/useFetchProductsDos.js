@@ -16,37 +16,46 @@ const useFetchProducts = (url) => {
 
         const data = await response.json();
 
-        // Procesar productos y preparar imágenes simuladas
-        const mappedProducts = data.products.map((product, index) => {
-          const categoriaProducto = data.categories.find(
-            (category) => category.id === product.categoriaId
-          ) || null;
-        
-          const modulo = data.modules.find(
-            (mod) => mod.id === product.moduloId
-          ) || null;
-        
+        // Añadimos un console.log para verificar los datos recibidos
+        console.log('Datos obtenidos de la API:', data);
+
+        // Procesar productos y utilizar las imágenes proporcionadas por la API
+        const mappedProducts = data.products.map((product) => {
+          const categoriaProducto =
+            data.categories.find(
+              (category) => category.id === product.categoriaId
+            ) || null;
+
+          const modulo =
+            data.modules.find((mod) => mod.id === product.moduloId) || null;
+
           // Incluye la categoría dentro de 'Modulo' si existe
           const moduloConCategoria = modulo
-            ? { ...modulo, categoria: categoriaProducto ? categoriaProducto.nombreCategoria : null }
+            ? {
+                ...modulo,
+                categoria: categoriaProducto
+                  ? categoriaProducto.nombreCategoria
+                  : null,
+              }
             : null;
-        
-          // Simular imágenes para algunos productos
-          const simulatedImage = {
-            url: 'https://via.placeholder.com/300',
-          };
-        
-          const hasImages = product.images && product.images.length > 0;
-        
+
+          // Preparar el array de imágenes
+          const images = product.images || (product.imagen ? [product.imagen] : []);
+
+          // Añadimos un console.log para verificar las imágenes
+          console.log('Imágenes del producto:', images);
+
           return {
             ...product,
             CategoriaProducto: categoriaProducto,
-            Modulo: moduloConCategoria, // Usamos 'moduloConCategoria' aquí
-            images: hasImages ? product.images : (index % 2 === 0 ? [simulatedImage] : []),
+            Modulo: moduloConCategoria,
+            images, // Incluimos el array de imágenes
           };
         });
-        
-        
+
+        // Añadimos un console.log para verificar los productos mapeados
+        console.log('Productos mapeados con imágenes:', mappedProducts);
+
         setProducts(mappedProducts); // Actualizar productos procesados
       } catch (error) {
         console.error('Error al obtener los productos:', error);
@@ -58,7 +67,7 @@ const useFetchProducts = (url) => {
     fetchProducts();
   }, [url]);
 
-  return { products, loading }; 
+  return { products, loading };
 };
 
 export default useFetchProducts;
