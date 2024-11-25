@@ -9,7 +9,7 @@ const folderPaths = [
       'CURP',
       'CADENA (Código de verificación)'
     ],
-    images: ['img1.png', 'img2.png', 'img3.png']
+    images: ['img1.png']
   },
   {
     path: 'actasFoliadas/defuncion',

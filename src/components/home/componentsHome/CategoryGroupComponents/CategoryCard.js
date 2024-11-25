@@ -12,7 +12,7 @@ const categoryImageMapping = {
   'TRÁMITES': [
     '/img/tramites/actasFoliadas/actaNacimiento/img1.png',
     '/img/tramites/actasFoliadas/matrimonio/img1.png',
-    '/img/tramites/afiliacionImss/img3.png',
+    '/img/tramites/afiliacionImss/img1.png',
   ],
 };
 
