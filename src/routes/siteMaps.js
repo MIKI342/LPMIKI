@@ -21,21 +21,6 @@ export const appRoutes = {
           name: 'Carrito de compras',
           to: '/e-commerce/shopping-cart',
           active: true
-        },
-        {
-          name: 'Pago',
-          to: '/e-commerce/checkout',
-          active: true
-        },
-        {
-          name: 'Facturación',
-          to: '/e-commerce/billing',
-          active: true
-        },
-        {
-          name: 'Factura',
-          to: '/e-commerce/invoice',
-          active: true
         }
       ]
     }

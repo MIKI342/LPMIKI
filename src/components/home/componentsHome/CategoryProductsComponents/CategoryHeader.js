@@ -7,7 +7,9 @@ const CategoryHeader = ({ category, contact }) => {
     const whatsappNumber = contact.replace(/[^0-9]/g, '');
 
     // Mensaje predefinido que se enviará
-    const message = `Estimado equipo, estoy interesado en los productos de la categoría ${category}.`;
+    
+    const message = `Hola, estoy interesado en productos de ${category} que ofrecen. ¿Podrían brindarme más información? Gracias.`;
+
 
     // Detecta si el usuario está en un dispositivo móvil
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);

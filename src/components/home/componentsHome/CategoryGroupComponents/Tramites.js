@@ -1,12 +1,18 @@
-// src/components/home/componentsHome/CategoryGroupComponents/Tramites.js
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import folderPaths from 'data/imagePaths'; // Ajusta la ruta según la ubicación real
+import CategoryHeader from 'components/home/componentsHome/CategoryProductsComponents/CategoryHeader'; // Ajusta la ruta según la ubicación real
+import useContactNumbers from 'hooks/useContactNumbers'; // Ajusta la ruta según la ubicación real
 
 const Tramites = () => {
+  const { getContactNumberByCategory } = useContactNumbers();
+  const contactNumber = getContactNumberByCategory('Trámites');
+
   return (
     <Container className="my-4">
-      <h2 className="mb-4">Trámites</h2>
+      {/* Integración del componente CategoryHeader */}
+      <CategoryHeader category="Trámites" contact={contactNumber} />
+
       <Row>
         {folderPaths.map((tramite) => (
           <Col key={tramite.path} md={6} lg={4} className="mb-4">

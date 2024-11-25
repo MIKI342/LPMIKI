@@ -12,20 +12,25 @@ const useContactNumbers = () => {
     return numbers;
   }, []);
 
-  const normalizeCategory = (category) => (category || '').trim().toLowerCase();
+  const normalizeCategory = (category) =>
+    (category || '')
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, ''); // Elimina acentos y diacríticos
 
   const getContactNumberByCategory = (category) => {
     const normalizedCategory = normalizeCategory(category);
 
     const contactMapping = {
       vape: contactNumbers.vapeDiego,
-      'Trámites': contactNumbers.tramitesVale,
+      tramites: contactNumbers.tramitesVale,
       refacciones: contactNumbers.refaccionesYahir,
       herramientas: contactNumbers.refaccionesYahir,
       insumos: contactNumbers.refaccionesYahir,
       'regalos y fiesta': contactNumbers.regalos,
-      papelería: contactNumbers.regalos,
-      electrónica: contactNumbers.respaldoManuel,
+      papeleria: contactNumbers.regalos,
+      electronica: contactNumbers.respaldoManuel,
     };
 
     const contact = contactMapping[normalizedCategory] || contactNumbers.respaldoManuel;
