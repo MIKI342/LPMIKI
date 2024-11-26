@@ -2,7 +2,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
-import Products from 'components/app/e-commerce/product/Products';
+import Products from 'components/app/e-commerce/product/ProductsF';
 import ProductDetails from 'components/app/e-commerce/product/product-details/ProductDetails';
 import ShoppingCart from 'components/app/e-commerce/cart/ShoppingCart';
 import SimpleLogin from 'components/authentication/simple/Login';
