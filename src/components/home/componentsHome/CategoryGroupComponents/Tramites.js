@@ -24,11 +24,19 @@ const Tramites = () => {
     <Container className="my-4">
       {/* Integración del componente CategoryHeader */}
       <CategoryHeader category="Trámites" contact={contactNumber} />
-
+  
       <Row>
         {folderPaths.map((tramite) => (
           <Col key={tramite.path} md={6} lg={4} className="mb-4">
-            <Card className="tramite-card h-100">
+            <Card
+              className="tramite-card h-100"
+              style={{
+                borderRadius: '10px', // Bordes redondeados
+                border: '1px solid black', // Margen negro delgado
+                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // Sombra ligera
+                backgroundColor: '#F7F7F7', // Fondo de la tarjeta
+              }}
+            >
               {/* Ruta actualizada para las imágenes */}
               <Card.Img
                 variant="top"
@@ -58,14 +66,14 @@ const Tramites = () => {
                 </ul>
                 {/* Opcional: Agregar un botón para más detalles */}
                 {/* <Button variant="primary" href={`/tramite/${tramite.path}`}>
-                  Más detalles
-                </Button> */}
+                    Más detalles
+                  </Button> */}
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
-
+  
       {/* Modal para mostrar la imagen ampliada */}
       <Modal
         show={showModal}
@@ -83,6 +91,7 @@ const Tramites = () => {
       </Modal>
     </Container>
   );
+  
 };
 
 export default Tramites;

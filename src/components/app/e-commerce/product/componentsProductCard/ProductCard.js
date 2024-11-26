@@ -38,10 +38,12 @@ const ProductCard = memo(({ product, paginationState }) => {
    
       className="h-100 shadow-sm"
       style={{
-        borderRadius: '10px',
-        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-        backgroundColor: '#F7F7F7',
+        borderRadius: '10px', // Bordes redondeados
+        border: '1px solid black', // Margen negro delgado
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // Sombra original
+        backgroundColor: '#F7F7F7', // Fondo de la tarjeta
       }}
+      
       onClick={handleCardClick}
     >
       <Row className="g-0">

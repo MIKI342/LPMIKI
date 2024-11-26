@@ -39,7 +39,15 @@ const ProductDetails = () => {
 
   return (
     <>
-      <Card className="shadow-sm mb-4">
+      <Card
+        className="shadow-sm mb-4"
+        style={{
+          borderRadius: '10px', // Bordes redondeados
+          border: '1px solid black', // Margen negro delgado
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // Sombra original
+          backgroundColor: '#F7F7F7', // Fondo de la tarjeta
+        }}
+      >
         <Card.Body>
           {/* Información principal */}
           <Row>
@@ -50,7 +58,7 @@ const ProductDetails = () => {
               <ProductDetailsMain product={product} />
             </Col>
           </Row>
-
+  
           {/* Footer alineado */}
           <Row className="mt-4">
             <Col>
