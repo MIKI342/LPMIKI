@@ -8,10 +8,10 @@ const BienvenidaDesign = ({ greeting, randomOffers }) => (
     style={{
       borderRadius: '15px',
       backgroundColor: '#f8f9fa',
-      padding: '20px',
+      padding: '0px',
       boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
       width: '100%',
-      minHeight: '600px',
+      minHeight: '500px',
     }}
   >
     <Card.Header
