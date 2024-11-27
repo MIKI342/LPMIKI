@@ -3,7 +3,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import Products from 'components/app/e-commerce/product/ProductsF';
-import ProductDetails from 'components/app/e-commerce/product/product-details/ProductDetails';
+import ProductDetails from 'components/app/e-commerce/product/product-detailsF/ProductDetailsF';
 import ShoppingCart from 'components/app/e-commerce/cart/ShoppingCart';
 import SimpleLogin from 'components/authentication/simple/Login';
 import Map from 'components/home/componentsHome/Map/map';
@@ -22,7 +22,7 @@ const FalconRoutes = () => {
         <Route path="/home" element={<Home />} />
         <Route path="e-commerce/shopping-cart" element={<ShoppingCart />} />
         <Route path="e-commerce/product/:productLayout" element={<Products />} />
-        <Route path="e-commerce/product/product-details/:productId" element={<ProductDetails />} />
+        <Route path="e-commerce/product/product-detailsF/:productId" element={<ProductDetails />} />
         
         {/* Ruta específica para "Trámites" */}
         <Route path="/category/Trámites" element={<Tramites />} />

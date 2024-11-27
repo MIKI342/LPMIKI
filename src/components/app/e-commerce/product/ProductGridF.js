@@ -44,7 +44,7 @@ const ProductGrid = ({ product, ...rest }) => {
             <h5 className="fs-9">
               <Link
                 className="text-1100"
-                to={`/e-commerce/product/product-details/${id}`}
+                to={`/e-commerce/product/product-detailsF/${id}`}
               >
                 {nombreProducto}
               </Link>
