@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { Button, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import classNames from 'classnames';
 import useProductHook from 'hooks/useProductHook';
-import ProductImage from './ProductImage';
 import StarRating from 'components/common/StarRating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -31,7 +30,7 @@ const ProductGrid = ({ product, ...rest }) => {
         className="border rounded-1 h-100 pb-3"
       >
         <div className="overflow-hidden">
-          {/* Mostrar imagen del producto */}
+          {/* Imagen del producto */}
           <div className="position-relative">
             <img
               src={imagen}
@@ -41,7 +40,7 @@ const ProductGrid = ({ product, ...rest }) => {
             />
           </div>
           <div className="p-3">
-            {/* Mostrar nombre del producto */}
+            {/* Nombre del producto */}
             <h5 className="fs-9">
               <Link
                 className="text-1100"
@@ -50,11 +49,11 @@ const ProductGrid = ({ product, ...rest }) => {
                 {nombreProducto}
               </Link>
             </h5>
-            {/* Mostrar descripción del producto */}
+            {/* Descripción del producto */}
             <p className="fs-10 mb-3 text-muted">
               {descripcionProducto || 'No description available'}
             </p>
-            {/* Mostrar precios */}
+            {/* Precios del producto */}
             <h5 className="fs-md-7 text-warning mb-0 d-flex align-items-center mb-3">
               {`$${superPrecio || precioUnitario}`}
               {superPrecio && (
@@ -64,7 +63,7 @@ const ProductGrid = ({ product, ...rest }) => {
             <p className="fs-10 mb-1">
               Precio Mayoreo: <strong>${precioMayoreo}</strong>
             </p>
-            {/* Mostrar cantidad en stock */}
+            {/* Cantidad en stock */}
             <p className="fs-10 mb-1">
               Stock:{' '}
               <strong
@@ -78,8 +77,11 @@ const ProductGrid = ({ product, ...rest }) => {
             </p>
           </div>
         </div>
-        {/* Acciones */}
-        <Flex alignItems="center" className="px-3">
+        {/* Calificación y Carrito */}
+        <Flex alignItems="center" className="px-3 justify-content-between">
+          {/* StarRating */}
+          <StarRating />
+          {/* Botón de agregar al carrito */}
           <OverlayTrigger
             placement="top"
             overlay={

@@ -1,23 +1,31 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import Rating from 'react-rating';
+import PropTypes from 'prop-types';
+import { useAppContext } from 'Main';
 
-const StarRating = () => {
-    // Generar un número aleatorio de estrellas llenas entre 4 y 5
-    const totalStars = 5;
-    const filledStars = Math.floor(Math.random() * 2) + 4; // Genera 4 o 5
+const StarRating = ({ fractions = 2, rating, handleChange, ...rest }) => {
+  const {
+    config: { isRTL }
+  } = useAppContext();
 
-    return (
-        <div>
-            {[...Array(totalStars)].map((star, index) => (
-                <FontAwesomeIcon
-                    key={index}
-                    icon={faStar}
-                    color={index < filledStars ? '#FFD700' : '#FFD700'}
-                />
-            ))}
-        </div>
-    );
+  return (
+    <Rating
+      fractions={fractions}
+      initialRating={rating}
+      fullSymbol={<FontAwesomeIcon icon="star" className="text-warning" />}
+      emptySymbol={<FontAwesomeIcon icon="star" className="text-300" />}
+      onChange={handleChange}
+      direction={isRTL ? 'rtl' : 'ltr'}
+      {...rest}
+    />
+  );
+};
+
+StarRating.propTypes = {
+  fractions: PropTypes.number,
+  rating: PropTypes.number.isRequired,
+  handleChange: PropTypes.func
 };
 
 export default StarRating;

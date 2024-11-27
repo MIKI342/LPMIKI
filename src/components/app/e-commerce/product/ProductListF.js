@@ -1,128 +1,116 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import IconButton from 'components/common/IconButton';
-import { ProductContext } from 'context/Context';
 import useProductHook from 'hooks/useProductHook';
-import ProductImage from './ProductImage';
-import StarRating from 'components/common/StarRating';
+import StarRating from 'components/common/StarRating'; // Asegúrate de importar el componente
 import Flex from 'components/common/Flex';
 
 const ProductList = ({ product, index }) => {
   const {
-    name,
-    category,
     id,
-    features,
-    price,  
-    discount,
-    salePrice,
-    shippingCost,
-    rating,
-    totalReview,
-    isInStock,
-    isNew,
-    files
+    nombreProducto,
+    descripcionProducto,
+    precioUnitario,
+    precioMayoreo,
+    superPrecio,
+    cantidad,
+    imagen
   } = product;
 
-  const { isInFavouriteItems } = useContext(ProductContext);
-
-  const { handleAddToCart, handleFavouriteClick } = useProductHook(product);
+  const { handleAddToCart } = useProductHook(product);
 
   return (
     <>
       <Col
         xs={12}
         className={classNames('p-x1', {
-          'bg-100': index % 2 !== 0
+          'bg-100': index % 2 !== 0 // Alternar el color de fondo
         })}
       >
         <Row>
+          {/* Columna para la imagen del producto */}
           <Col sm={5} md={4}>
-            <ProductImage
-              name={name}
-              id={id}
-              isNew={isNew}
-              files={files}
-              layout="list"
-            />
+            <div className="position-relative">
+              <img
+                src={imagen}
+                alt={nombreProducto}
+                className="img-fluid rounded"
+                style={{ maxHeight: '200px', objectFit: 'cover', width: '100%' }}
+              />
+            </div>
           </Col>
+
+          {/* Columna para la información del producto */}
           <Col sm={7} md={8}>
             <Row className="h-100">
               <Col lg={8}>
+                {/* Nombre del producto */}
                 <h5 className="mt-3 mt-sm-0">
                   <Link
                     to={`/e-commerce/product/product-details/${id}`}
                     className="text-1100 fs-9 fs-lg-8"
                   >
-                    {name}
+                    {nombreProducto}
                   </Link>
                 </h5>
-                <p className="fs-10 mb-2 mb-md-3">
-                  <Link to="#!" className="text-500">
-                    {category}
-                  </Link>
+                {/* Descripción del producto */}
+                <p className="fs-10 mb-2 mb-md-3 text-muted">
+                  {descripcionProducto || 'No description available'}
                 </p>
+
+                {/* Lista de características adicionales */}
                 <ul className="list-unstyled d-none d-lg-block">
-                  {features.map(feature => (
-                    <li key={feature}>
-                      <FontAwesomeIcon icon="circle" transform="shrink-12" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
+                  <li>
+                    <FontAwesomeIcon icon="circle" transform="shrink-12" />
+                    <span>Cantidad disponible: {cantidad}</span>
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon="circle" transform="shrink-12" />
+                    <span>Precio Mayoreo: ${precioMayoreo}</span>
+                  </li>
                 </ul>
               </Col>
+
+              {/* Columna para precios, calificación y acciones */}
               <Col lg={4} as={Flex} justifyContent="between" direction="column">
                 <div>
+                  {/* Precio del producto */}
                   <h4 className="fs-8 fs-md-7 text-warning mb-0">
-                    {`$${salePrice ? salePrice : price}`}
+                    {`$${superPrecio || precioUnitario}`}
                   </h4>
-                  {salePrice && (
+                  {superPrecio && (
                     <h5 className="fs-10 text-500 mb-0 mt-1">
-                      <del>{`$${price}`}</del>
-                      <span className="ms-2">-{discount}%</span>
+                      <del>{`$${precioUnitario}`}</del>
                     </h5>
                   )}
+
+                  {/* Calificación del producto */}
                   <div className="mb-2 mt-3">
-                    <StarRating readonly rating={rating} />
-                    <span className="ms-1">({totalReview})</span>
+                    <StarRating readonly />
                   </div>
+
+                  {/* Stock */}
                   <div className="d-none d-lg-block">
-                    <p className="fs-10 mb-1">
-                      Shipping Cost: <strong>{`$${shippingCost}`}</strong>
-                    </p>
                     <p className="fs-10 mb-1">
                       Stock:{' '}
                       <strong
                         className={classNames({
-                          'text-success': isInStock,
-                          'text-danger': !isInStock
+                          'text-success': cantidad > 0,
+                          'text-danger': cantidad === 0
                         })}
                       >
-                        {isInStock ? 'Available' : 'Stock-Out'}
+                        {cantidad > 0 ? `${cantidad} disponibles` : 'Agotado'}
                       </strong>
                     </p>
                   </div>
                 </div>
+
+                {/* Botón de agregar al carrito */}
                 <div className="mt-2">
-                  <IconButton
-                    size="sm"
-                    variant={
-                      isInFavouriteItems(id)
-                        ? 'outline-danger'
-                        : 'outline-secondary'
-                    }
-                    className={classNames('d-lg-block me-2 me-lg-0 w-lg-100', {
-                      'border-300': !isInFavouriteItems(id)
-                    })}
-                    icon={isInFavouriteItems(id) ? 'heart' : ['far', 'heart']}
-                    onClick={handleFavouriteClick}
-                  >
-                    Favourite
-                  </IconButton>
                   <IconButton
                     size="sm"
                     variant="primary"
@@ -144,19 +132,14 @@ const ProductList = ({ product, index }) => {
 
 ProductList.propTypes = {
   product: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    features: PropTypes.array,
-    price: PropTypes.number.isRequired,
-    discount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    salePrice: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    shippingCost: PropTypes.number,
-    rating: PropTypes.number,
-    totalReview: PropTypes.number,
-    isInStock: PropTypes.bool,
-    isNew: PropTypes.bool,
-    files: PropTypes.arrayOf(PropTypes.object).isRequired
+    id: PropTypes.string.isRequired,
+    nombreProducto: PropTypes.string.isRequired,
+    descripcionProducto: PropTypes.string,
+    precioUnitario: PropTypes.number.isRequired,
+    precioMayoreo: PropTypes.number.isRequired,
+    superPrecio: PropTypes.oneOfType([PropTypes.number, PropTypes.null]),
+    cantidad: PropTypes.number.isRequired,
+    imagen: PropTypes.string.isRequired
   }),
   index: PropTypes.number
 };
