@@ -29,7 +29,7 @@ import FalconCloseButton from 'components/common/FalconCloseButton';
 import { ProductContext } from 'context/Context';
 
 const MediaSearchContent = ({ item }) => (
-  <Dropdown.Item className="px-x1 py-2" as={Link} to={`/e-commerce/product/product-details/${item.id}`}>
+  <Dropdown.Item className="px-x1 py-2" as={Link} to={`/e-commerce/product/product-detailsF/${item.id}`}>
     <Flex alignItems="center">
       {item.file && (
         <div className="file-thumbnail">

@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { Col } from 'react-bootstrap';
-import ProductCard from 'components/app/e-commerce/product/componentsProductCard/ProductCard';
+import ProductCard from 'components/app/e-commerce/product/ProductGridF';
 
 const ProductList = ({ products, dispatch, paginationState }) => {
   if (!products.length) {
