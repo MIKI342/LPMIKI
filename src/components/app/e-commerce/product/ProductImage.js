@@ -30,7 +30,7 @@ const ProductImage = ({
 
   return (
     <div className={classNames('overflow-hidden w-100 h-100', className)} style={style}>
-      <Link to={`/e-commerce/product/product-details/${id}`} className="d-block w-100 h-100">
+      <Link to={`/e-commerce/product/product-detailsF/${id}`} className="d-block w-100 h-100">
         {imageUrls.length > 1 ? (
           <Carousel
             indicators={false}
