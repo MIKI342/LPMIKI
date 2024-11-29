@@ -28,15 +28,22 @@ const ProductGrid = ({ product, ...rest }) => {
         direction="column"
         justifyContent="between"
         className="border rounded-1 h-100 pb-3"
+        style={{ minHeight: '550px' }} // Incrementar altura de la tarjeta
       >
         <div className="overflow-hidden">
           {/* Imagen del producto */}
-          <div className="position-relative">
+          <div
+            className="position-relative"
+            style={{
+              height: '400px', // Incrementar espacio disponible para la imagen
+              width: '100%'
+            }}
+          >
             <img
               src={imagen}
               alt={nombreProducto}
               className="img-fluid rounded-top"
-              style={{ maxHeight: '200px', objectFit: 'cover', width: '100%' }}
+              style={{ height: '100%', width: '100%', objectFit: 'cover' }}
             />
           </div>
           <div className="p-3">

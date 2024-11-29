@@ -34,12 +34,22 @@ const ProductList = ({ product, index }) => {
         <Row>
           {/* Columna para la imagen del producto */}
           <Col sm={5} md={4}>
-            <div className="position-relative">
+            <div
+              className="position-relative"
+              style={{
+                height: '300px', // Incrementar espacio para la imagen
+                width: '100%'
+              }}
+            >
               <img
                 src={imagen}
                 alt={nombreProducto}
                 className="img-fluid rounded"
-                style={{ maxHeight: '200px', objectFit: 'cover', width: '100%' }}
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  objectFit: 'cover' // Asegurarse de que la imagen ocupe todo el espacio disponible
+                }}
               />
             </div>
           </Col>
@@ -51,7 +61,7 @@ const ProductList = ({ product, index }) => {
                 {/* Nombre del producto */}
                 <h5 className="mt-3 mt-sm-0">
                   <Link
-                    to={`/e-commerce/product/product-details/${id}`}
+                    to={`/e-commerce/product/product-detailsF/${id}`}
                     className="text-1100 fs-9 fs-lg-8"
                   >
                     {nombreProducto}
