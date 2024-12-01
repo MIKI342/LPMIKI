@@ -14,7 +14,6 @@ import SkeletonLoader from 'components/home/componentsHome/CategoryProductsCompo
 import ProductList from 'components/app/e-commerce/product/ProductListF';
 import ProductGrid from 'components/app/e-commerce/product/ProductGridF';
 import CategoryHeader from 'components/home/componentsHome/CategoryProductsComponents/CategoryHeader';
-import CartModal from 'components/app/e-commerce/cart/CartModal';
 import Flex from 'components/common/Flex';
 
 const CategoryProducts = () => {
@@ -261,7 +260,6 @@ const CategoryProducts = () => {
         </Card.Footer>
       </Card>
 
-      <CartModal />
     </div>
   );
 };

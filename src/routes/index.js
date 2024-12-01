@@ -4,12 +4,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import Products from 'components/app/e-commerce/product/ProductsF';
 import ProductDetails from 'components/app/e-commerce/product/product-detailsF/ProductDetailsF';
-import ShoppingCart from 'components/app/e-commerce/cart/ShoppingCart';
-import SimpleLogin from 'components/authentication/simple/Login';
 import Map from 'components/home/componentsHome/Map/map';
 import Home from 'components/home';
 import CategoryProducts from 'components/home/componentsHome/CategoryProductsComponents/CategoryProducts';
-import AuthSimpleLayout from '../layouts/AuthSimpleLayout';
 import Tramites from 'components/home/componentsHome/CategoryGroupComponents/Tramites'; // Importa el nuevo componente Tramites
 
 const FalconRoutes = () => {
@@ -20,7 +17,6 @@ const FalconRoutes = () => {
         <Route path="/" element={<Home />} />
         {/* Rutas para el ecommerce */}
         <Route path="/home" element={<Home />} />
-        <Route path="e-commerce/shopping-cart" element={<ShoppingCart />} />
         <Route path="e-commerce/product/:productLayout" element={<Products />} />
         <Route path="e-commerce/product/product-detailsF/:productId" element={<ProductDetails />} />
         
@@ -32,10 +28,6 @@ const FalconRoutes = () => {
 
       </Route>
 
-      {/* Rutas de autenticación */}
-      <Route element={<AuthSimpleLayout />}>
-        <Route path="authentication/simple/login" element={<SimpleLogin />} />
-      </Route>
 
       {/* Rutas de usuario, mapas y utilidades */}
       <Route path="components/home/componentsHome/map" element={<Map />} />
