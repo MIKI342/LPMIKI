@@ -1,6 +1,5 @@
-// CategoryGroup.js
 import React, { useContext, useState, useCallback } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { ProductContext } from 'context/Context';
 import useGroupedByCategory from 'hooks/useGroupedByCategory';
@@ -34,6 +33,9 @@ const CategoryGroup = () => {
     setShowAllCategories((prev) => !prev);
   }, []);
 
+  // Función para manejar la cantidad de categorías a mostrar
+  const categoriesToDisplay = showAllCategories ? displayedDynamicCategories : displayedDynamicCategories.slice(0, 6);
+
   if (loading) {
     return <div>Cargando...</div>;
   }
@@ -47,11 +49,25 @@ const CategoryGroup = () => {
       <Card.Body className="py-3 d-flex flex-column">
         <h2 className="category-group-title">Descubre nuestras categorías</h2>
 
-        {/* Renderizado de todas las categorías */}
+        {/* Renderizar las categorías */}
         <DynamicCategories
-          categories={displayedDynamicCategories}
+          categories={categoriesToDisplay}
           onCategoryClick={handleCategoryClick}
         />
+
+        {/* Mostrar el botón de "Ver todas las categorías" solo cuando no se muestran todas */}
+        {!isSmallScreen && !showAllCategories && (
+          <Button variant="link" onClick={toggleCategories} className="text-decoration-none">
+            Ver todas las categorías
+          </Button>
+        )}
+
+        {/* Mostrar el botón de "Ver menos" solo cuando se muestran todas */}
+        {!isSmallScreen && showAllCategories && (
+          <Button variant="link" onClick={toggleCategories} className="text-decoration-none">
+            Ver menos
+          </Button>
+        )}
 
         {/* Alternador para pantallas pequeñas */}
         {isSmallScreen && (
