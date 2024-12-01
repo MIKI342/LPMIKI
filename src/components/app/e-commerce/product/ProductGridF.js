@@ -88,21 +88,7 @@ const ProductGrid = ({ product, ...rest }) => {
         <Flex alignItems="center" className="px-3 justify-content-between">
           {/* StarRating */}
           <StarRating />
-          {/* Botón de agregar al carrito */}
-          <OverlayTrigger
-            placement="top"
-            overlay={
-              <Tooltip style={{ position: 'fixed' }}>Add to Cart</Tooltip>
-            }
-          >
-            <Button
-              variant="falcon-default"
-              size="sm"
-              onClick={() => handleAddToCart(1, true, true)}
-            >
-              <FontAwesomeIcon icon="cart-plus" />
-            </Button>
-          </OverlayTrigger>
+         
         </Flex>
       </Flex>
     </Col>

@@ -119,18 +119,7 @@ const ProductList = ({ product, index }) => {
                   </div>
                 </div>
 
-                {/* Botón de agregar al carrito */}
-                <div className="mt-2">
-                  <IconButton
-                    size="sm"
-                    variant="primary"
-                    className="d-lg-block mt-lg-2 w-lg-100"
-                    icon="cart-plus"
-                    onClick={() => handleAddToCart(1, true, true)}
-                  >
-                    Add to Cart
-                  </IconButton>
-                </div>
+                
               </Col>
             </Row>
           </Col>

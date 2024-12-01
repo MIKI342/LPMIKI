@@ -114,32 +114,7 @@ const ProductDetailsMain = ({ product }) => {
           ))}
         </p>
       )}
-      <Row>
-        
-        <Col xs="auto" className="px-2 px-md-3">
-          <IconButton
-            iconClassName="me-sm-2"
-            variant="primary"
-            size="sm"
-            icon="cart-plus"
-            onClick={() => handleAddToCart(productCount, true)}
-          >
-            <span className="d-none d-sm-inline-block">Agregar al carrito</span>
-          </IconButton>
-        </Col>
-        <Col xs="auto" className="px-0">
-          <IconButton
-            className="border-300"
-            iconClassName="me-1"
-            variant="outline-danger"
-            size="sm"
-            icon={isFavourite ? 'heart' : ['far', 'heart']}
-            onClick={handleFavouriteToggle}
-          >
-            Favorito
-          </IconButton>
-        </Col>
-      </Row>
+      
     </>
   );
 };
