@@ -1,6 +1,6 @@
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
-import ProductImage from 'components/app/e-commerce/product/ProductImage';
+import ProductImage from 'components/home/componentsHome/BienvenidaComponents/ProductImage';
 
 const BienvenidaCarousel = ({ randomOffers }) => (
   <Carousel interval={5000} pause="hover" indicators={false}>
