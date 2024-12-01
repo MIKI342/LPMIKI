@@ -1,4 +1,5 @@
 // components/app/e-commerce/product/ProductImage.jsx
+//Aqui aun tengo la duda de como se esta utilizando
 
 import React, { useMemo } from 'react';
 import { Badge, Image, Carousel } from 'react-bootstrap';

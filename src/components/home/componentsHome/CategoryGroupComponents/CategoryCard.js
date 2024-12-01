@@ -77,7 +77,7 @@ const CategoryCard = ({ category, products, onImageClick }) => {
   );
 
   return (
-    <Card className="category-card">
+    <Card className="category-card">  
       <Carousel interval={2000} touch pause={false}>
         {images.map((imgSrc, index) => (
           <Carousel.Item key={index}>
