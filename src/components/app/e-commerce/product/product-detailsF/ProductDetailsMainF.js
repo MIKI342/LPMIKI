@@ -1,16 +1,10 @@
-// ProductDetailsMain.jsx
-import classNames from 'classnames';
-import IconButton from 'components/common/IconButton';
-import React, { useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import useProductHook from 'hooks/useProductHook';
 import StarRating from 'components/common/StarRating';
 
 const ProductDetailsMain = ({ product }) => {
   const {
-    id,
     nombreProducto,
     descripcionProducto,
     precioUnitario,
@@ -22,29 +16,6 @@ const ProductDetailsMain = ({ product }) => {
     totalReview,
     tags
   } = product;
-
-  const [productCount, setProductCount] = useState(1);
-  const [isFavourite, setIsFavourite] = useState(false); // Estado local para manejar favoritos
-
-  const { handleAddToCart, handleFavouriteClick } = useProductHook(product);
-
-  const handleQuantityChange = e => {
-    setProductCount(parseInt(e.target.value < 1 ? 1 : e.target.value));
-  };
-
-  const handleQuantityIncrease = () => {
-    setProductCount(productCount + 1);
-  };
-
-  const handleQuantityDecrease = () => {
-    productCount > 1 && setProductCount(productCount - 1);
-  };
-
-  // Función para manejar el click en el botón de favoritos
-  const handleFavouriteToggle = () => {
-    setIsFavourite(!isFavourite);
-    handleFavouriteClick();
-  };
 
   return (
     <>
@@ -88,10 +59,9 @@ const ProductDetailsMain = ({ product }) => {
       <p className="fs-10">
         Stock:{' '}
         <strong
-          className={classNames({
-            'text-success': cantidad > 0,
-            'text-danger': cantidad === 0
-          })}
+          className={`${
+            cantidad > 0 ? 'text-success' : 'text-danger'
+          }`}
         >
           {cantidad > 0 ? 'Disponible' : 'Agotado'}
         </strong>
@@ -99,14 +69,11 @@ const ProductDetailsMain = ({ product }) => {
       {tags && (
         <p className="fs-10 mb-3">
           Tags:
-          {tags?.map((tag, index) => (
+          {tags.map((tag, index) => (
             <Link
               to="#!"
               key={tag}
-              className={classNames({
-                'ms-2': index === 0,
-                'ms-1': index > 0
-              })}
+              className={index === 0 ? 'ms-2' : 'ms-1'}
             >
               {tag}
               {index < tags.length - 1 && ','}
@@ -114,7 +81,6 @@ const ProductDetailsMain = ({ product }) => {
           ))}
         </p>
       )}
-      
     </>
   );
 };
