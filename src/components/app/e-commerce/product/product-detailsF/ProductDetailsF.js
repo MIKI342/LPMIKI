@@ -11,8 +11,7 @@ const ProductDetails = () => {
   const { productId } = useParams();
 
   const {
-    products,
-    dispatch: productsDispatch
+    products
   } = useContext(ProductContext);
 
   const product = products.find(product => product.id === productId);
@@ -26,18 +25,12 @@ const ProductDetails = () => {
               <ProductDetailsMedia product={product} />
             </Col>
             <Col lg={6} as={Flex} justifyContent="between" direction="column">
-              <ProductDetailsMain
-                product={product}
-                productsDispatch={productsDispatch}
-              />
+              <ProductDetailsMain product={product} />
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
-              <ProductDetailsFooter
-                product={product}
-                productsDispatch={productsDispatch}
-              />
+              <ProductDetailsFooter product={product} />
             </Col>
           </Row>
         </Card.Body>

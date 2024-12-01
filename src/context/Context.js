@@ -1,5 +1,4 @@
 import React, { createContext, useReducer, useMemo, useState, useEffect } from 'react';
-import { productReducer } from '../reducers/productReducer';
 import useFetchProducts from 'hooks/useFetchProductsDos'; // Asegúrate de importar el hook correcto
 
 export const AppContext = createContext();
@@ -49,61 +48,13 @@ export const ProductProvider = ({ children }) => {
     );
   };
 
-  const initData = {
-    products: [],
-    cartItems: [],
-    promo: null,
-    favouriteItems: [],
-    cartModal: {
-      show: false,
-      product: {},
-      quantity: 0,
-      type: 'add',
-    },
-  };
-
-  const [state, dispatch] = useReducer(productReducer, initData);
-
-  useEffect(() => {
-    console.log('Estado inicial del carrito:', state.cartItems);
-  }, []);
-
-  const getCartTotal = useMemo(() => {
-    const total = state.cartItems.reduce(
-      (total, item) => total + item.unitPrice * item.quantity,
-      0
-    );
-    console.log('Total del carrito recalculado:', total);
-    return total;
-  }, [state.cartItems]);
-
-  useEffect(() => {
-    console.log('Estado del carrito actualizado:', state.cartItems);
-  }, [state.cartItems]);
-
   const contextValue = useMemo(
     () => ({
-      products: formattedProducts.length ? formattedProducts : state.products,
+      products: formattedProducts.length ? formattedProducts : [],
       loading,
-      cartItems: state.cartItems,
-      promo: state.promo,
-      favouriteItems: state.favouriteItems,
-      cartModal: state.cartModal,
-      dispatch,
-      getCartTotal,
       updateProduct,
     }),
-    [
-      formattedProducts,
-      loading,
-      state.products,
-      state.cartItems,
-      state.promo,
-      state.favouriteItems,
-      state.cartModal,
-      dispatch,
-      getCartTotal,
-    ]
+    [formattedProducts, loading]
   );
 
   return (

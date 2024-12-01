@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Flex from 'components/common/Flex';
 import { Link } from 'react-router-dom';
-import { Button, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import classNames from 'classnames';
-import useProductHook from 'hooks/useProductHook';
 import StarRating from 'components/common/StarRating';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ProductGrid = ({ product, ...rest }) => {
   const {
@@ -19,8 +17,6 @@ const ProductGrid = ({ product, ...rest }) => {
     cantidad,
     imagen
   } = product;
-
-  const { handleAddToCart } = useProductHook(product);
 
   return (
     <Col className="mb-4" {...rest}>
@@ -84,11 +80,10 @@ const ProductGrid = ({ product, ...rest }) => {
             </p>
           </div>
         </div>
-        {/* Calificación y Carrito */}
+        {/* Calificación */}
         <Flex alignItems="center" className="px-3 justify-content-between">
           {/* StarRating */}
           <StarRating />
-         
         </Flex>
       </Flex>
     </Col>

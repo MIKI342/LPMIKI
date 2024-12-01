@@ -4,8 +4,6 @@ import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import IconButton from 'components/common/IconButton';
-import useProductHook from 'hooks/useProductHook';
 import StarRating from 'components/common/StarRating'; // Asegúrate de importar el componente
 import Flex from 'components/common/Flex';
 
@@ -20,8 +18,6 @@ const ProductList = ({ product, index }) => {
     cantidad,
     imagen
   } = product;
-
-  const { handleAddToCart } = useProductHook(product);
 
   return (
     <>
@@ -118,8 +114,6 @@ const ProductList = ({ product, index }) => {
                     </p>
                   </div>
                 </div>
-
-                
               </Col>
             </Row>
           </Col>

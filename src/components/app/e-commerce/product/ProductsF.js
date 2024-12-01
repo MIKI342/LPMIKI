@@ -19,12 +19,12 @@ import usePagination from 'hooks/usePagination';
 import Flex from 'components/common/Flex';
 
 const Products = () => {
-  // Corregimos cómo accedemos al contexto
-  const { products, dispatch } = useContext(ProductContext);
+  const { products, loading } = useContext(ProductContext); // Accedemos al contexto sin el dispatch
 
   const [sortBy, setSortBy] = useState('id'); // Control para ordenar
   const [isAsc, setIsAsc] = useState(true); // Ascendente o descendente
   const [productPerPage, setProductPerPage] = useState(6); // Productos por página
+  const [sortedProducts, setSortedProducts] = useState(products); // Estado local para productos ordenados
 
   const { productLayout } = useParams(); // Parámetro de diseño
   const layout = productLayout.split(/-/)[1]; // Determinar si es grid o list
@@ -48,18 +48,23 @@ const Products = () => {
     prevPage,
     goToPage,
     setItemsPerPage
-  } = usePagination(products || [], productPerPage);
+  } = usePagination(sortedProducts, productPerPage); // Usar productos ordenados para paginación
 
   // Ordenar productos al cambiar sortBy o isAsc
   useEffect(() => {
-    dispatch({
-      type: 'SORT_PRODUCT',
-      payload: {
-        sortBy,
-        order: isAsc ? 'asc' : 'desc'
+    const sorted = [...products].sort((a, b) => {
+      if (sortBy === 'price') {
+        return isAsc ? a.precioUnitario - b.precioUnitario : b.precioUnitario - a.precioUnitario;
+      } else if (sortBy === 'rating') {
+        return isAsc ? a.rating - b.rating : b.rating - a.rating;
+      } else if (sortBy === 'review') {
+        return isAsc ? a.review - b.review : b.review - a.review;
       }
+      return 0;
     });
-  }, [sortBy, isAsc, dispatch]);
+
+    setSortedProducts(sorted); // Actualizar los productos ordenados
+  }, [sortBy, isAsc, products]);
 
   const navigate = useNavigate();
 
@@ -134,14 +139,10 @@ const Products = () => {
                     }
                   >
                     <Link
-                      to={`/e-commerce/product/product-${
-                        isList ? 'grid' : 'list'
-                      }`}
+                      to={`/e-commerce/product/product-${isList ? 'grid' : 'list'}`}
                       className="text-600 px-1"
                     >
-                      <FontAwesomeIcon
-                        icon={classNames({ th: isList, 'list-ul': isGrid })}
-                      />
+                      <FontAwesomeIcon icon={classNames({ th: isList, 'list-ul': isGrid })} />
                     </Link>
                   </OverlayTrigger>
                 </Col>
