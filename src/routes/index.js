@@ -2,7 +2,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
-import Products from 'components/app/e-commerce/product/ProductsF';
+import Products from 'components/app/e-commerce/product/products/ProductsF';
 import ProductDetails from 'components/app/e-commerce/product/product-detailsF/ProductDetailsF';
 import Map from 'components/home/componentsHome/Map/map';
 import Home from 'components/home';
