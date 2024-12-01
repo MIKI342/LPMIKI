@@ -26,70 +26,68 @@ const ProductGrid = ({ product, ...rest }) => {
 
   return (
     <Col className="mb-4" {...rest}>
-      <Flex
-        direction="column"
-        justifyContent="between"
-        className="border rounded-1 h-100 pb-3"
-        style={{ minHeight: '550px' }} // Incrementar altura de la tarjeta
+      {/* Envolver toda la tarjeta en un Link */}
+      <Link
+        to={`/e-commerce/product/product-detailsF/${id}`}
+        className="text-decoration-none"
       >
-        <div className="overflow-hidden">
-          {/* Imagen del producto */}
-          <div
-            className="position-relative"
-            style={{
-              height: '400px', // Incrementar espacio disponible para la imagen
-              width: '100%'
-            }}
-          >
-            <img
-              src={imagen}
-              alt={nombreProducto}
-              className="img-fluid rounded-top"
-              style={{ height: '100%', width: '100%', objectFit: 'cover' }}
-            />
+        <Flex
+          direction="column"
+          justifyContent="between"
+          className="border rounded-1 h-100 pb-3"
+          style={{ minHeight: '550px' }} // Incrementar altura de la tarjeta
+        >
+          <div className="overflow-hidden">
+            {/* Imagen del producto */}
+            <div
+              className="position-relative"
+              style={{
+                height: '400px', // Incrementar espacio disponible para la imagen
+                width: '100%'
+              }}
+            >
+              <img
+                src={imagen}
+                alt={nombreProducto}
+                className="img-fluid rounded-top"
+                style={{ height: '100%', width: '100%', objectFit: 'cover' }}
+              />
+            </div>
+            <div className="p-3">
+              {/* Nombre del producto */}
+              <h5 className="fs-9">{nombreProducto}</h5>
+              {/* Descripción del producto */}
+              <p className="fs-10 mb-3 text-muted">
+                {descripcionProducto || 'No description available'}
+              </p>
+              {/* Solo mostrar el precio más barato */}
+              <h5 className="fs-md-7 text-warning mb-0 d-flex align-items-center mb-3">
+                {`$${precioMasBarato}`}
+              </h5>
+              {/* Cantidad en stock */}
+              <p className="fs-10 mb-1">
+                Stock:{' '}
+                <strong
+                  className={classNames({
+                    'text-success': cantidad > 0,
+                    'text-danger': cantidad === 0
+                  })}
+                >
+                  {cantidad > 0 ? `${cantidad} disponibles` : 'Agotado'}
+                </strong>
+              </p>
+            </div>
           </div>
-          <div className="p-3">
-            {/* Nombre del producto */}
-            <h5 className="fs-9">
-              <Link
-                className="text-1100"
-                to={`/e-commerce/product/product-detailsF/${id}`}
-              >
-                {nombreProducto}
-              </Link>
-            </h5>
-            {/* Descripción del producto */}
-            <p className="fs-10 mb-3 text-muted">
-              {descripcionProducto || 'No description available'}
-            </p>
-            {/* Solo mostrar el precio más barato */}
-            <h5 className="fs-md-7 text-warning mb-0 d-flex align-items-center mb-3">
-              {`$${precioMasBarato}`}
-            </h5>
-            {/* Cantidad en stock */}
-            <p className="fs-10 mb-1">
-              Stock:{' '}
-              <strong
-                className={classNames({
-                  'text-success': cantidad > 0,
-                  'text-danger': cantidad === 0
-                })}
-              >
-                {cantidad > 0 ? `${cantidad} disponibles` : 'Agotado'}
-              </strong>
-            </p>
-          </div>
-        </div>
-        {/* Calificación */}
-        <Flex alignItems="center" className="px-3 justify-content-between">
-          {/* StarRating */}
-          <StarRating />
+          {/* Calificación */}
+          <Flex alignItems="center" className="px-3 justify-content-between">
+            {/* StarRating */}
+            <StarRating />
+          </Flex>
         </Flex>
-      </Flex>
+      </Link>
     </Col>
   );
 };
-
 
 ProductGrid.propTypes = {
   product: PropTypes.shape({

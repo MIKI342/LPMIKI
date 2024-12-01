@@ -33,94 +33,92 @@ const ProductList = ({ product, index }) => {
           'bg-100': index % 2 !== 0 // Alternar el color de fondo
         })}
       >
-        <Row>
-          {/* Columna para la imagen del producto */}
-          <Col sm={5} md={4}>
-            <div
-              className="position-relative"
-              style={{
-                height: '300px', // Incrementar espacio para la imagen
-                width: '100%'
-              }}
-            >
-              <img
-                src={imagen}
-                alt={nombreProducto}
-                className="img-fluid rounded"
+        {/* Envolver toda la tarjeta en un Link */}
+        <Link
+          to={`/e-commerce/product/product-detailsF/${id}`}
+          className="text-decoration-none"
+        >
+          <Row>
+            {/* Columna para la imagen del producto */}
+            <Col sm={5} md={4}>
+              <div
+                className="position-relative"
                 style={{
-                  height: '100%',
-                  width: '100%',
-                  objectFit: 'cover' // Asegurarse de que la imagen ocupe todo el espacio disponible
+                  height: '300px', // Incrementar espacio para la imagen
+                  width: '100%'
                 }}
-              />
-            </div>
-          </Col>
+              >
+                <img
+                  src={imagen}
+                  alt={nombreProducto}
+                  className="img-fluid rounded"
+                  style={{
+                    height: '100%',
+                    width: '100%',
+                    objectFit: 'cover' // Asegurarse de que la imagen ocupe todo el espacio disponible
+                  }}
+                />
+              </div>
+            </Col>
 
-          {/* Columna para la información del producto */}
-          <Col sm={7} md={8}>
-            <Row className="h-100">
-              <Col lg={8}>
-                {/* Nombre del producto */}
-                <h5 className="mt-3 mt-sm-0">
-                  <Link
-                    to={`/e-commerce/product/product-detailsF/${id}`}
-                    className="text-1100 fs-9 fs-lg-8"
-                  >
+            {/* Columna para la información del producto */}
+            <Col sm={7} md={8}>
+              <Row className="h-100">
+                <Col lg={8}>
+                  {/* Nombre del producto */}
+                  <h5 className="mt-3 mt-sm-0">
                     {nombreProducto}
-                  </Link>
-                </h5>
-               <br></br>
+                  </h5>
+                  <br />
 
-                {/* Lista de características adicionales */}
-                <ul className="list-unstyled d-none d-lg-block">
-                <li>
-                    <FontAwesomeIcon icon="circle" transform="shrink-12" />
-                    <span> {descripcionProducto}</span>
-                  </li>
-                  <br></br>
-                 
-                
-                </ul>
-              </Col>
+                  {/* Lista de características adicionales */}
+                  <ul className="list-unstyled d-none d-lg-block">
+                    <li>
+                      <FontAwesomeIcon icon="circle" transform="shrink-12" />
+                      <span> {descripcionProducto}</span>
+                    </li>
+                    <br />
+                  </ul>
+                </Col>
 
-              {/* Columna para precios, calificación y acciones */}
-              <Col lg={4} as={Flex} justifyContent="between" direction="column">
-                <div>
-                  {/* Solo mostrar el precio más barato */}
-                  <h4 className="fs-8 fs-md-7 text-warning mb-0">
-                    {`$${precioMasBarato}`}
-                  </h4>
-                  <br></br>
+                {/* Columna para precios, calificación y acciones */}
+                <Col lg={4} as={Flex} justifyContent="between" direction="column">
+                  <div>
+                    {/* Solo mostrar el precio más barato */}
+                    <h4 className="fs-8 fs-md-7 text-warning mb-0">
+                      {`$${precioMasBarato}`}
+                    </h4>
+                    <br />
 
-                  {/* Calificación del producto */}
-                  <div className="mb-2 mt-3">
-                    <StarRating readonly />
+                    {/* Calificación del producto */}
+                    <div className="mb-2 mt-3">
+                      <StarRating readonly />
+                    </div>
+                    <br />
+                    {/* Stock */}
+                    <div className="d-none d-lg-block">
+                      <p className="fs-10 mb-1">
+                        Stock:{' '}
+                        <strong
+                          className={classNames({
+                            'text-success': cantidad > 0,
+                            'text-danger': cantidad === 0
+                          })}
+                        >
+                          {cantidad > 0 ? `${cantidad} disponibles` : 'Agotado'}
+                        </strong>
+                      </p>
+                    </div>
                   </div>
-                  <br></br>
-                  {/* Stock */}
-                  <div className="d-none d-lg-block">
-                    <p className="fs-10 mb-1">
-                      Stock:{' '}
-                      <strong
-                        className={classNames({
-                          'text-success': cantidad > 0,
-                          'text-danger': cantidad === 0
-                        })}
-                      >
-                        {cantidad > 0 ? `${cantidad} disponibles` : 'Agotado'}
-                      </strong>
-                    </p>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Link>
       </Col>
     </>
   );
 };
-
 
 ProductList.propTypes = {
   product: PropTypes.shape({
