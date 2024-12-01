@@ -7,6 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import StarRating from 'components/common/StarRating'; // Asegúrate de importar el componente
 import Flex from 'components/common/Flex';
 
+// Ruta de la imagen por defecto
+const defaultImage = '/img/default.png'; // Ruta relativa dentro de 'src' o '/img/default.png' si está en 'public'
+
 const ProductList = ({ product, index }) => {
   const {
     id,
@@ -24,6 +27,9 @@ const ProductList = ({ product, index }) => {
 
   // Obtener el precio más bajo de los precios disponibles
   const precioMasBarato = Math.min(...preciosDisponibles);
+
+  // Verificar si la imagen existe, si no, usar la imagen por defecto
+  const productImage = imagen ? imagen : defaultImage;
 
   return (
     <>
@@ -49,7 +55,7 @@ const ProductList = ({ product, index }) => {
                 }}
               >
                 <img
-                  src={imagen}
+                  src={productImage}  // Usar la imagen del producto o la imagen por defecto
                   alt={nombreProducto}
                   className="img-fluid rounded"
                   style={{
@@ -129,7 +135,7 @@ ProductList.propTypes = {
     precioMayoreo: PropTypes.number.isRequired,
     superPrecio: PropTypes.oneOfType([PropTypes.number, PropTypes.null]),
     cantidad: PropTypes.number.isRequired,
-    imagen: PropTypes.string.isRequired
+    imagen: PropTypes.string // Se permite que 'imagen' sea null o una cadena vacía
   }),
   index: PropTypes.number
 };

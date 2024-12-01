@@ -6,12 +6,17 @@ import { Col } from 'react-bootstrap';
 import classNames from 'classnames';
 import StarRating from 'components/common/StarRating';
 
+// Ruta de la imagen por defecto
+// Ruta de la imagen por defecto
+const defaultImage = '/img/default.png'; // Ruta relativa a la carpeta public
+ // Asegúrate de usar la ruta correcta de la imagen por defecto
+
 const ProductGrid = ({ product, ...rest }) => {
   const {
     id,
     nombreProducto,
     descripcionProducto,
-    precioUnitario,
+    precioUnitario, 
     precioMayoreo,
     superPrecio,
     cantidad,
@@ -23,6 +28,9 @@ const ProductGrid = ({ product, ...rest }) => {
 
   // Obtener el precio más bajo de los precios disponibles
   const precioMasBarato = Math.min(...preciosDisponibles);
+
+  // Selección de la imagen (si no hay imagen, usa la imagen por defecto)
+  const productImage = imagen || defaultImage;
 
   return (
     <Col className="mb-4" {...rest}>
@@ -47,7 +55,7 @@ const ProductGrid = ({ product, ...rest }) => {
               }}
             >
               <img
-                src={imagen}
+                src={productImage} // Usar la imagen seleccionada
                 alt={nombreProducto}
                 className="img-fluid rounded-top"
                 style={{ height: '100%', width: '100%', objectFit: 'cover' }}
@@ -98,7 +106,7 @@ ProductGrid.propTypes = {
     precioMayoreo: PropTypes.number.isRequired,
     superPrecio: PropTypes.oneOfType([PropTypes.number, PropTypes.null]),
     cantidad: PropTypes.number.isRequired,
-    imagen: PropTypes.string.isRequired
+    imagen: PropTypes.string // Asegúrate de que la propiedad `imagen` puede ser null o una cadena vacía
   })
 };
 
