@@ -18,6 +18,12 @@ const ProductGrid = ({ product, ...rest }) => {
     imagen
   } = product;
 
+  // Lógica para determinar el precio más bajo (si alguno es null, lo ignoramos)
+  const preciosDisponibles = [precioUnitario, precioMayoreo, superPrecio].filter(price => price != null);
+
+  // Obtener el precio más bajo de los precios disponibles
+  const precioMasBarato = Math.min(...preciosDisponibles);
+
   return (
     <Col className="mb-4" {...rest}>
       <Flex
@@ -56,16 +62,10 @@ const ProductGrid = ({ product, ...rest }) => {
             <p className="fs-10 mb-3 text-muted">
               {descripcionProducto || 'No description available'}
             </p>
-            {/* Precios del producto */}
+            {/* Solo mostrar el precio más barato */}
             <h5 className="fs-md-7 text-warning mb-0 d-flex align-items-center mb-3">
-              {`$${superPrecio || precioUnitario}`}
-              {superPrecio && (
-                <del className="ms-2 fs-10 text-500">${precioUnitario}</del>
-              )}
+              {`$${precioMasBarato}`}
             </h5>
-            <p className="fs-10 mb-1">
-              Precio Mayoreo: <strong>${precioMayoreo}</strong>
-            </p>
             {/* Cantidad en stock */}
             <p className="fs-10 mb-1">
               Stock:{' '}
@@ -89,6 +89,7 @@ const ProductGrid = ({ product, ...rest }) => {
     </Col>
   );
 };
+
 
 ProductGrid.propTypes = {
   product: PropTypes.shape({

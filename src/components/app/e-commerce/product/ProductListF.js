@@ -19,6 +19,12 @@ const ProductList = ({ product, index }) => {
     imagen
   } = product;
 
+  // Lógica para determinar el precio más bajo (si alguno es null, lo ignoramos)
+  const preciosDisponibles = [precioUnitario, precioMayoreo, superPrecio].filter(price => price != null);
+
+  // Obtener el precio más bajo de los precios disponibles
+  const precioMasBarato = Math.min(...preciosDisponibles);
+
   return (
     <>
       <Col
@@ -63,42 +69,34 @@ const ProductList = ({ product, index }) => {
                     {nombreProducto}
                   </Link>
                 </h5>
-                {/* Descripción del producto */}
-                <p className="fs-10 mb-2 mb-md-3 text-muted">
-                  {descripcionProducto || 'No description available'}
-                </p>
+               <br></br>
 
                 {/* Lista de características adicionales */}
                 <ul className="list-unstyled d-none d-lg-block">
-                  <li>
+                <li>
                     <FontAwesomeIcon icon="circle" transform="shrink-12" />
-                    <span>Cantidad disponible: {cantidad}</span>
+                    <span> {descripcionProducto}</span>
                   </li>
-                  <li>
-                    <FontAwesomeIcon icon="circle" transform="shrink-12" />
-                    <span>Precio Mayoreo: ${precioMayoreo}</span>
-                  </li>
+                  <br></br>
+                 
+                
                 </ul>
               </Col>
 
               {/* Columna para precios, calificación y acciones */}
               <Col lg={4} as={Flex} justifyContent="between" direction="column">
                 <div>
-                  {/* Precio del producto */}
+                  {/* Solo mostrar el precio más barato */}
                   <h4 className="fs-8 fs-md-7 text-warning mb-0">
-                    {`$${superPrecio || precioUnitario}`}
+                    {`$${precioMasBarato}`}
                   </h4>
-                  {superPrecio && (
-                    <h5 className="fs-10 text-500 mb-0 mt-1">
-                      <del>{`$${precioUnitario}`}</del>
-                    </h5>
-                  )}
+                  <br></br>
 
                   {/* Calificación del producto */}
                   <div className="mb-2 mt-3">
                     <StarRating readonly />
                   </div>
-
+                  <br></br>
                   {/* Stock */}
                   <div className="d-none d-lg-block">
                     <p className="fs-10 mb-1">
@@ -122,6 +120,7 @@ const ProductList = ({ product, index }) => {
     </>
   );
 };
+
 
 ProductList.propTypes = {
   product: PropTypes.shape({
