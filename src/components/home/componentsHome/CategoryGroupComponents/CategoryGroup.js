@@ -1,12 +1,11 @@
-import React, { useContext, useState, useCallback } from 'react';
-import { Card, Button } from 'react-bootstrap';
+import React, { useContext, useCallback } from 'react';
+import { Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { ProductContext } from 'context/Context';
 import useGroupedByCategory from 'hooks/useGroupedByCategory';
 import useIsSmallScreen from 'hooks/useIsSmallScreen';
 import { useCategoryLogic } from 'hooks/useCategoryLogic';
 import DynamicCategories from 'components/home/componentsHome/CategoryGroupComponents/DynamicCategories';
-import CategoryToggle from 'components/home/componentsHome/CategoryGroupComponents/CategoryToggle';
 import 'components/home/componentsHome/css/CategoryGroup.css';
 
 const CategoryGroup = () => {
@@ -14,12 +13,10 @@ const CategoryGroup = () => {
   const groupedProducts = useGroupedByCategory(products);
   const navigate = useNavigate();
   const isSmallScreen = useIsSmallScreen();
-  const [showAllCategories, setShowAllCategories] = useState(false);
 
   const { displayedDynamicCategories } = useCategoryLogic(
     groupedProducts,
-    isSmallScreen,
-    showAllCategories
+    isSmallScreen
   );
 
   // Función memoizada para manejar el clic en una categoría
@@ -27,14 +24,6 @@ const CategoryGroup = () => {
     (category) => navigate(`/category/${category}`),
     [navigate]
   );
-
-  // Función memoizada para alternar la visualización de categorías
-  const toggleCategories = useCallback(() => {
-    setShowAllCategories((prev) => !prev);
-  }, []);
-
-  // Función para manejar la cantidad de categorías a mostrar
-  const categoriesToDisplay = showAllCategories ? displayedDynamicCategories : displayedDynamicCategories.slice(0, 6);
 
   if (loading) {
     return <div>Cargando...</div>;
@@ -49,33 +38,13 @@ const CategoryGroup = () => {
       <Card.Body className="py-3 d-flex flex-column">
         <h2 className="category-group-title">Descubre nuestras categorías</h2>
 
-        {/* Renderizar las categorías */}
-        <DynamicCategories
-          categories={categoriesToDisplay}
-          onCategoryClick={handleCategoryClick}
-        />
-
-        {/* Mostrar el botón de "Ver todas las categorías" solo cuando no se muestran todas */}
-        {!isSmallScreen && !showAllCategories && (
-          <Button variant="link" onClick={toggleCategories} className="text-decoration-none">
-            Ver todas las categorías
-          </Button>
-        )}
-
-        {/* Mostrar el botón de "Ver menos" solo cuando se muestran todas */}
-        {!isSmallScreen && showAllCategories && (
-          <Button variant="link" onClick={toggleCategories} className="text-decoration-none">
-            Ver menos
-          </Button>
-        )}
-
-        {/* Alternador para pantallas pequeñas */}
-        {isSmallScreen && (
-          <CategoryToggle
-            showAllCategories={showAllCategories}
-            toggleCategories={toggleCategories}
+        {/* Contenedor scrollable para categorías */}
+        <div className="categories-scroll-container">
+          <DynamicCategories
+            categories={displayedDynamicCategories}
+            onCategoryClick={handleCategoryClick}
           />
-        )}
+        </div>
       </Card.Body>
     </Card>
   );

@@ -103,3 +103,24 @@
 .toggle-icon.open {
   transform: rotate(180deg);
 }
+
+.categories-scroll-container {
+  max-height: 670px; /* Ajusta según la altura deseada */
+  overflow-y: auto;
+  scrollbar-width: thin; /* Estilo para Firefox */
+  -ms-overflow-style: none; /* Estilo para IE y Edge */
+
+  /* Para ocultar el scroll en Webkit (Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+  }
+}
