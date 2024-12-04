@@ -17,9 +17,7 @@ const DynamicCategories = ({ categories, onCategoryClick }) => {
 
   // Función para generar handlers memoizados por categoría
   const generateOnImageClick = useCallback(
-    (categoryName) => {
-      return () => onCategoryClick(categoryName);
-    },
+    (categoryName) => () => onCategoryClick(categoryName),
     [onCategoryClick]
   );
 
@@ -50,7 +48,7 @@ DynamicCategories.propTypes = {
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      data: PropTypes.array.isRequired, // Aseguramos que la categoría incluye sus productos
+      data: PropTypes.array.isRequired, // Aseguramos que la categoría tiene productos
     })
   ).isRequired,
   onCategoryClick: PropTypes.func.isRequired,

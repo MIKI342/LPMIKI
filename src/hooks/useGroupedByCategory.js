@@ -1,5 +1,3 @@
-// hooks/useGroupedByCategory.js
-
 import { useMemo } from 'react';
 
 /**
