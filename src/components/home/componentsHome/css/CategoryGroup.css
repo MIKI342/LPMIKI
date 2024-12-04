@@ -124,3 +124,16 @@
     background-color: #aaa;
   }
 }
+
+.centered-toggle {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: #007bff;
+}
+
+.centered-toggle:hover {
+  color: #0056b3;
+}
