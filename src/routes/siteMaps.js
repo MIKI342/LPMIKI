@@ -7,22 +7,15 @@ export const appRoutes = {
   label: 'E-commerce',
   children: [
     {
-      name: 'Productos',
-      icon: 'shopping-cart',
-      active: true,
-      children: [
-        {
-          name: 'Todos los productos',
+     
+        
+          name: 'Productos',
           to: '/e-commerce/product/product-grid',
+          
+      icon: 'shopping-cart',
           active: true
-        },
-
-        {
-          name: 'Carrito de compras',
-          to: '/e-commerce/shopping-cart',
-          active: true
-        }
-      ]
+        
+      
     }
   ]
 };
